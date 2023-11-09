@@ -66,8 +66,21 @@ func _on_gui_focus_changed(node: Node):
 		current_text_edit = null
 
 func _process(delta):
-	for watch in watches:
+	var to_be_removed = []
+	for index in range(len(watches)):
+		var watch = watches[index]
 		watch.update()
+		if watch.to_be_removed:
+			to_be_removed.append(index)
+	for i in range(len(to_be_removed) - 1, 0, -1):
+		var index = to_be_removed[i]
+		swap_remove(watches, index)
+
+static func swap_remove(array: Array, index: int):
+	var last = len(array) - 1
+	if index != last:
+		array[index] = array[last]
+	array.resize(last)
 
 const ANNOTATION_OFFSET = Vector2(40, 0)
 
@@ -112,6 +125,7 @@ class Watch:
 	var current_value: Variant
 	var current_annotation: Annotation
 	var plugin: EditorPlugin
+	var to_be_removed = false
 
 	func belongs_to_text_edit(text_edit: TextEdit) -> bool:
 		var current_script = plugin.get_editor_interface().get_script_editor().get_current_script()
@@ -141,8 +155,9 @@ class Watch:
 			if current_annotation.is_valid():
 				current_annotation.update()
 			else:
-				print("removing annotation")
 				remove_annotation()
+				if belongs_to_current_script():
+					to_be_removed = true
 
 	func update_value(new_value: Variant):
 		current_value = new_value
