@@ -111,6 +111,13 @@ class Annotation:
 
 	func create():
 		pass
+	
+	func get_line_height():
+		return text_edit.get_line_height() - text_edit.get_theme_constant("line_spacing")
+	
+	func get_line_height_square():
+		var line_height = get_line_height()
+		return Vector2(line_height, line_height)
 
 	func update():
 		var column = len(text_edit.get_line(line))
@@ -159,9 +166,7 @@ class ColorAnnotation extends Annotation:
 
 	func create():
 		node = ColorRect.new()
-		var line_height = text_edit.get_line_height() - text_edit.get_theme_constant("line_spacing")
-		print(line_height)
-		node.set_size(Vector2(line_height, line_height))
+		node.set_size(get_line_height_square())
 	
 	func update_value(value: Variant):
 		node.color = value
