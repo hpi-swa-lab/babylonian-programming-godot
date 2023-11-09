@@ -48,6 +48,7 @@ func find_or_create_watch_for(source: String, line: int) -> Watch:
 	var watch = Watch.new()
 	watch.source = source
 	watch.line = line
+	watch.plugin = self
 	watches.append(watch)
 	if current_text_edit != null:
 		watch.create_annotation(current_text_edit)
@@ -110,10 +111,11 @@ class Watch:
 	var line: int
 	var current_value: Variant
 	var current_annotation: Annotation
+	var plugin: EditorPlugin
 
 	func belongs_to_text_edit(text_edit: TextEdit) -> bool:
-		# TODO
-		return true
+		var current_script = plugin.get_editor_interface().get_script_editor().get_current_script()
+		return current_script.resource_path == source
 
 	func create_annotation(text_edit: TextEdit) -> Annotation:
 		if not belongs_to_text_edit(text_edit):
