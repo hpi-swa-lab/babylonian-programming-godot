@@ -44,6 +44,8 @@ func on_watch(source: String, line: int, value: Variant):
 func find_or_create_watch_for(source: String, line: int) -> Watch:
 	for watch in watches:
 		if watch.source == source and watch.line == line:
+			if current_text_edit != null:
+				watch.create_annotation(current_text_edit)
 			return watch
 	var watch = Watch.new()
 	watch.source = source
@@ -86,6 +88,7 @@ const ANNOTATION_OFFSET = Vector2(40, 0)
 
 class Annotation:
 	var line = 0
+	var text_edit: TextEdit
 	var node: Control
 	var last_scroll_pos
 	var last_column
@@ -93,14 +96,10 @@ class Annotation:
 	func is_valid():
 		return is_instance_valid(node) and is_watch_valid()
 
-	func get_text_edit() -> TextEdit:
-		return node.get_parent() as TextEdit
-
 	func is_watch_valid() -> bool:
-		return get_text_edit().get_line(line).contains("watch(")
-
+		return text_edit.get_line(line).contains("watch(")
+		
 	func update():
-		var text_edit = get_text_edit()
 		var column = len(text_edit.get_line(line))
 		if text_edit.scroll_vertical == last_scroll_pos and last_column == column:
 			return
@@ -113,12 +112,6 @@ class Annotation:
 		else:
 			node.hide()
 
-	func set_line(line: int):
-		self.line = line
-
-	func set_node(node: Control):
-		self.node = node
-
 class Watch:
 	var source: String
 	var line: int
@@ -127,23 +120,29 @@ class Watch:
 	var plugin: EditorPlugin
 	var to_be_removed = false
 
-	func belongs_to_text_edit(text_edit: TextEdit) -> bool:
+	func belongs_to_current_script() -> bool:
 		var current_script = plugin.get_editor_interface().get_script_editor().get_current_script()
+		if current_script == null:
+			return false
 		return current_script.resource_path == source
 
 	func create_annotation(text_edit: TextEdit) -> Annotation:
-		if not belongs_to_text_edit(text_edit):
+		if not belongs_to_current_script() or current_annotation != null:
 			return
 
-		var textLabel = RichTextLabel.new()
-		textLabel.fit_content = true
-		textLabel.text_direction = Control.TEXT_DIRECTION_LTR
-		textLabel.autowrap_mode = TextServer.AUTOWRAP_OFF
+		var text_label = RichTextLabel.new()
+		text_label.fit_content = true
+		text_label.text_direction = Control.TEXT_DIRECTION_LTR
+		text_label.autowrap_mode = TextServer.AUTOWRAP_OFF
 
 		var annotation = Annotation.new()
-		annotation.set_node(textLabel)
-		annotation.set_line(line - 1) # Godot source uses 1-indexing, TextEdit uses 0-indexing
-		text_edit.add_child(textLabel)
+		annotation.text_edit = text_edit
+		annotation.node = text_label
+		annotation.line = line - 1 # Godot source uses 1-indexing, TextEdit uses 0-indexing
+		if not annotation.is_watch_valid():
+			return
+
+		text_edit.add_child(text_label)
 		annotation.update()
 
 		current_annotation = annotation
