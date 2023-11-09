@@ -1,3 +1,5 @@
+extends Node
+
 static func watch(value: Variant):
 	var stack = get_stack()
 	if len(stack) < 1:
