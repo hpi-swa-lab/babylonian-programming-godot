@@ -17,7 +17,6 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-watch="*res://addons/watch/B.gd"
 B="*res://addons/watch/B.gd"
 
 [editor_plugins]
