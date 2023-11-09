@@ -92,13 +92,26 @@ class Annotation:
 	var node: Control
 	var last_scroll_pos
 	var last_column
+	
+	static func is_instance(annotation: Annotation) -> bool:
+		return false
+
+	static func can_display(value: Variant) -> bool:
+		return false
+		
+	func copy_settings_from(other: Annotation):
+		line = other.line
+		text_edit = other.text_edit
 
 	func is_valid():
-		return is_instance_valid(node) and is_watch_valid()
+		return is_watch_valid()
 
 	func is_watch_valid() -> bool:
 		return text_edit.get_line(line).contains("watch(")
-		
+
+	func create():
+		pass
+
 	func update():
 		var column = len(text_edit.get_line(line))
 		if text_edit.scroll_vertical == last_scroll_pos and last_column == column:
@@ -111,6 +124,49 @@ class Annotation:
 			node.set_position(Vector2(rect.end.x, rect.position.y) + ANNOTATION_OFFSET)
 		else:
 			node.hide()
+
+	func update_value(value: Variant):
+		pass
+
+class TextAnnotation extends Annotation:
+	static func name():
+		return "Text"
+		
+	static func is_instance(annotation: Annotation) -> bool:
+		return annotation is TextAnnotation
+
+	static func can_display(value: Variant) -> bool:
+		return true
+	
+	func create():
+		node = RichTextLabel.new()
+		node.fit_content = true
+		node.text_direction = Control.TEXT_DIRECTION_LTR
+		node.autowrap_mode = TextServer.AUTOWRAP_OFF
+	
+	func update_value(value: Variant):
+		node.text = str(value)
+
+class ColorAnnotation extends Annotation:
+	static func name():
+		return "Color"
+		
+	static func is_instance(annotation: Annotation) -> bool:
+		return annotation is ColorAnnotation
+
+	static func can_display(value: Variant) -> bool:
+		return value is Color
+
+	func create():
+		node = ColorRect.new()
+		var line_height = text_edit.get_line_height() - text_edit.get_theme_constant("line_spacing")
+		print(line_height)
+		node.set_size(Vector2(line_height, line_height))
+	
+	func update_value(value: Variant):
+		node.color = value
+
+const annotation_classes = [ColorAnnotation, TextAnnotation]
 
 class Watch:
 	var source: String
@@ -130,19 +186,12 @@ class Watch:
 		if not belongs_to_current_script() or current_annotation != null:
 			return
 
-		var text_label = RichTextLabel.new()
-		text_label.fit_content = true
-		text_label.text_direction = Control.TEXT_DIRECTION_LTR
-		text_label.autowrap_mode = TextServer.AUTOWRAP_OFF
-
 		var annotation = Annotation.new()
 		annotation.text_edit = text_edit
-		annotation.node = text_label
+		annotation.node = null
 		annotation.line = line - 1 # Godot source uses 1-indexing, TextEdit uses 0-indexing
 		if not annotation.is_watch_valid():
 			return
-
-		text_edit.add_child(text_label)
 		annotation.update()
 
 		current_annotation = annotation
@@ -164,7 +213,25 @@ class Watch:
 
 	func update_annotation_display():
 		if current_annotation != null:
-			current_annotation.node.text = str(current_value)
+			var annotation_class = find_annotation_class()
+			if annotation_class == null:
+				remove_annotation()
+				return
+			if not annotation_class.is_instance(current_annotation):
+				print(annotation_class)
+				var new_annotation = annotation_class.new()
+				new_annotation.copy_settings_from(current_annotation)
+				new_annotation.create()
+				current_annotation.text_edit.add_child(new_annotation.node)
+				remove_annotation()
+				current_annotation = new_annotation
+			current_annotation.update_value(current_value)
+	
+	func find_annotation_class():
+		for annotation_class in annotation_classes:
+			if annotation_class.can_display(current_value):
+				return annotation_class
+		return null
 
 	func remove_annotation():
 		if current_annotation == null:
