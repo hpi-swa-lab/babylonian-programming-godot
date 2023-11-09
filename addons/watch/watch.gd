@@ -175,7 +175,40 @@ class ColorAnnotation extends Annotation:
 	func update_value(value: Variant):
 		node.color = value
 
-const annotation_classes = [ColorAnnotation, TextAnnotation]
+class VectorAnnotation extends Annotation:
+	static func name():
+		return "Vector"
+	
+	static func is_instance(annotation: Annotation) -> bool:
+		return annotation is VectorAnnotation
+	
+	static func can_display(value: Variant) -> bool:
+		return value is Vector2
+	
+	func create():
+		node = VectorDisplay.new()
+		node.set_size(get_line_height_square())
+	
+	func update_value(value: Variant):
+		node.value = value
+		node.queue_redraw()
+
+class VectorDisplay extends Control:
+	var value: Vector2
+	
+	func _draw():
+		var rect = get_rect()
+		var start = rect.size / 2
+		var length = min(rect.size.x, rect.size.y) 
+		var pointer = value.normalized() * length
+		var end = start + pointer
+		var right_tip = end + pointer.rotated(PI * 3 / 4) / 3
+		var left_tip = end + pointer.rotated(-PI * 3 / 4) / 3
+		draw_line(start, end, Color.WHITE, 2.0, true)
+		draw_line(end, right_tip, Color.WHITE, 2.0, true)
+		draw_line(end, left_tip, Color.WHITE, 2.0, true)
+
+const annotation_classes = [ColorAnnotation, VectorAnnotation, TextAnnotation]
 
 class Watch:
 	var source: String
