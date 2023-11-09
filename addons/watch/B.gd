@@ -1,4 +1,3 @@
-@tool
 class_name B
 
 static func watch(value: Variant):
