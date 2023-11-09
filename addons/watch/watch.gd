@@ -234,7 +234,6 @@ class Watch:
 		annotation.line = line - 1 # Godot source uses 1-indexing, TextEdit uses 0-indexing
 		if not annotation.is_watch_valid():
 			return
-		annotation.update()
 
 		current_annotation = annotation
 		update_annotation_display()
@@ -260,7 +259,6 @@ class Watch:
 				remove_annotation()
 				return
 			if not annotation_class.is_instance(current_annotation):
-				print(annotation_class)
 				var new_annotation = annotation_class.new()
 				new_annotation.copy_settings_from(current_annotation)
 				new_annotation.create()
@@ -278,5 +276,6 @@ class Watch:
 	func remove_annotation():
 		if current_annotation == null:
 			return
-		current_annotation.node.queue_free()
+		if current_annotation.node != null:
+			current_annotation.node.queue_free()
 		current_annotation = null
