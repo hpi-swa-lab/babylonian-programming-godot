@@ -34,6 +34,9 @@ func get_line_height_square():
 	var line_height = get_line_height()
 	return Vector2(line_height, line_height)
 
+func get_offset():
+	return Vector2.ZERO
+
 func update():
 	var column = len(text_edit.get_line(line))
 	if text_edit.scroll_vertical == last_scroll_pos and last_column == column:
@@ -43,7 +46,7 @@ func update():
 	var rect = text_edit.get_rect_at_line_column(line, column)
 	if rect.position.y >= 0:
 		node.show()
-		node.set_position(Vector2(rect.end.x, rect.position.y) + ANNOTATION_OFFSET)
+		node.set_position(Vector2(rect.end.x, rect.position.y) + get_offset() + ANNOTATION_OFFSET)
 	else:
 		node.hide()
 
