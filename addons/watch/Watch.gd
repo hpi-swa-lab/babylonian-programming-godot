@@ -1,6 +1,6 @@
 class_name Watch
 
-var annotation_classes = [ColorAnnotation, VectorAnnotation, TextAnnotation]
+var annotation_classes = [ColorAnnotation, FloatAnnotation, VectorAnnotation, TextAnnotation]
 
 var source: String
 var line: int
