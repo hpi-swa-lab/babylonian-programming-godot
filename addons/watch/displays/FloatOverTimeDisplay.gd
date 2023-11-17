@@ -1,4 +1,4 @@
-extends Control
+extends Display
 class_name FloatOverTimeDisplay
 
 var length: int = 2 * 60
@@ -12,11 +12,12 @@ func _init():
 func inc(index: int) -> int:
 	return (index + 1) % len(ring_buffer)
 
-func append(value: float):
+func update_value(value: Variant):
 	if inc(end) == start:
 		start = inc(start)
 	ring_buffer[end] = value
 	end = inc(end)
+	queue_redraw()
 
 const MAX_FLOAT = 1.79769e308
 const MIN_FLOAT = -1.79769e308

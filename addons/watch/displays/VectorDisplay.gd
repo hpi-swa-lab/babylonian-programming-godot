@@ -1,4 +1,4 @@
-extends Control
+extends Display
 class_name VectorDisplay
 
 var value: Vector2
@@ -14,3 +14,7 @@ func _draw():
 	draw_line(start, end, Color.WHITE, 2.0, true)
 	draw_line(end, right_tip, Color.WHITE, 2.0, true)
 	draw_line(end, left_tip, Color.WHITE, 2.0, true)
+
+func update_value(new_value: Variant):
+	value = new_value
+	queue_redraw()

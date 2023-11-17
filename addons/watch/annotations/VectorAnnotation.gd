@@ -16,5 +16,4 @@ func _init(_line: int, _text_edit: TextEdit):
 	node.set_size(get_line_height_square())
 
 func update_value(value: Variant):
-	node.value = value
-	node.queue_redraw()
+	node.update_value(value)

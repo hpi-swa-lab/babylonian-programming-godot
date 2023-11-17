@@ -19,5 +19,4 @@ func get_offset() -> Vector2:
 	return Vector2(0, -get_line_height())
 
 func update_value(value: Variant):
-	node.append(value)
-	node.queue_redraw()
+	node.update_value(value)
