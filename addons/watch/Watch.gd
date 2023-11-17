@@ -40,19 +40,20 @@ func update_value(new_value: Variant):
 	current_value = new_value
 	update_annotation_display()
 
+func update_annotation_class():
+	var annotation_class = find_annotation_class()
+	if annotation_class == null:
+		remove_annotation()
+		return
+	if not annotation_class.is_instance(current_annotation):
+		var new_annotation = Annotation.from(current_annotation, annotation_class)
+		current_annotation.text_edit.add_child(new_annotation.node)
+		remove_annotation()
+		current_annotation = new_annotation
+
 func update_annotation_display():
 	if current_annotation != null:
-		var annotation_class = find_annotation_class()
-		if annotation_class == null:
-			remove_annotation()
-			return
-		if not annotation_class.is_instance(current_annotation):
-			var new_annotation = annotation_class.new()
-			new_annotation.copy_settings_from(current_annotation)
-			new_annotation.create()
-			current_annotation.text_edit.add_child(new_annotation.node)
-			remove_annotation()
-			current_annotation = new_annotation
+		update_annotation_class()
 		current_annotation.update_value(current_value)
 
 func find_annotation_class():
