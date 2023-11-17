@@ -12,8 +12,8 @@ static func can_display(value: Variant) -> bool:
 
 func _init(_line: int, _text_edit: TextEdit):
 	super(_line, _text_edit)
-	display = FloatOverTimeDisplay.new()
-	display.set_size(Vector2(300, 3 * get_line_height()))
-
-func get_offset() -> Vector2:
-	return Vector2(0, -get_line_height())
+	var tab_display = TabDisplay.new()
+	tab_display.set_size(Vector2(500, 3 * get_line_height()))
+	tab_display.add_tab("Graph", FloatOverTimeDisplay.new())
+	tab_display.add_tab("Current", TextDisplay.new())
+	display = tab_display
