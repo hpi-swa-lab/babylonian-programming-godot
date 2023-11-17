@@ -10,7 +10,8 @@ static func is_instance(annotation: Annotation) -> bool:
 static func can_display(value: Variant) -> bool:
 	return true
 
-func create():
+func _init(_line: int, _text_edit: TextEdit):
+	super(_line, _text_edit)
 	node = RichTextLabel.new()
 	node.fit_content = true
 	node.text_direction = Control.TEXT_DIRECTION_LTR

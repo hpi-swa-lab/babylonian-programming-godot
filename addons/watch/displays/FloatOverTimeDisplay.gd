@@ -6,7 +6,7 @@ var ring_buffer = PackedFloat64Array()
 var start = 0
 var end = 0
 
-func _ready():
+func _init():
 	ring_buffer.resize(length + 1)
 
 func inc(index: int) -> int:

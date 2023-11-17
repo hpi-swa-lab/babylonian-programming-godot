@@ -10,7 +10,8 @@ static func is_instance(annotation: Annotation) -> bool:
 static func can_display(value: Variant) -> bool:
 	return value is Vector2
 
-func create():
+func _init(_line: int, _text_edit: TextEdit):
+	super(_line, _text_edit)
 	node = VectorDisplay.new()
 	node.set_size(get_line_height_square())
 

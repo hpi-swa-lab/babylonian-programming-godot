@@ -13,19 +13,19 @@ static func is_instance(annotation: Annotation) -> bool:
 
 static func can_display(value: Variant) -> bool:
 	return false
-	
-func copy_settings_from(other: Annotation):
-	line = other.line
-	text_edit = other.text_edit
+
+func _init(_line: int, _text_edit: TextEdit):
+	line = _line
+	text_edit = _text_edit
+
+static func from(other: Annotation, new_class: RefCounted):
+	return new_class.new(other.line, other.text_edit)
 
 func is_valid():
 	return is_watch_valid()
 
 func is_watch_valid() -> bool:
 	return text_edit.get_line(line).contains("watch(")
-
-func create():
-	pass
 
 func get_line_height():
 	return text_edit.get_line_height() - text_edit.get_theme_constant("line_spacing")

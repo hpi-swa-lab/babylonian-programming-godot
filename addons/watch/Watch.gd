@@ -15,20 +15,17 @@ func belongs_to_current_script() -> bool:
 		return false
 	return current_script.resource_path == source
 
-func create_annotation(text_edit: TextEdit) -> Annotation:
+func create_annotation(text_edit: TextEdit):
 	if not belongs_to_current_script() or current_annotation != null:
 		return
 
-	var annotation = Annotation.new()
-	annotation.text_edit = text_edit
-	annotation.node = null
-	annotation.line = line - 1 # Godot source uses 1-indexing, TextEdit uses 0-indexing
-	if not annotation.is_watch_valid():
+	# Godot source uses 1-indexing, TextEdit uses 0-indexing
+	var new_annotation = Annotation.new(line - 1, text_edit)
+	if not new_annotation.is_watch_valid():
 		return
+	current_annotation = new_annotation
 
-	current_annotation = annotation
 	update_annotation_display()
-	return annotation
 
 func update():
 	if current_annotation != null:
