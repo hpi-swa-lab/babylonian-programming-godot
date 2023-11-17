@@ -4,7 +4,7 @@ const ANNOTATION_OFFSET = Vector2(40, 0)
 
 var line = 0
 var text_edit: TextEdit
-var node: Control
+var display: Display
 var last_scroll_pos
 var last_column
 
@@ -45,10 +45,10 @@ func update():
 	last_column = column
 	var rect = text_edit.get_rect_at_line_column(line, column)
 	if rect.position.y >= 0:
-		node.show()
-		node.set_position(Vector2(rect.end.x, rect.position.y) + get_offset() + ANNOTATION_OFFSET)
+		display.show()
+		display.set_position(Vector2(rect.end.x, rect.position.y) + get_offset() + ANNOTATION_OFFSET)
 	else:
-		node.hide()
+		display.hide()
 
 func update_value(value: Variant):
-	pass
+	display.update_value(value)

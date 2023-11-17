@@ -12,8 +12,5 @@ static func can_display(value: Variant) -> bool:
 
 func _init(_line: int, _text_edit: TextEdit):
 	super(_line, _text_edit)
-	node = VectorDisplay.new()
-	node.set_size(get_line_height_square())
-
-func update_value(value: Variant):
-	node.update_value(value)
+	display = VectorDisplay.new()
+	display.set_size(get_line_height_square())

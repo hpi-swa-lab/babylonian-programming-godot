@@ -12,11 +12,8 @@ static func can_display(value: Variant) -> bool:
 
 func _init(_line: int, _text_edit: TextEdit):
 	super(_line, _text_edit)
-	node = FloatOverTimeDisplay.new()
-	node.set_size(Vector2(300, 3 * get_line_height()))
+	display = FloatOverTimeDisplay.new()
+	display.set_size(Vector2(300, 3 * get_line_height()))
 
 func get_offset() -> Vector2:
 	return Vector2(0, -get_line_height())
-
-func update_value(value: Variant):
-	node.update_value(value)

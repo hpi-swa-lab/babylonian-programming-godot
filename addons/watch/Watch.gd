@@ -47,7 +47,7 @@ func update_annotation_class():
 		return
 	if not annotation_class.is_instance(current_annotation):
 		var new_annotation = Annotation.from(current_annotation, annotation_class)
-		current_annotation.text_edit.add_child(new_annotation.node)
+		current_annotation.text_edit.add_child(new_annotation.display)
 		remove_annotation()
 		current_annotation = new_annotation
 
@@ -65,6 +65,6 @@ func find_annotation_class():
 func remove_annotation():
 	if current_annotation == null:
 		return
-	if current_annotation.node != null:
-		current_annotation.node.queue_free()
+	if current_annotation.display != null:
+		current_annotation.display.queue_free()
 	current_annotation = null
