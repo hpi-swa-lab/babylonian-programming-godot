@@ -29,7 +29,7 @@ func buffer_size() -> int:
 	return size
 
 func current_value() -> float:
-	return ring_buffer[end if end != 0 else len(ring_buffer) - 1]
+	return ring_buffer[end - 1 if end >= 1 else len(ring_buffer) - 1]
 
 func get_min_max() -> Array:
 	var min = MAX_FLOAT
