@@ -80,7 +80,7 @@ func draw_float(position: Vector2, value: float, font_size: int):
 	draw_string(
 		get_theme_default_font(),
 		position,
-		str(value),
+		"%.3f" % value,
 		HORIZONTAL_ALIGNMENT_LEFT,
 		-1,
 		font_size)
