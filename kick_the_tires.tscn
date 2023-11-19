@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://cb6dsf0prkabc"]
+
+[ext_resource type="PackedScene" uid="uid://b32bqgjmfmd0h" path="res://mario.tscn" id="1_dagel"]
+[ext_resource type="PackedScene" uid="uid://c280av4pcmhmi" path="res://block.tscn" id="2_fh70c"]
+[ext_resource type="PackedScene" uid="uid://moliabgo0vyk" path="res://tire.tscn" id="3_5apuo"]
+
+[node name="kick_the_tires" type="Node2D"]
+
+[node name="Mario" parent="." instance=ExtResource("1_dagel")]
+position = Vector2(130, 456)
+
+[node name="Blocks" parent="." instance=ExtResource("2_fh70c")]
+position = Vector2(40, 608)
+
+[node name="Tire" parent="." instance=ExtResource("3_5apuo")]
+position = Vector2(656, 470)
+
+[node name="Tire2" parent="." instance=ExtResource("3_5apuo")]
+position = Vector2(943, 374)
+
+[node name="Tire3" parent="." instance=ExtResource("3_5apuo")]
+position = Vector2(409, 321)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(576, 324)
