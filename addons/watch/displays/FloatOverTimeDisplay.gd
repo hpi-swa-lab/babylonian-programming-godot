@@ -50,29 +50,26 @@ func get_min_max() -> Array:
 			max = maxf(max, value)
 	return [min, max]
 
+func value_to_graph_point(rect: Rect2, point_index: int, index: int, min: float, max: float) -> Vector2:
+	var value = ring_buffer[index]
+	var x = float(point_index) / length * rect.size.x
+	var y = remap(value, min, max, rect.size.y, 0)
+	return Vector2(x, y)
+
 func get_points(rect: Rect2, min: float, max: float) -> PackedVector2Array:
 	var points = PackedVector2Array()
 	points.resize(buffer_size())
 	var point_index = 0
 	if start <= end:
 		for index in range(start, end):
-			var value = ring_buffer[index]
-			var x = float(point_index) / length * rect.size.x
-			var y = remap(value, min, max, 0, rect.size.y)
-			points[point_index] = Vector2(x, y)
+			points[point_index] = value_to_graph_point(rect, point_index, index, min, max)
 			point_index += 1
 	else:
 		for index in range(start, len(ring_buffer)):
-			var value = ring_buffer[index]
-			var x = float(point_index) / length * rect.size.x
-			var y = remap(value, min, max, 0, rect.size.y)
-			points[point_index] = Vector2(x, y)
+			points[point_index] = value_to_graph_point(rect, point_index, index, min, max)
 			point_index += 1
 		for index in range(0, end):
-			var value = ring_buffer[index]
-			var x = float(point_index) / length * rect.size.x
-			var y = remap(value, min, max, 0, rect.size.y)
-			points[point_index] = Vector2(x, y)
+			points[point_index] = value_to_graph_point(rect, point_index, index, min, max)
 			point_index += 1
 	return points
 
