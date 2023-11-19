@@ -10,3 +10,4 @@ static func watch(value: Variant):
 	var line = location["line"]
 	var data = [source, line, value]
 	EngineDebugger.send_message("watch:watch", data)
+	return value
