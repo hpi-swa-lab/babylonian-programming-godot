@@ -38,14 +38,15 @@ func find_or_create_watch_for(source: String, line: int) -> Watch:
 
 func _on_gui_focus_changed(node: Node):
 	if node is TextEdit:
+		if current_text_edit == node:
+			return
+
 		for watch in watches:
 			watch.remove_annotation()
 
 		for watch in watches:
 			watch.create_annotation(node)
 		current_text_edit = node
-	else:
-		current_text_edit = null
 
 func _process(delta):
 	var to_be_removed = []
