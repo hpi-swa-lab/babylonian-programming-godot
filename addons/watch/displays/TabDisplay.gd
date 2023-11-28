@@ -14,6 +14,7 @@ func add_tab(name: String, display: Display):
 	tab_container.set_tab_title(len(tabs), name)
 	tabs.append(display)
 	display.annotation = annotation
+	return display
 
 func update_value(new_value: Variant):
 	for tab in tabs:

@@ -28,6 +28,7 @@ func set_inner(display: Display):
 	inner_display.set_anchors_preset(PRESET_FULL_RECT)
 	inner_display.set_offsets_preset(PRESET_FULL_RECT)
 	inner_display.annotation = annotation
+	return display
 
 func update_value(new_value: Variant):
 	inner_display.update_value(new_value)

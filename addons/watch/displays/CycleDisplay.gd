@@ -23,6 +23,7 @@ func add_display(display: Display):
 		add_child(display)
 	displays.append(display)
 	display.annotation = annotation
+	return display
 
 func update_value(new_value: Variant):
 	for display in displays:
