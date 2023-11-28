@@ -31,3 +31,7 @@ func set_inner(display: Display):
 
 func update_value(new_value: Variant):
 	inner_display.update_value(new_value)
+
+func _draw():
+	var half_line_height = Vector2(0, annotation.get_line_height() / 2)
+	draw_line(half_line_height, half_line_height - offset, Color.WHITE)
