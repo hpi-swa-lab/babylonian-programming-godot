@@ -3,7 +3,7 @@ class_name ColorDisplay
 
 var color_rect: ColorRect
 
-func _ready():
+func _init():
 	color_rect = ColorRect.new()
 	color_rect.set_anchors_preset(PRESET_FULL_RECT)
 	add_child(color_rect)

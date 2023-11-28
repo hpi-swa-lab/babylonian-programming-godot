@@ -4,7 +4,7 @@ class_name ColorEditorDisplay
 var color_override = null
 var color_picker: ColorPicker
 
-func _ready():
+func _init():
 	color_picker = ColorPicker.new()
 	color_picker.presets_visible = false
 	color_picker.set_anchors_preset(PRESET_FULL_RECT)
