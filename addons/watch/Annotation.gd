@@ -46,6 +46,18 @@ func get_offset():
 func get_line() -> String:
 	return text_edit.get_line(line)
 
+func set_line(new_line: String):
+	text_edit.set_line(line, new_line)
+
+func update_text_edit_line_drawing_cache():
+	# A TextEdit needs to have an up-to-date line_drawing_cache
+	# to properly answer get_rect_at_line_column requests.
+	text_edit.queue_redraw()
+
+func replace_source(new_source: String):
+	set_line(watch_regex.sub(get_line(), "$1" + new_source.replace("$", "$$") + "$3"))
+	update_text_edit_line_drawing_cache()
+
 func update():
 	var column = len(get_line())
 	if text_edit.scroll_vertical == last_scroll_pos and last_column == column:
