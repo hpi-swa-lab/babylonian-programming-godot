@@ -8,7 +8,7 @@ func _ready():
 	color_picker = ColorPicker.new()
 	color_picker.presets_visible = false
 	color_picker.set_anchors_preset(PRESET_FULL_RECT)
-	color_picker.connect("color_changed", Callable(self, "color_changed"))
+	color_picker.color_changed.connect(self.color_changed)
 	add_child(color_picker)
 
 func update_value(new_value: Variant):

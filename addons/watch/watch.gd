@@ -8,7 +8,7 @@ var debugger = WatchEditorDebugger.new()
 
 func _enter_tree():
 	# Initialization of the plugin goes here.
-	get_viewport().connect("gui_focus_changed", Callable(self, "_on_gui_focus_changed"))
+	get_viewport().gui_focus_changed.connect(self._on_gui_focus_changed)
 	debugger.plugin = self
 	add_debugger_plugin(debugger)
 	add_autoload_singleton("B", "B.gd")
