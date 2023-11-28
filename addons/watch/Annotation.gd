@@ -8,6 +8,8 @@ var display: Display : set = set_display
 var last_scroll_pos
 var last_column
 
+var watch_regex = RegEx.create_from_string("(B\\.watch\\()(.*)(\\))")
+
 static func is_instance(annotation: Annotation) -> bool:
 	return false
 
@@ -29,7 +31,7 @@ func is_valid():
 	return is_watch_valid()
 
 func is_watch_valid() -> bool:
-	return text_edit.get_line(line).contains("watch(")
+	return watch_regex.search(get_line()) != null
 
 func get_line_height():
 	return text_edit.get_line_height() - text_edit.get_theme_constant("line_spacing")
@@ -41,8 +43,11 @@ func get_line_height_square():
 func get_offset():
 	return Vector2.ZERO
 
+func get_line() -> String:
+	return text_edit.get_line(line)
+
 func update():
-	var column = len(text_edit.get_line(line))
+	var column = len(get_line())
 	if text_edit.scroll_vertical == last_scroll_pos and last_column == column:
 		return
 	last_scroll_pos = text_edit.scroll_vertical
