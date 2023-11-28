@@ -4,7 +4,7 @@ const ANNOTATION_OFFSET = Vector2(40, 0)
 
 var line = 0
 var text_edit: TextEdit
-var display: Display
+var display: Display : set = set_display
 var last_scroll_pos
 var last_column
 
@@ -20,6 +20,10 @@ func _init(_line: int, _text_edit: TextEdit):
 
 static func from(other: Annotation, new_class: RefCounted):
 	return new_class.new(other.line, other.text_edit)
+
+func set_display(new_display: Display):
+	display = new_display
+	new_display.annotation = self
 
 func is_valid():
 	return is_watch_valid()

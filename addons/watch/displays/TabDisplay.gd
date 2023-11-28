@@ -13,6 +13,7 @@ func add_tab(name: String, display: Display):
 	tab_container.add_child(display)
 	tab_container.set_tab_title(len(tabs), name)
 	tabs.append(display)
+	display.annotation = annotation
 
 func update_value(new_value: Variant):
 	for tab in tabs:

@@ -15,6 +15,7 @@ func _ready():
 func set_inner(display: Display):
 	inner_display = display
 	popup.add_child(inner_display)
+	inner_display.annotation = annotation
 
 func update_value(new_value: Variant):
 	inner_display.update_value(new_value)
