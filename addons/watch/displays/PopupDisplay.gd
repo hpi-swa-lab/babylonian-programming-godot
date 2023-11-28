@@ -1,20 +1,32 @@
 extends Display
 class_name PopupDisplay
 
-var popup: Window
 var inner_display: Display
+var offset = Vector2.ZERO
 
-func _init():
-	popup = Window.new()
-	popup.exclusive = false
-	add_child(popup)
+func _input(event: InputEvent):
+	if event is InputEventMouseMotion:
+		handle_mouse_motion(event)
 
-func _ready():
-	popup.popup(get_rect())
+func handle_mouse_motion(event: InputEventMouseMotion):
+	if not get_global_rect().has_point(event.position - event.relative):
+		return
+	if event.button_mask & MOUSE_BUTTON_LEFT:
+		position += event.relative
+		offset += event.relative
+		queue_redraw()
+	if event.button_mask & MOUSE_BUTTON_RIGHT:
+		size += event.relative
+
+func get_annotation_offset() -> Vector2:
+	return offset
 
 func set_inner(display: Display):
 	inner_display = display
-	popup.add_child(inner_display)
+	add_child(inner_display)
+	set_size(inner_display.size)
+	inner_display.set_anchors_preset(PRESET_FULL_RECT)
+	inner_display.set_offsets_preset(PRESET_FULL_RECT)
 	inner_display.annotation = annotation
 
 func update_value(new_value: Variant):
