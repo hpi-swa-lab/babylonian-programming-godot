@@ -50,7 +50,11 @@ func update():
 	var rect = text_edit.get_rect_at_line_column(line, column)
 	if rect.position.y >= 0:
 		display.show()
-		display.set_position(Vector2(rect.end.x, rect.position.y) + get_offset() + ANNOTATION_OFFSET)
+		display.set_position((
+			Vector2(rect.end.x, rect.position.y) +
+			get_offset() +
+			display.get_annotation_offset() +
+			ANNOTATION_OFFSET))
 	else:
 		display.hide()
 
