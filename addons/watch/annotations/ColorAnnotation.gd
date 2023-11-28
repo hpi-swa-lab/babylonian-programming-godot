@@ -12,5 +12,8 @@ static func can_display(value: Variant) -> bool:
 
 func _init(_line: int, _text_edit: TextEdit):
 	super(_line, _text_edit)
-	display = ColorDisplay.new()
-	display.set_size(get_line_height_square())
+	var popup = PopupDisplay.new()
+	var color_editor = ColorEditorDisplay.new()
+	color_editor.set_size(get_line_height_square())
+	display = popup
+	popup.set_inner(color_editor)

@@ -39,6 +39,8 @@ func _physics_process(delta):
 		velocity.x = direction * SPEED
 	else:
 		velocity.x = lerp(velocity.x, 0.0, 0.2)
+		
+	B.watch(Color.hex(0x16622ff))
 
 	if move_and_slide():
 		for i in get_slide_collision_count():
