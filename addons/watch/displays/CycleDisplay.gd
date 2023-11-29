@@ -7,10 +7,10 @@ var displays: Array[Display]
 func _init():
 	var button = Button.new()
 	button.text = "↔"
-	button.pressed.connect(self.toggle)
+	button.pressed.connect(self.cycle)
 	add_child(button)
 
-func toggle():
+func cycle():
 	if len(displays) == 0:
 		return
 	remove_child(displays[index])
