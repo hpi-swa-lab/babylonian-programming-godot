@@ -14,7 +14,8 @@ func _init(_line: int, _text_edit: TextEdit):
 	super(_line, _text_edit)
 	var popup = PopupDisplay.new()
 	display = popup
-	var tab_display = popup.set_inner(TabDisplay.new())
+	var pausable = popup.set_inner(PausableDisplay.new())
+	var tab_display = pausable.set_inner(TabDisplay.new())
 	tab_display.set_size(Vector2(500, 5 * get_line_height()))
 	tab_display.add_tab("Graph", FloatOverTimeDisplay.new())
 	tab_display.add_tab("Current", TextDisplay.new())
