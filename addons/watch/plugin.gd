@@ -5,21 +5,28 @@ class_name WatchPlugin
 var watches: Array[Watch] = []
 var current_text_edit: TextEdit = null
 var debugger = WatchEditorDebugger.new()
+var in_game_ui = preload("./InGameUI.gd").new()
 
 func _enter_tree():
 	# Initialization of the plugin goes here.
 	get_viewport().gui_focus_changed.connect(self._on_gui_focus_changed)
 	debugger.plugin = self
+	in_game_ui.debugger = debugger
 	add_debugger_plugin(debugger)
 	add_autoload_singleton("B", "B.gd")
+	add_autoload_singleton("InGameUI", "InGameUI.gd")
 
 func _exit_tree():
 	remove_debugger_plugin(debugger)
 	remove_autoload_singleton("B")
+	remove_autoload_singleton("InGameUI")
 
 func on_watch(source: String, line: int, value: Variant):
 	var watch = find_or_create_watch_for(source, line)
 	watch.update_value(value)
+
+func on_session_ready(session_id: int):
+	in_game_ui.on_session_ready(session_id)
 
 func find_or_create_watch_for(source: String, line: int) -> Watch:
 	for watch in watches:

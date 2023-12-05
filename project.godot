@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 B="*res://addons/watch/B.gd"
+InGameUI="*res://addons/watch/InGameUI.gd"
 
 [editor_plugins]
 
