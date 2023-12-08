@@ -4,11 +4,24 @@ const message_capture = "watch_in_game_ui"
 var debugger
 
 func _init():
-	if not Engine.is_editor_hint():
-		EngineDebugger.register_message_capture(message_capture, self.on_message)
-		EngineDebugger.send_message(message_capture + ":game_ready", [])
+	if Engine.is_editor_hint():
+		editor_init()
+	else:
+		game_init()
+
+func _ready():
+	if Engine.is_editor_hint():
+		editor_ready()
+	else:
+		game_ready()
 
 ##### CALLED FROM EDITOR
+
+func editor_init():
+	pass
+
+func editor_ready():
+	pass
 
 func send_message_to(session_id: int, name: String, data: Array):
 	debugger.send_message_to(session_id, message_capture + ":" + name, data)
@@ -17,6 +30,13 @@ func on_session_ready(session_id: int):
 	send_message_to(session_id, "add_record_button", [])
 
 ##### CALLED FROM GAME
+
+func game_init():
+	EngineDebugger.register_message_capture(message_capture, self.on_message)
+	EngineDebugger.send_message(message_capture + ":game_ready", [])
+
+func game_ready():
+	pass
 
 func on_message(name: String, data: Array):
 	match name:
