@@ -10,7 +10,7 @@ func _process(delta):
 
 func watch(value: Variant):
 	var stack = get_stack()
-	if len(stack) < 1:
+	if len(stack) < 2:
 		print("Watching is unsupported without access to a stack")
 		return
 	var location = stack[1] # get the caller
