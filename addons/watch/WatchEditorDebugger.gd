@@ -14,7 +14,7 @@ func _capture(message, data, session_id):
 		var source = data[0]
 		var line = data[1]
 		var value = data[2]
-		plugin.on_watch(source, line, value)
+		plugin.watch_manager.on_watch(source, line, value)
 		# we handled the message
 		return true
 	if message == InGameUI.message_capture + ":game_ready":

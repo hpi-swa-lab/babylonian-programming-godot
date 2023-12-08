@@ -10,8 +10,8 @@ static func is_instance(annotation: Annotation) -> bool:
 static func can_display(value: Variant) -> bool:
 	return true
 
-func _init(_line: int, _text_edit: TextEdit):
-	super(_line, _text_edit)
+func _init(_line: int, _parent: Node):
+	super(_line, _parent)
 	display = TextDisplay.new()
 	display.set_size(Vector2(200, get_line_height()))
 

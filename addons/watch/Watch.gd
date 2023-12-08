@@ -10,17 +10,19 @@ var plugin: EditorPlugin
 var to_be_removed = false
 
 func belongs_to_current_script() -> bool:
+	if plugin == null:
+		return true
 	var current_script = plugin.get_editor_interface().get_script_editor().get_current_script()
 	if current_script == null:
 		return false
 	return current_script.resource_path == source
 
-func create_annotation(text_edit: TextEdit):
+func create_annotation(parent: Node):
 	if not belongs_to_current_script() or current_annotation != null:
 		return
 
 	# Godot source uses 1-indexing, TextEdit uses 0-indexing
-	var new_annotation = Annotation.new(line - 1, text_edit)
+	var new_annotation = Annotation.new(line - 1, parent)
 	if not new_annotation.is_watch_valid():
 		return
 	current_annotation = new_annotation
@@ -47,7 +49,7 @@ func update_annotation_class():
 		return
 	if not annotation_class.is_instance(current_annotation):
 		var new_annotation = Annotation.from(current_annotation, annotation_class)
-		current_annotation.text_edit.add_child(new_annotation.display)
+		current_annotation.parent.add_child(new_annotation.display)
 		remove_annotation()
 		current_annotation = new_annotation
 
