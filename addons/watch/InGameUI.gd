@@ -33,6 +33,7 @@ func add_record_button():
 	root.add_child(button)
 
 func set_owners(node: Node, owner: Node):
+	node.scene_file_path = ""
 	for child in node.get_children():
 		child.owner = owner
 		set_owners(child, owner)
