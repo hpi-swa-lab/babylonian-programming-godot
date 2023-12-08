@@ -31,12 +31,41 @@ func on_session_ready(session_id: int):
 
 ##### CALLED FROM GAME
 
+var snapshot: Snapshot
+
 func game_init():
 	EngineDebugger.register_message_capture(message_capture, self.on_message)
 	EngineDebugger.send_message(message_capture + ":game_ready", [])
 
 func game_ready():
-	pass
+	take_snapshot()
+
+func snapshot_target():
+	return get_tree().current_scene
+
+func set_snapshot_target(node: Node):
+	get_tree().current_scene = node
+
+func take_snapshot():
+	snapshot = Snapshot.take(snapshot_target())
+
+func _unhandled_input(event):
+	if event is InputEventKey:
+		if not event.pressed:
+			return
+		if event.keycode == KEY_R:
+			var restored = snapshot.restore()
+			full_replace_by(snapshot_target(), restored)
+			set_snapshot_target(restored)
+		if event.keycode == KEY_S:
+			take_snapshot()
+
+func full_replace_by(original: Node, replacement: Node):
+	var parent = original.get_parent()
+	var index = original.get_index()
+	parent.remove_child(original)
+	parent.add_child(replacement)
+	parent.move_child(replacement, index)
 
 func on_message(name: String, data: Array):
 	match name:
