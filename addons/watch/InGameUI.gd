@@ -1,6 +1,7 @@
 extends Node
 
 const message_capture = "watch_in_game_ui"
+const snapshot_path = "res://examples/1.snapshot"
 var debugger
 
 func _init():
@@ -91,14 +92,6 @@ func set_owners(node: Node, owner: Node):
 		set_owners(child, owner)
 
 func on_record():
-	var root = get_tree().current_scene.duplicate(DUPLICATE_SIGNALS | DUPLICATE_GROUPS | DUPLICATE_SCRIPTS)
-	set_owners(root, root)
-	var packed_scene = PackedScene.new()
-	var result = packed_scene.pack(root)
-	if result != OK:
-		push_error("recording the scene failed with error " + error_string(result))
-		return
-	result = ResourceSaver.save(packed_scene, "res://examples/1.tscn")
-	if result != OK:
-		push_error("saving the recorded scene failed with error " + error_string(result))
-		return
+	var current_snapshot = take_snapshot()
+	var file = FileAccess.open(snapshot_path, FileAccess.WRITE)
+	file.store_buffer(var_to_bytes_with_objects(current_snapshot))
