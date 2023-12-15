@@ -17,7 +17,7 @@ func restore(variant: Variant):
 		return restore_array(variant)
 	if variant is Dictionary:
 		return restore_dictionary(variant)
-	if variant is Snapshot.ObjectReference:
+	if variant is ObjectReference:
 		return restore_object(variant.id)
 	return variant
 

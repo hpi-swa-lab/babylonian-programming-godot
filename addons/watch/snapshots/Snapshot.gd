@@ -69,12 +69,3 @@ func add_object(object: Object):
 
 func restore():
 	return SnapshotRestorer.root_of(self)
-
-class ObjectReference:
-	var id: int
-
-	func _init(_id: int):
-		id = _id
-
-	func _to_string():
-		return "Ref(" + str(id) + ")"
