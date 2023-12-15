@@ -70,17 +70,10 @@ func _unhandled_input(event):
 			return
 		if event.keycode == KEY_R:
 			var restored = snapshot.restore()
-			full_replace_by(snapshot_target(), restored)
+			Utils.full_replace_by(snapshot_target(), restored)
 			set_snapshot_target(restored)
 		if event.keycode == KEY_S:
 			take_and_remember_snapshot()
-
-func full_replace_by(original: Node, replacement: Node):
-	var parent = original.get_parent()
-	var index = original.get_index()
-	parent.remove_child(original)
-	parent.add_child(replacement)
-	parent.move_child(replacement, index)
 
 func on_message(name: String, data: Array):
 	match name:
