@@ -30,17 +30,6 @@ func send_message_to(session_id: int, name: String, data: Array):
 func on_session_ready(session_id: int):
 	send_message_to(session_id, "add_record_button", [])
 
-func create_play_snapshot_button():
-	var button = Button.new()
-	button.text = "Play Snapshot"
-	button.pressed.connect(self.play_snapshot)
-	return button
-
-func play_snapshot():
-	var file = FileAccess.open(snapshot_path, FileAccess.READ)
-	var snapshot_bytes = file.get_buffer(file.get_length())
-	var snapshot = bytes_to_var_with_objects(snapshot_bytes)
-
 ##### CALLED FROM GAME
 
 var snapshot: String
