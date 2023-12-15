@@ -83,7 +83,7 @@ func add_record_button():
 	var button = Button.new()
 	button.text = "⏺"
 	button.pressed.connect(self.on_record)
-	root.add_child(button)
+	root.add_child.call_deferred(button)
 
 func set_owners(node: Node, owner: Node):
 	node.scene_file_path = ""
