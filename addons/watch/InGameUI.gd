@@ -1,7 +1,7 @@
 extends Node
 
 const message_capture = "watch_in_game_ui"
-const snapshot_path = "res://examples/1.snapshot"
+const snapshot_path = "res://snapshots/1.json"
 var debugger
 
 func _init():
@@ -43,7 +43,7 @@ func play_snapshot():
 
 ##### CALLED FROM GAME
 
-var snapshot: Snapshot
+var snapshot: String
 
 func game_init():
 	EngineDebugger.register_message_capture(message_capture, self.on_message)
@@ -59,7 +59,7 @@ func set_snapshot_target(node: Node):
 	get_tree().current_scene = node
 
 func take_snapshot():
-	return Snapshot.take(snapshot_target())
+	return Serializer.serialize_to_json(snapshot_target())
 
 func take_and_remember_snapshot():
 	snapshot = take_snapshot()
@@ -69,7 +69,7 @@ func _unhandled_input(event):
 		if not event.pressed:
 			return
 		if event.keycode == KEY_R:
-			var restored = snapshot.restore()
+			var restored = Deserializer.deserialize_json(snapshot)
 			Utils.full_replace_by(snapshot_target(), restored)
 			set_snapshot_target(restored)
 		if event.keycode == KEY_S:
@@ -98,4 +98,4 @@ func set_owners(node: Node, owner: Node):
 func on_record():
 	var current_snapshot = take_snapshot()
 	var file = FileAccess.open(snapshot_path, FileAccess.WRITE)
-	file.store_buffer(var_to_bytes_with_objects(current_snapshot))
+	file.store_string(current_snapshot)
