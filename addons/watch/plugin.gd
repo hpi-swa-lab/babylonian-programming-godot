@@ -15,14 +15,27 @@ func _enter_tree():
 	add_debugger_plugin(debugger)
 	add_autoload_singleton("B", "B.gd")
 	add_autoload_singleton("InGameUI", "InGameUI.gd")
+	add_play_snapshot_button()
 
 func _exit_tree():
 	remove_debugger_plugin(debugger)
 	remove_autoload_singleton("B")
 	remove_autoload_singleton("InGameUI")
+	remove_play_snapshot_button()
 
 func on_session_ready(session_id: int):
 	in_game_ui.on_session_ready(session_id)
+
+var play_snapshot_button: Control
+const play_snapshot_button_container = CONTAINER_TOOLBAR
+
+func add_play_snapshot_button():
+	play_snapshot_button = in_game_ui.create_play_snapshot_button()
+	add_control_to_container(play_snapshot_button_container, play_snapshot_button)
+
+func remove_play_snapshot_button():
+	remove_control_from_container(play_snapshot_button_container, play_snapshot_button)
+	play_snapshot_button.queue_free()
 
 func _on_gui_focus_changed(node: Node):
 	if node is TextEdit:
