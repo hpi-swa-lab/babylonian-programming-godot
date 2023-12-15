@@ -22,6 +22,9 @@ static func take(object: Object):
 	snapshot.add_root(object)
 	return snapshot
 
+func _to_string():
+	return str({"root": root, "objects": objects})
+
 func add_root(object: Object):
 	root = add(object)
 
