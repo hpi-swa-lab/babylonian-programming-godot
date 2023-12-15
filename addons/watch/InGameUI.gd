@@ -38,7 +38,7 @@ func game_init():
 	EngineDebugger.send_message(message_capture + ":game_ready", [])
 
 func game_ready():
-	take_snapshot()
+	take_and_remember_snapshot()
 
 func snapshot_target():
 	return get_tree().current_scene
@@ -47,7 +47,10 @@ func set_snapshot_target(node: Node):
 	get_tree().current_scene = node
 
 func take_snapshot():
-	snapshot = Snapshot.take(snapshot_target())
+	return Snapshot.take(snapshot_target())
+
+func take_and_remember_snapshot():
+	snapshot = take_snapshot()
 
 func _unhandled_input(event):
 	if event is InputEventKey:
@@ -58,7 +61,7 @@ func _unhandled_input(event):
 			full_replace_by(snapshot_target(), restored)
 			set_snapshot_target(restored)
 		if event.keycode == KEY_S:
-			take_snapshot()
+			take_and_remember_snapshot()
 
 func full_replace_by(original: Node, replacement: Node):
 	var parent = original.get_parent()
