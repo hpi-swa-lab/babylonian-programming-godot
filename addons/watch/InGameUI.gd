@@ -1,8 +1,8 @@
 extends Node
 
 const message_capture = "watch_in_game_ui"
-const snapshot_path = "res://snapshots/1.json"
-const recording_path = "res://recordings/1.json"
+const snapshots_path = "res://snapshots"
+const recordings_path = "res://recordings"
 var debugger
 
 func _init():
@@ -97,7 +97,17 @@ func start_playback_recording(events: Array):
 	recorded_events = events
 	record_mode = RecordMode.PLAYBACK
 
+func get_json_path(base: String, index: int):
+	return base + "/" + str(index) + ".json"
+
+func get_recording_path(index: int):
+	return get_json_path(recordings_path, index)
+
+func get_snapshot_path(index: int):
+	return get_json_path(snapshots_path, index)
+
 func read_saved_recording():
+	var recording_path = get_recording_path(0)
 	if not FileAccess.file_exists(recording_path):
 		return
 	var file = FileAccess.open(recording_path, FileAccess.READ)
@@ -145,16 +155,29 @@ func set_owners(node: Node, owner: Node):
 		child.owner = owner
 		set_owners(child, owner)
 
+func get_next_json_path(base: String):
+	var index = 0
+	DirAccess.make_dir_recursive_absolute(base)
+	while FileAccess.file_exists(get_json_path(base, index)):
+		index += 1
+	return get_json_path(base, index)
+
+func get_next_recording_path():
+	return get_next_json_path(recordings_path)
+
+func get_next_snapshot_path():
+	return get_next_json_path(snapshots_path)
+
 func on_record():
 	if record_mode == RecordMode.PLAYBACK:
 		return
 	var current_snapshot = take_snapshot()
-	var file = FileAccess.open(snapshot_path, FileAccess.WRITE)
+	var file = FileAccess.open(get_next_snapshot_path(), FileAccess.WRITE)
 	file.store_string(current_snapshot)
 	file.close()
 	var serialized_recording = recorded_events.duplicate()
 	for index in range(len(serialized_recording)):
 		serialized_recording[index][1] = var_to_str(serialized_recording[index][1])
-	file = FileAccess.open(recording_path, FileAccess.WRITE)
+	file = FileAccess.open(get_next_recording_path(), FileAccess.WRITE)
 	file.store_string(JSON.stringify(recorded_events))
 	file.close()
