@@ -36,3 +36,5 @@ func _draw():
 		return
 	var half_line_height = Vector2(0, annotation.get_line_height() / 2)
 	draw_line(half_line_height, half_line_height - offset, Color.WHITE)
+	# for debugging
+	#draw_rect(Rect2(Vector2.ZERO, size), Color.RED)
