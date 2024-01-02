@@ -90,10 +90,12 @@ func _draw():
 	var min_max = get_min_max()
 	var min = min_max[0]
 	var max = min_max[1]
-	var points = get_points(rect, min, max)
-	draw_polyline(points, Color.WHITE)
 	var font_size = 16
-	draw_float(Vector2(rect.size.x, font_size), max, font_size)
-	draw_float(Vector2(rect.size.x, rect.size.y), min, font_size)
+	var right = rect.size.x - font_size * 6
+	var points_rect = Rect2(rect.position, Vector2(right, rect.size.y))
+	var points = get_points(points_rect, min, max)
+	draw_polyline(points, Color.WHITE)
+	draw_float(Vector2(right, font_size), max, font_size)
+	draw_float(Vector2(right, rect.size.y), min, font_size)
 	font_size *= 2
-	draw_float(Vector2(rect.size.x, (rect.size.y + font_size) / 2), current_value(), font_size)
+	draw_float(Vector2(right, (rect.size.y + font_size) / 2), current_value(), font_size)
