@@ -44,7 +44,46 @@ func remove_play_snapshot_button():
 
 func _on_gui_focus_changed(node: Node):
 	if node is TextEdit:
-		watch_manager.current_parent = node
+		handle_new_text_edit(node)
+
+func handle_new_text_edit(text_edit: TextEdit):
+	watch_manager.current_parent = text_edit
+	add_wrap_in_watch_menu_item(text_edit)
+
+const WRAP_IN_WATCH_ITEM_ID = 1000 # large enough to probably not conflict with anything else
+
+func get_context_menu() -> PopupMenu:
+	var script_text_editor = get_editor_interface().get_script_editor().get_current_editor()
+	# the context menu is the only PopupMenu that is a direct child of the ScriptTextEditor
+	for child in script_text_editor.get_children():
+		if child is PopupMenu:
+			return child
+	return null
+
+var registered_context_menus = []
+
+func add_wrap_in_watch_menu_item(text_edit: TextEdit):
+	var menu = get_context_menu()
+	# only add listeners once
+	if registered_context_menus.has(menu):
+		return
+	registered_context_menus.append(menu)
+
+	menu.id_pressed.connect(
+		func(id: int):
+			if id == WRAP_IN_WATCH_ITEM_ID:
+				wrap_selections_in_watch(text_edit))
+	menu.about_to_popup.connect(
+		func():
+			menu.add_item("Wrap in watch", WRAP_IN_WATCH_ITEM_ID))
+
+func wrap_selections_in_watch(text_edit: TextEdit):
+	text_edit.start_action(TextEdit.ACTION_TYPING)
+	text_edit.cut()
+	text_edit.insert_text_at_caret("B.watch(")
+	text_edit.paste()
+	text_edit.insert_text_at_caret(")")
+	text_edit.end_action()
 
 func _process(delta):
 	watch_manager.update()
