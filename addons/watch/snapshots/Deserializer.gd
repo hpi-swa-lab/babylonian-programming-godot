@@ -312,45 +312,45 @@ func deserialize_array(variant: Array):
 		copy[index] = deserialize_variant(variant[index])
 	return copy
 
-func deserialize_packed_byte_array(variant: Array[float]):
+func deserialize_packed_byte_array(variant: Array):
 	return PackedByteArray(variant)
 
-func deserialize_packed_int32_array(variant: Array[float]):
+func deserialize_packed_int32_array(variant: Array):
 	return PackedInt32Array(variant)
 
-func deserialize_packed_int64_array(variant: Array[String]):
+func deserialize_packed_int64_array(variant: Array):
 	var copy = []
 	copy.resize(len(variant))
 	for index in range(len(variant)):
 		copy[index] = deserialize_int_value(variant[index])
 	return PackedInt64Array(copy)
 
-func deserialize_packed_float32_array(variant: Array[float]):
+func deserialize_packed_float32_array(variant: Array):
 	return PackedFloat32Array(variant)
 
-func deserialize_packed_float64_array(variant: Array[float]):
+func deserialize_packed_float64_array(variant: Array):
 	return PackedFloat64Array(variant)
 
-func deserialize_packed_string_array(variant: Array[String]):
+func deserialize_packed_string_array(variant: Array):
 	return PackedStringArray(variant)
 
-func deserialize_packed_vector2_array(variant: Array[Dictionary]):
+func deserialize_packed_vector2_array(variant: Array):
 	var copy = []
 	copy.resize(len(variant))
 	for index in range(len(variant)):
-		copy[index] = deserialize_vector2(variant[index])
+		copy[index] = deserialize_vector2(unwrap(variant[index]))
 	return PackedVector2Array(copy)
 
-func deserialize_packed_vector3_array(variant: Array[Dictionary]):
+func deserialize_packed_vector3_array(variant: Array):
 	var copy = []
 	copy.resize(len(variant))
 	for index in range(len(variant)):
-		copy[index] = deserialize_vector3(variant[index])
+		copy[index] = deserialize_vector3(unwrap(variant[index]))
 	return PackedVector3Array(copy)
 
-func deserialize_packed_color_array(variant: Array[Dictionary]):
+func deserialize_packed_color_array(variant: Array):
 	var copy = []
 	copy.resize(len(variant))
 	for index in range(len(variant)):
-		copy[index] = deserialize_color(variant[index])
+		copy[index] = deserialize_color(unwrap(variant[index]))
 	return PackedColorArray(copy)
