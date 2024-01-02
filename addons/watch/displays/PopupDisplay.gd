@@ -11,6 +11,7 @@ func _input(event: InputEvent):
 func handle_mouse_motion(event: InputEventMouseMotion):
 	if not get_global_rect().has_point(event.position - event.relative):
 		return
+	get_viewport().set_input_as_handled()
 	if event.button_mask & MOUSE_BUTTON_LEFT:
 		position += event.relative
 		offset += event.relative
