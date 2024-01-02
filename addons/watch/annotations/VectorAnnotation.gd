@@ -12,5 +12,7 @@ static func can_display(value: Variant) -> bool:
 
 func _init(_line: int, _parent: Node):
 	super(_line, _parent)
-	display = VectorDisplay.new()
-	display.set_size(get_line_height_square())
+	var popup = PopupDisplay.new()
+	display = popup
+	var vector = popup.set_inner(VectorDisplay.new())
+	popup.set_size(get_line_height_square())

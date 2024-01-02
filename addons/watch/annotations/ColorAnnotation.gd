@@ -12,6 +12,7 @@ static func can_display(value: Variant) -> bool:
 
 func _init(_line: int, _parent: Node):
 	super(_line, _parent)
-	var color_editor = ColorEditorDisplay.new()
-	display = color_editor
-	color_editor.set_size(get_line_height_square())
+	var popup = PopupDisplay.new()
+	display = popup
+	var color_editor = popup.set_inner(ColorEditorDisplay.new())
+	popup.set_size(get_line_height_square())

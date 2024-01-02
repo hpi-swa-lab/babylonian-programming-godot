@@ -12,8 +12,10 @@ static func can_display(value: Variant) -> bool:
 
 func _init(_line: int, _parent: Node):
 	super(_line, _parent)
-	display = TextDisplay.new()
-	display.set_size(Vector2(200, get_line_height()))
+	var popup = PopupDisplay.new()
+	display = popup
+	var text = popup.set_inner(TextDisplay.new())
+	popup.set_size(Vector2(200, get_line_height()))
 
 func get_offset():
 	return Vector2(0, -get_line_height() * 0.15)
