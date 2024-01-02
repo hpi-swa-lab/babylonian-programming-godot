@@ -7,6 +7,7 @@ var tabs: Array[Display] = []
 func _init():
 	tab_container = TabContainer.new()
 	tab_container.set_anchors_preset(PRESET_FULL_RECT)
+	tab_container.clip_contents = true
 	add_child(tab_container)
 
 func add_tab(name: String, display: Display):
