@@ -24,9 +24,6 @@ func get_annotation_offset() -> Vector2:
 func set_inner(display: Display):
 	inner_display = display
 	add_child(inner_display)
-	set_size(inner_display.size)
-	inner_display.set_anchors_preset(PRESET_FULL_RECT)
-	inner_display.set_offsets_preset(PRESET_FULL_RECT)
 	inner_display.annotation = annotation
 	return display
 
