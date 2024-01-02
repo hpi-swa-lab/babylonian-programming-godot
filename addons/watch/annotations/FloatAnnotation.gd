@@ -15,7 +15,7 @@ func _init(_line: int, _parent: Node):
 	var popup = PopupDisplay.new()
 	display = popup
 	var pausable = popup.set_inner(PausableDisplay.new())
-	var tab_display = pausable.set_inner(TabDisplay.new())
-	tab_display.add_tab("Graph", FloatOverTimeDisplay.new())
-	tab_display.add_tab("Current", TextDisplay.new())
+	var tab = pausable.set_inner(TabDisplay.new())
+	tab.add_tab("Graph", FloatOverTimeDisplay.new())
+	tab.add_tab("Current", TextDisplay.new())
 	popup.set_size(Vector2(500, 5 * get_line_height()))
