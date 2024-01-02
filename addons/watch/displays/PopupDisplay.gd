@@ -9,7 +9,8 @@ func _input(event: InputEvent):
 		handle_mouse_motion(event)
 
 func handle_mouse_motion(event: InputEventMouseMotion):
-	if not get_global_rect().has_point(event.position - event.relative):
+	var rect = Rect2(get_screen_position(), get_global_rect().size)
+	if not rect.has_point(event.global_position - event.relative):
 		return
 	if event.button_mask & MOUSE_BUTTON_LEFT:
 		position += event.relative
