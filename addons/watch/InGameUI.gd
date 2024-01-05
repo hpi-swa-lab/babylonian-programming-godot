@@ -1,4 +1,4 @@
-extends Node
+extends CanvasLayer
 
 const message_capture = "watch_in_game_ui"
 const snapshots_path = "res://snapshots"
@@ -143,11 +143,10 @@ func on_message(name: String, data: Array):
 	return false
 
 func add_record_button():
-	var root = get_node("/root")
 	var button = Button.new()
 	button.text = "⏺"
 	button.pressed.connect(self.on_record)
-	root.add_child.call_deferred(button)
+	add_child.call_deferred(button)
 
 func set_owners(node: Node, owner: Node):
 	node.scene_file_path = ""

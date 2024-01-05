@@ -3,7 +3,7 @@ extends Node
 var watch_manager = WatchManager.new()
 
 func _ready():
-	watch_manager.current_parent = $/root
+	watch_manager.current_parent = InGameUI
 
 func _process(delta):
 	watch_manager.update()
