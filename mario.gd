@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name Mario
 
 
 const SPEED = 500.0
@@ -6,6 +7,8 @@ const JUMP_VELOCITY = -600.0
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+
+@onready var start_position = global_position
 
 func _ready():
 	$Sprite.play()
@@ -36,7 +39,7 @@ func _physics_process(delta):
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var direction = Input.get_axis("ui_left", "ui_right")
 	if direction:
-		velocity.x = direction * SPEED
+		velocity.x = B.watch(direction) * B.watch(SPEED)
 	else:
 		velocity.x = lerp(velocity.x, 0.0, 0.2)
 		
@@ -53,9 +56,21 @@ func _physics_process(delta):
 				B.watch(force)
 				
 				B.watch(str(force.length()))
-				B.watch(collider.get_node("Sprite").modulate)
+				B.watch(Color.hex(0xcff00ff))
 				
 				collider.apply_force(force)
+			
+			if collider is Goomba and not collider.is_dead:
+				if collision.get_normal().y < 0:
+					collider.kill()
+					velocity.y = JUMP_VELOCITY * 0.5
+				else:
+					self.kill()
 	
 	$Sprite.flip_h = velocity.x < 0
 	$Sprite.speed_scale = velocity.x / 150
+	if global_position.y > 1200:
+		kill()
+
+func kill():
+	global_position = start_position

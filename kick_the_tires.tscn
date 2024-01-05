@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://cb6dsf0prkabc"]
+[gd_scene load_steps=5 format=3 uid="uid://cb6dsf0prkabc"]
 
 [ext_resource type="PackedScene" uid="uid://b32bqgjmfmd0h" path="res://mario.tscn" id="1_dagel"]
-[ext_resource type="PackedScene" uid="uid://c280av4pcmhmi" path="res://block.tscn" id="2_fh70c"]
-[ext_resource type="PackedScene" uid="uid://moliabgo0vyk" path="res://tire.tscn" id="3_5apuo"]
+[ext_resource type="PackedScene" uid="uid://d3j3msm2jiigd" path="res://block.tscn" id="2_fh70c"]
+[ext_resource type="PackedScene" uid="uid://bc48xekaedh6e" path="res://goomba.tscn" id="4_3lwe2"]
+[ext_resource type="Script" path="res://camera.gd" id="4_lyfuj"]
 
 [node name="kick_the_tires" type="Node2D"]
 
@@ -10,16 +11,33 @@
 position = Vector2(130, 456)
 
 [node name="Blocks" parent="." instance=ExtResource("2_fh70c")]
-position = Vector2(40, 608)
+position = Vector2(-22, 672)
 
-[node name="Tire" parent="." instance=ExtResource("3_5apuo")]
-position = Vector2(656, 470)
+[node name="Blocks2" parent="." instance=ExtResource("2_fh70c")]
+position = Vector2(1581, 672)
 
-[node name="Tire2" parent="." instance=ExtResource("3_5apuo")]
-position = Vector2(943, 374)
+[node name="Blocks3" parent="." instance=ExtResource("2_fh70c")]
+position = Vector2(3061, 552)
 
-[node name="Tire3" parent="." instance=ExtResource("3_5apuo")]
-position = Vector2(409, 321)
+[node name="Blocks4" parent="." instance=ExtResource("2_fh70c")]
+position = Vector2(4584, 939)
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("target")]
 position = Vector2(576, 324)
+script = ExtResource("4_lyfuj")
+target = NodePath("../Mario")
+
+[node name="Goomba" parent="." instance=ExtResource("4_3lwe2")]
+position = Vector2(4744, 856)
+
+[node name="Goomba2" parent="." instance=ExtResource("4_3lwe2")]
+position = Vector2(4902, 856)
+
+[node name="Goomba3" parent="." instance=ExtResource("4_3lwe2")]
+position = Vector2(5061, 856)
+
+[node name="Goomba4" parent="." instance=ExtResource("4_3lwe2")]
+position = Vector2(5223, 856)
+
+[node name="Goomba5" parent="." instance=ExtResource("4_3lwe2")]
+position = Vector2(5382, 856)
