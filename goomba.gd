@@ -12,6 +12,8 @@ var is_dead = false
 
 func _ready():
 	$AnimatedSprite2D.play()
+	for ground_area in ground_areas:
+		ground_area.body_exited.connect(self.ground_area_check)
 
 func _physics_process(delta):
 	if is_dead:
@@ -20,10 +22,6 @@ func _physics_process(delta):
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y += gravity * delta
-
-	var direction_area = ground_areas[0 if direction < 0 else 1]
-	if len(direction_area.get_overlapping_bodies()) == 0:
-		direction *= -1
 
 	if direction:
 		velocity.x = direction * SPEED
@@ -40,6 +38,12 @@ func _physics_process(delta):
 		elif collision.get_normal().x != 0:
 			# hit a wall
 			direction *= -1
+
+func ground_area_check(_body):
+	var direction_area = ground_areas[0 if direction < 0 else 1]
+	if len(direction_area.get_overlapping_bodies()) == 0:
+		print("flip")
+		direction *= -1
 
 func kill():
 	$AnimatedSprite2D.animation = "flat"
