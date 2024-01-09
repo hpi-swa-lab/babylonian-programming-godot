@@ -74,3 +74,4 @@ func _physics_process(delta):
 
 func kill():
 	global_position = start_position
+	velocity = Vector2.ZERO
