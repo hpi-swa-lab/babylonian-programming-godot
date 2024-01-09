@@ -35,9 +35,11 @@ func _physics_process(delta):
 		var collider = collision.get_collider()
 		if collider is Mario:
 			collider.kill()
-		elif collision.get_normal().x != 0:
-			# hit a wall
-			direction *= -1
+		else:
+			var collision_direction = collision.get_normal().x
+			if collision_direction != 0 and sign(collision_direction) != sign(direction):
+				# hit a wall
+				direction *= -1
 
 func ground_area_check(_body):
 	var direction_area = ground_areas[0 if direction < 0 else 1]
