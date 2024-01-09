@@ -79,6 +79,9 @@ func _physics_process(delta):
 					velocity.y = JUMP_VELOCITY * 0.5
 				else:
 					self.kill()
+			
+			if collider.is_in_group("spike"):
+				self.kill()
 	
 	$Sprite.flip_h = velocity.x < 0
 	$Sprite.speed_scale = velocity.x / 150
