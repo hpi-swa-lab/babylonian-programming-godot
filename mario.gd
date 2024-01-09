@@ -13,6 +13,8 @@ var start_position = global_position
 func _ready():
 	$Sprite.play()
 
+var jump_hold_time = 0
+
 func _physics_process(delta):
 	# Add the gravity.
 	B.watch(abs(velocity.x))
@@ -30,10 +32,21 @@ func _physics_process(delta):
 	B.watch(velocity)
 	
 	B.watch($Sprite.animation)
+	
+	B.watch(jump_hold_time, true)
 
+	var jump_action = "ui_accept"
+	var jump_force = pow(jump_hold_time, 2.5)
+	B.watch(jump_force, true)
+	
 	# Handle Jump.
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
+	if Input.is_action_just_released(jump_action) and is_on_floor():
+		velocity.y = JUMP_VELOCITY * jump_force
+	
+	if Input.is_action_pressed(jump_action):
+		jump_hold_time += delta
+	else:
+		jump_hold_time = 0
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
