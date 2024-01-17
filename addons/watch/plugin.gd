@@ -23,9 +23,6 @@ func _exit_tree():
 	remove_autoload_singleton("InGameUI")
 	remove_play_snapshot_button()
 
-func on_session_ready(session_id: int):
-	in_game_ui.on_session_ready(session_id)
-
 var play_snapshot_button: Control
 const play_snapshot_button_container = CONTAINER_TOOLBAR
 
