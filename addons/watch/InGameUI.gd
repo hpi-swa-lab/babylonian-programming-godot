@@ -67,17 +67,6 @@ func take_snapshot():
 func take_and_remember_snapshot():
 	snapshot = take_snapshot()
 
-func _unhandled_input(event):
-	if event is InputEventKey:
-		if not event.pressed:
-			return
-		if event.keycode == KEY_R:
-			var restored = Deserializer.deserialize_json(snapshot)
-			Utils.full_replace_by(snapshot_target(), restored)
-			set_snapshot_target(restored)
-		if event.keycode == KEY_S:
-			take_and_remember_snapshot()
-
 enum RecordMode {
 	NONE,
 	RECORD,
@@ -86,6 +75,20 @@ enum RecordMode {
 
 var recorded_events = []
 var record_mode = RecordMode.RECORD
+var next_played_event_index = 0
+var recording_playback_start_ticks = 0
+
+func _unhandled_input(event):
+	if event is InputEventKey:
+		if not event.pressed:
+			return
+		if event.keycode == KEY_R:
+			var restored = Deserializer.deserialize_json(snapshot)
+			Utils.full_replace_by(snapshot_target(), restored)
+			set_snapshot_target(restored)
+			start_playback_recording(recorded_events)
+		if event.keycode == KEY_S:
+			take_and_remember_snapshot()
 
 func _input(event: InputEvent):
 	if record_mode != RecordMode.RECORD:
@@ -96,6 +99,8 @@ func _input(event: InputEvent):
 func start_playback_recording(events: Array):
 	recorded_events = events
 	record_mode = RecordMode.PLAYBACK
+	next_played_event_index = 0
+	recording_playback_start_ticks = Time.get_ticks_usec()
 
 func get_json_path(base: String, index: int):
 	return base + "/" + str(index) + ".json"
@@ -118,12 +123,10 @@ func read_saved_recording():
 	file.close()
 	start_playback_recording(recording)
 
-var next_played_event_index = 0
-
 func playback_recording():
 	if record_mode != RecordMode.PLAYBACK:
 		return
-	var current_ticks = Time.get_ticks_usec()
+	var current_ticks = Time.get_ticks_usec() - recording_playback_start_ticks
 	var index = next_played_event_index
 	while index < len(recorded_events):
 		var recorded_event = recorded_events[index]
