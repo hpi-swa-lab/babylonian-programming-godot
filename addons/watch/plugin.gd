@@ -6,6 +6,8 @@ var watch_manager = WatchManager.new()
 var debugger = WatchEditorDebugger.new()
 var in_game_ui = preload("./InGameUI.gd").new()
 
+var singletons = ["B", "InGameUI"]
+
 func _enter_tree():
 	# Initialization of the plugin goes here.
 	get_viewport().gui_focus_changed.connect(self._on_gui_focus_changed)
@@ -13,14 +15,14 @@ func _enter_tree():
 	debugger.plugin = self
 	in_game_ui.debugger = debugger
 	add_debugger_plugin(debugger)
-	add_autoload_singleton("B", "B.gd")
-	add_autoload_singleton("InGameUI", "InGameUI.gd")
+	for singleton in singletons:
+		add_autoload_singleton(singleton, singleton + ".gd")
 	add_play_snapshot_button()
 
 func _exit_tree():
 	remove_debugger_plugin(debugger)
-	remove_autoload_singleton("B")
-	remove_autoload_singleton("InGameUI")
+	for singleton in singletons:
+		remove_autoload_singleton(singleton)
 	remove_play_snapshot_button()
 
 var play_snapshot_button: Control
