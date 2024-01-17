@@ -44,7 +44,6 @@ func _physics_process(delta):
 func ground_area_check(_body):
 	var direction_area = ground_areas[0 if direction < 0 else 1]
 	if len(direction_area.get_overlapping_bodies()) == 0:
-		print("flip")
 		direction *= -1
 
 func kill():
