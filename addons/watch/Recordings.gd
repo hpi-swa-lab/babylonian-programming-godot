@@ -61,6 +61,7 @@ func do_recording():
 	start_recording()
 	await stop_button.pressed
 	stop_recording()
+	stop_button.queue_free()
 	return recorded_events
 
 func recording_to_serializable(events):
