@@ -1,0 +1,43 @@
+[gd_scene load_steps=2 format=3 uid="uid://bv7ltl5b31pda"]
+
+[ext_resource type="Script" path="res://addons/watch/example_slot.gd" id="1_q120w"]
+
+[node name="ExampleSlot" type="HBoxContainer"]
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -15.5
+offset_bottom = 15.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_q120w")
+
+[node name="Index" type="Label" parent="."]
+layout_mode = 2
+text = "1"
+
+[node name="Name" type="LineEdit" parent="."]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SaveButton" type="Button" parent="."]
+layout_mode = 2
+focus_mode = 0
+text = "Save"
+
+[node name="RestoreButton" type="Button" parent="."]
+layout_mode = 2
+focus_mode = 0
+text = "Restore
+"
+
+[node name="DeleteButton" type="Button" parent="."]
+layout_mode = 2
+focus_mode = 0
+text = "Delete"
+
+[connection signal="pressed" from="SaveButton" to="." method="_on_save_button_pressed"]
+[connection signal="pressed" from="RestoreButton" to="." method="_on_restore_button_pressed"]
+[connection signal="pressed" from="DeleteButton" to="." method="_on_delete_button_pressed"]

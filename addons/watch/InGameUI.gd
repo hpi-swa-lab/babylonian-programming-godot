@@ -2,7 +2,7 @@ extends CanvasLayer
 
 var debugger
 
-var examples = Examples.new()
+var examples: Examples
 
 func _init():
 	if Engine.is_editor_hint():
@@ -39,6 +39,7 @@ func game_init():
 	pass
 
 func game_ready():
+	examples = preload("res://addons/watch/examples.tscn").instantiate()
 	add_child(examples)
 
 func game_process(delta):

@@ -1,0 +1,74 @@
+[gd_scene load_steps=4 format=3 uid="uid://df3k352fau6x7"]
+
+[ext_resource type="Script" path="res://addons/watch/Examples.gd" id="1_3yfx3"]
+[ext_resource type="Script" path="res://addons/watch/ToggleVisibilityButton.gd" id="2_gu3p0"]
+
+[sub_resource type="Theme" id="Theme_nhwpp"]
+default_font_size = 30
+
+[node name="Examples" type="HBoxContainer"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -755.0
+offset_bottom = 50.0
+grow_horizontal = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+theme = SubResource("Theme_nhwpp")
+script = ExtResource("1_3yfx3")
+
+[node name="ToggleVisibilityButton" type="Button" parent="." node_paths=PackedStringArray("control")]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+focus_mode = 0
+text = "Hide"
+script = ExtResource("2_gu3p0")
+control = NodePath("../ScrollContainer")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+custom_minimum_size = Vector2(0, 500)
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="SlotsContainer" type="VBoxContainer" parent="ScrollContainer"]
+layout_mode = 2
+
+[node name="Explanation" type="Label" parent="ScrollContainer/SlotsContainer"]
+layout_mode = 2
+text = "Use Ctrl+S to start a new example.
+Use Ctrl+R followed by:
+- Ctrl+[Number] to restore example [Number].
+- Ctrl+R to restore the last used example.
+Mode for next example:"
+
+[node name="ModeSelector" type="OptionButton" parent="ScrollContainer/SlotsContainer"]
+layout_mode = 2
+focus_mode = 0
+item_count = 3
+selected = 0
+popup/item_0/text = "Snapshot only"
+popup/item_0/id = 0
+popup/item_1/text = "Snapshot & Input Recording"
+popup/item_1/id = 1
+popup/item_2/text = "Input Recording only"
+popup/item_2/id = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/SlotsContainer"]
+layout_mode = 2
+
+[node name="SaveExampleCheckbox" type="CheckBox" parent="ScrollContainer/SlotsContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+text = "Save next example to disk"
+
+[node name="LoadExampleButton" type="Button" parent="ScrollContainer/SlotsContainer/HBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+text = "Load from disk"
+
+[connection signal="item_selected" from="ScrollContainer/SlotsContainer/ModeSelector" to="." method="_on_mode_selector_item_selected"]
+[connection signal="toggled" from="ScrollContainer/SlotsContainer/HBoxContainer/SaveExampleCheckbox" to="." method="_on_save_example_checkbox_toggled"]
+[connection signal="pressed" from="ScrollContainer/SlotsContainer/HBoxContainer/LoadExampleButton" to="." method="load_example"]
