@@ -65,12 +65,16 @@ func do_recording():
 	return recorded_events
 
 func recording_to_serializable(events):
+	if events == null:
+		return null
 	var serializable_recording = events.duplicate()
 	for index in range(len(serializable_recording)):
 		serializable_recording[index][1] = var_to_str(serializable_recording[index][1])
 	return serializable_recording
 
 func recording_from_serializable(serializable_events):
+	if serializable_events == null:
+		return null
 	var events = serializable_events.duplicate()
 	for index in range(len(events)):
 		events[index][1] = str_to_var(events[index][1])
