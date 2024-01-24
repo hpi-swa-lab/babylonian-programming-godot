@@ -8,6 +8,7 @@ func _init():
 	var button = Button.new()
 	button.text = "↔"
 	button.pressed.connect(self.cycle)
+	button.focus_mode = Control.FOCUS_NONE
 	add_child(button)
 
 func cycle():

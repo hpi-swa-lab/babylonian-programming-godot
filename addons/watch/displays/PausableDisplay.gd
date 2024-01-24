@@ -9,6 +9,7 @@ func _init():
 	button = Button.new()
 	update_button_text()
 	button.pressed.connect(self.toggle)
+	button.focus_mode = Control.FOCUS_NONE
 	add_child(button)
 
 func _ready():

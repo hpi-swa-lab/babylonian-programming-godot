@@ -10,6 +10,7 @@ func _init():
 	color_picker.presets_visible = false
 	color_picker_button.color_changed.connect(self.color_changed)
 	color_picker_button.set_anchors_and_offsets_preset(PRESET_FULL_RECT)
+	color_picker_button.focus_mode = Control.FOCUS_NONE
 	add_child(color_picker_button)
 
 func update_value(new_value: Variant):
