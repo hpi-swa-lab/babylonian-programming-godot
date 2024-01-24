@@ -1,6 +1,7 @@
 extends HBoxContainer
 class_name ExampleSlot
 
+signal set_loop_example_slot(index: int, loop: bool)
 signal save_example_slot(index: int, suggested_name: String)
 signal restore_example_slot(index: int)
 signal delete_example_slot(index: int)
@@ -8,7 +9,7 @@ signal delete_example_slot(index: int)
 var index: set = set_index
 var is_last = false: set = set_is_last
 var has_snapshot = false
-var has_recording = false
+var has_recording = false: set = set_has_recording
 var example_name: get = get_example_name, set = set_example_name
 
 func set_index(new_index: int):
@@ -18,6 +19,10 @@ func set_index(new_index: int):
 func set_is_last(new_is_last: bool):
 	is_last = new_is_last
 	update_index_text()
+
+func set_has_recording(new_has_recording: bool):
+	has_recording = new_has_recording
+	$LoopCheckBox.visible = has_recording
 
 func update_index_text():
 	var text = str(index + 1)
@@ -38,6 +43,9 @@ func get_example_name():
 
 func set_example_name(new_name: String):
 	$Name.text = new_name
+
+func _on_loop_check_box_toggled(toggled_on):
+	set_loop_example_slot.emit(index, toggled_on)
 
 func _on_save_button_pressed():
 	save_example_slot.emit(index, example_name)

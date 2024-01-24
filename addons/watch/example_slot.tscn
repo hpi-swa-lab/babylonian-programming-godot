@@ -22,6 +22,12 @@ custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 
+[node name="LoopCheckBox" type="CheckBox" parent="."]
+visible = false
+layout_mode = 2
+focus_mode = 0
+text = "Loop"
+
 [node name="SaveButton" type="Button" parent="."]
 layout_mode = 2
 focus_mode = 0
@@ -38,6 +44,7 @@ layout_mode = 2
 focus_mode = 0
 text = "Delete"
 
+[connection signal="toggled" from="LoopCheckBox" to="." method="_on_loop_check_box_toggled"]
 [connection signal="pressed" from="SaveButton" to="." method="_on_save_button_pressed"]
 [connection signal="pressed" from="RestoreButton" to="." method="_on_restore_button_pressed"]
 [connection signal="pressed" from="DeleteButton" to="." method="_on_delete_button_pressed"]

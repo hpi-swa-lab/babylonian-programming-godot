@@ -9,11 +9,13 @@ var recording_enabled = false
 var save_recorded_examples = false
 
 var example_slots = []
+var loop_example_slots = []
 var last_example_slot = -1
 
 func _ready():
 	for child in [snapshots, recordings]:
 		add_child(child)
+	recordings.looped_playback_ended.connect(self.looped_playback_ended)
 
 func create_example(snapshot, recording):
 	return {
@@ -21,13 +23,20 @@ func create_example(snapshot, recording):
 		"recording": recording,
 	}
 
-func restore_example(example):
+var looped_example
+
+func restore_example(example, loop: bool):
 	var snapshot = example["snapshot"]
 	var recording = example["recording"]
 	if snapshot != null:
 		snapshots.restore_snapshot(snapshot)
 	if recording != null:
-		recordings.playback_recording(recording)
+		recordings.playback_recording(recording, loop)
+	if loop:
+		looped_example = example
+
+func looped_playback_ended():
+	restore_example(looped_example, true)
 
 func set_last_example_slot(index):
 	if last_example_slot >= 0 and last_example_slot < len(example_slot_uis):
@@ -39,7 +48,7 @@ func set_last_example_slot(index):
 func restore_slot(index):
 	if index >= len(example_slots):
 		return
-	restore_example(example_slots[index])
+	restore_example(example_slots[index], loop_example_slots[index])
 	set_last_example_slot(index)
 
 func restore_last_example():
@@ -47,6 +56,7 @@ func restore_last_example():
 
 func add_example_slot(example):
 	example_slots.append(example)
+	loop_example_slots.append(false)
 	var index = len(example_slots) - 1
 	add_example_slot_ui(example, index)
 	set_last_example_slot(index)
@@ -57,6 +67,7 @@ var example_slot_uis = []
 
 func add_example_slot_ui(example, index: int):
 	var example_slot = preload("res://addons/watch/example_slot.tscn").instantiate()
+	example_slot.set_loop_example_slot.connect(self.set_loop_slot)
 	example_slot.save_example_slot.connect(self.save_slot)
 	example_slot.restore_example_slot.connect(self.restore_slot)
 	example_slot.delete_example_slot.connect(self.delete_slot)
@@ -71,6 +82,7 @@ func add_example_slot_ui(example, index: int):
 
 func delete_slot(index: int):
 	example_slots.remove_at(index)
+	loop_example_slots.remove_at(index)
 	example_slot_uis[index].queue_free()
 	example_slot_uis.remove_at(index)
 	for index_above in range(index, len(example_slots)):
@@ -79,6 +91,9 @@ func delete_slot(index: int):
 		set_last_example_slot(-1)
 	elif last_example_slot > index:
 		set_last_example_slot(last_example_slot - 1)
+
+func set_loop_slot(index: int, loop: bool):
+	loop_example_slots[index] = loop
 
 func example_name(index: int):
 	return "Example " + str(index + 1)
