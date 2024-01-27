@@ -23,6 +23,9 @@ func _physics_process(delta):
 	if not is_on_floor():
 		velocity.y += gravity * delta
 
+	B.game_watch(direction, self)
+	B.game_watch(velocity, self)
+
 	if direction:
 		velocity.x = direction * SPEED
 	else:
