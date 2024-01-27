@@ -2,6 +2,7 @@ class_name Annotation
 
 const ANNOTATION_OFFSET = Vector2(40, 0)
 
+var watch_group#: WatchGroup
 var line = 0
 var parent: Node
 var display: Display : set = set_display
@@ -88,6 +89,9 @@ func update():
 				ANNOTATION_OFFSET))
 		else:
 			display.hide()
+	else:
+		display.show()
+		display.set_position(get_offset() + display.get_annotation_offset())
 
 func update_value(value: Variant):
 	display.update_value(value)

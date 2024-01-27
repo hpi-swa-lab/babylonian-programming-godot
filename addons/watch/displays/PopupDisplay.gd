@@ -20,7 +20,19 @@ func handle_mouse_motion(event: InputEventMouseMotion):
 		size += event.relative
 
 func get_annotation_offset() -> Vector2:
-	return offset
+	return offset + get_group_offset()
+
+func get_group_offset() -> Vector2:
+	var group = get_group()
+	if is_instance_valid(group) and group is Node2D:
+		return get_node_2d_group_offset(group)
+	return Vector2.ZERO
+
+var NODE_OFFSET = Vector2.UP * 50
+
+func get_node_2d_group_offset(node: Node2D):
+	var anchor = node.position
+	return node.get_viewport_transform() * anchor + NODE_OFFSET
 
 func set_inner(display: Display):
 	inner_display = display
@@ -31,8 +43,12 @@ func set_inner(display: Display):
 func update_value(new_value: Variant):
 	inner_display.update_value(new_value)
 
+func draw_origin_connection():
+	var group = get_group()
+	return Engine.is_editor_hint() or is_instance_valid(group) and group is Node2D
+
 func _draw():
-	if not Engine.is_editor_hint():
+	if not draw_origin_connection():
 		return
 	var half_line_height = Vector2(0, annotation.get_line_height() / 2)
 	draw_line(half_line_height, half_line_height - offset, Color.WHITE)
