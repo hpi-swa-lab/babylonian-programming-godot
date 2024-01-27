@@ -8,6 +8,9 @@ func _ready():
 func _process(delta):
 	watch_manager.update()
 
+func _exit_tree():
+	watch_manager.on_exit()
+
 func watch(value: Variant, show_in_game = false):
 	var stack = get_stack()
 	if len(stack) < 2:

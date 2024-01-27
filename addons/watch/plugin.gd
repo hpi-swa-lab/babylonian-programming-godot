@@ -20,6 +20,7 @@ func _enter_tree():
 	add_play_snapshot_button()
 
 func _exit_tree():
+	watch_manager.on_exit()
 	remove_debugger_plugin(debugger)
 	for singleton in singletons:
 		remove_autoload_singleton(singleton)

@@ -50,3 +50,7 @@ static func swap_remove(array: Array, index: int):
 	if index != last:
 		array[index] = array[last]
 	array.resize(last)
+
+func on_exit():
+	for watch in watches:
+		watch.remove_annotation()
