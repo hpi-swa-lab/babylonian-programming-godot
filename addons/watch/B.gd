@@ -11,12 +11,22 @@ func _process(delta):
 func _exit_tree():
 	watch_manager.on_exit()
 
-func watch(value: Variant, group = null, show_in_game = false):
+func get_caller_stack_frame():
 	var stack = get_stack()
-	if len(stack) < 2:
+	if len(stack) == 0:
+		return null
+	var location = null
+	var here = stack[0]["source"]
+	for frame in stack:
+		if frame["source"] != here:
+			return frame
+	return stack[len(stack) - 1]
+
+func watch(value: Variant, group = null, show_in_game = false):
+	var location = get_caller_stack_frame()
+	if location == null:
 		print("Watching is unsupported without access to a stack")
 		return value
-	var location = stack[1] # get the caller
 	var source = location["source"]
 	var line = location["line"]
 	var sent_group = Utils.group_key(group)
@@ -28,4 +38,3 @@ func watch(value: Variant, group = null, show_in_game = false):
 
 func game_watch(value: Variant, group = null):
 	watch(value, group, true)
-
