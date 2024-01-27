@@ -8,7 +8,7 @@ var display: Display : set = set_display
 var last_scroll_pos
 var last_column
 
-var watch_regex = RegEx.create_from_string("(B\\.watch\\()(.*)(\\))")
+var watch_regex = RegEx.create_from_string("(B\\.(?:game_)?watch\\()(.*)(\\))")
 
 static func is_instance(annotation: Annotation) -> bool:
 	return false

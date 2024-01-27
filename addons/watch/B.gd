@@ -25,3 +25,7 @@ func watch(value: Variant, group = null, show_in_game = false):
 	if show_in_game:
 		watch_manager.on_watch(source, line, value, group)
 	return value
+
+func game_watch(value: Variant, group = null):
+	watch(value, group, true)
+
