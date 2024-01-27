@@ -10,8 +10,7 @@ static func is_instance(annotation: Annotation) -> bool:
 static func can_display(value: Variant) -> bool:
 	return value is float or value is int
 
-func _init(_line: int, _parent: Node):
-	super(_line, _parent)
+func create_display():
 	var popup = PopupDisplay.new()
 	display = popup
 	var pausable = popup.set_inner(PausableDisplay.new())

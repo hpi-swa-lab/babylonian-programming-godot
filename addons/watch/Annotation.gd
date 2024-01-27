@@ -19,6 +19,10 @@ static func can_display(value: Variant) -> bool:
 func _init(_line: int, _parent: Node):
 	line = _line
 	parent = _parent
+	create_display()
+
+func create_display():
+	pass
 
 static func from(other: Annotation, new_class: RefCounted):
 	return new_class.new(other.line, other.parent)
