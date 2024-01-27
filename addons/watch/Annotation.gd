@@ -16,16 +16,17 @@ static func is_instance(annotation: Annotation) -> bool:
 static func can_display(value: Variant) -> bool:
 	return false
 
-func _init(_line: int, _parent: Node):
+func _init(_line: int, _parent: Node, _watch_group):
 	line = _line
 	parent = _parent
+	watch_group = _watch_group
 	create_display()
 
 func create_display():
 	pass
 
 static func from(other: Annotation, new_class: RefCounted):
-	return new_class.new(other.line, other.parent)
+	return new_class.new(other.line, other.parent, other.watch_group)
 
 func set_display(new_display: Display):
 	display = new_display

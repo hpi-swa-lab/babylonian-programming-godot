@@ -14,6 +14,7 @@ func _capture(message, data, session_id):
 		var source = data[0]
 		var line = data[1]
 		var value = data[2]
-		plugin.watch_manager.on_watch(source, line, value)
+		var group = data[3]
+		plugin.watch_manager.on_watch(source, line, value, group)
 		# we handled the message
 		return true
