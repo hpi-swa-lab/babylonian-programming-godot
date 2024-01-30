@@ -1,6 +1,8 @@
 extends Node
 class_name Examples
 
+const examples_path = "res://examples"
+
 var snapshots = Snapshots.new()
 var recordings = Recordings.new()
 
@@ -115,7 +117,8 @@ func record_example():
 func choose_example_path(mode: FileDialog.FileMode, current_file = ""):
 	var dialog = FileDialog.new()
 	dialog.file_mode = mode
-	dialog.root_subfolder = "res://examples"
+	DirAccess.make_dir_recursive_absolute(examples_path)
+	dialog.root_subfolder = examples_path
 	dialog.current_file = current_file
 	dialog.add_filter("*.json", "JSON")
 	add_child(dialog)
