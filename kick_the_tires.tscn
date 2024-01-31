@@ -25,10 +25,10 @@ position = Vector2(3061, 552)
 position = Vector2(4584, 939)
 
 [node name="Blocks5" parent="." instance=ExtResource("2_fh70c")]
-position = Vector2(6259, 934)
+position = Vector2(6275, 885)
 
 [node name="Blocks6" parent="." instance=ExtResource("2_fh70c")]
-position = Vector2(6259, 290)
+position = Vector2(6275, 241)
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("target")]
 position = Vector2(576, 324)
@@ -147,10 +147,10 @@ position = Vector2(4461, 223)
 position = Vector2(4526, 223)
 
 [node name="Spike33" parent="." instance=ExtResource("5_rkyox")]
-position = Vector2(6121, 530)
+position = Vector2(6137, 481)
 
 [node name="Spike34" parent="." instance=ExtResource("5_rkyox")]
-position = Vector2(6186, 530)
+position = Vector2(6202, 481)
 
 [node name="Blocks7" parent="." instance=ExtResource("6_pbgb3")]
-position = Vector2(6259, 694)
+position = Vector2(6275, 645)
