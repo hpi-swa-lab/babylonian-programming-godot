@@ -146,5 +146,11 @@ position = Vector2(4461, 223)
 [node name="Spike32" parent="." instance=ExtResource("5_rkyox")]
 position = Vector2(4526, 223)
 
+[node name="Spike33" parent="." instance=ExtResource("5_rkyox")]
+position = Vector2(6121, 530)
+
+[node name="Spike34" parent="." instance=ExtResource("5_rkyox")]
+position = Vector2(6186, 530)
+
 [node name="Blocks7" parent="." instance=ExtResource("6_pbgb3")]
 position = Vector2(6259, 694)
