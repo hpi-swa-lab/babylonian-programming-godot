@@ -257,6 +257,11 @@ const skipped_properties = [
 	"global_transform",
 ]
 
+var node_setters = {
+	"$children": set_children,
+	"$groups": set_groups,
+}
+
 func deserialize_object(id: String):
 	if id in deserialized_objects:
 		return deserialized_objects[id]
@@ -268,8 +273,8 @@ func deserialize_object(id: String):
 	for key in properties:
 		if key == "$str":
 			continue
-		if key == "$children":
-			set_children(object as Node, properties[key])
+		if key in node_setters:
+			node_setters[key].call(object as Node, deserialize_variant(properties[key]))
 			continue
 		set_key(object, key, deserialize_variant(properties[key]))
 	return object
@@ -278,7 +283,13 @@ func set_children(node: Node, children: Array):
 	for child in node.get_children():
 		node.remove_child(child)
 	for child in children:
-		node.add_child(deserialize_variant(child))
+		node.add_child(child)
+
+func set_groups(node: Node, groups: Array):
+	for group in node.get_groups():
+		node.remove_from_group(group)
+	for group in groups:
+		node.add_to_group(group)
 
 func set_key(object: Object, key: String, value: Variant):
 	if object is Camera2D and key == "custom_viewport" and value == null:

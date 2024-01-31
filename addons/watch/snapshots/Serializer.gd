@@ -265,7 +265,8 @@ func serialize_object(object: Object):
 		var value = object.get(key)
 		properties[key] = serialize_variant(value)
 	if object is Node:
-		properties["$children"] = serialize_array(object.get_children())
+		properties["$children"] = serialize_variant(object.get_children())
+		properties["$groups"] = serialize_variant(object.get_groups())
 	return reference
 
 func serialize_callable(variant: Callable):
