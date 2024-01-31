@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://cb6dsf0prkabc"]
+[gd_scene load_steps=7 format=3 uid="uid://cb6dsf0prkabc"]
 
 [ext_resource type="PackedScene" uid="uid://b32bqgjmfmd0h" path="res://mario.tscn" id="1_dagel"]
 [ext_resource type="PackedScene" uid="uid://d3j3msm2jiigd" path="res://block.tscn" id="2_fh70c"]
 [ext_resource type="PackedScene" uid="uid://bc48xekaedh6e" path="res://goomba.tscn" id="4_3lwe2"]
 [ext_resource type="Script" path="res://camera.gd" id="4_lyfuj"]
 [ext_resource type="PackedScene" uid="uid://bvypwcugyqlur" path="res://spike.tscn" id="5_rkyox"]
+[ext_resource type="PackedScene" uid="uid://cd2kr4abyrbqt" path="res://column.tscn" id="6_pbgb3"]
 
 [node name="kick_the_tires" type="Node2D"]
 
@@ -22,6 +23,12 @@ position = Vector2(3061, 552)
 
 [node name="Blocks4" parent="." instance=ExtResource("2_fh70c")]
 position = Vector2(4584, 939)
+
+[node name="Blocks5" parent="." instance=ExtResource("2_fh70c")]
+position = Vector2(6259, 934)
+
+[node name="Blocks6" parent="." instance=ExtResource("2_fh70c")]
+position = Vector2(6259, 290)
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("target")]
 position = Vector2(576, 324)
@@ -138,3 +145,6 @@ position = Vector2(4461, 223)
 
 [node name="Spike32" parent="." instance=ExtResource("5_rkyox")]
 position = Vector2(4526, 223)
+
+[node name="Blocks7" parent="." instance=ExtResource("6_pbgb3")]
+position = Vector2(6259, 694)
