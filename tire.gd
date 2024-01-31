@@ -13,6 +13,4 @@ func _process(delta):
 		position = viewport_rect.get_center()
 		linear_velocity = Vector2.ZERO
 		
-	$Sprite.modulate = Color.from_hsv(B.watch(linear_velocity.length() / 1000), 1, 1)
-	
-	B.watch($Sprite.modulate)
+	$Sprite.modulate = Color.from_hsv(linear_velocity.length() / 1000, 1, 1)
