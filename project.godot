@@ -15,15 +15,6 @@ run/main_scene="res://kick_the_tires.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 
-[autoload]
-
-B="*res://addons/watch/B.gd"
-InGameUI="*res://addons/watch/InGameUI.gd"
-
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/watch/plugin.cfg")
-
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
