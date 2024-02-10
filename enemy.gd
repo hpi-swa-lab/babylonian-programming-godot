@@ -1,5 +1,5 @@
 extends CharacterBody2D
-class_name Goomba
+class_name Enemy
 
 const SPEED = 200.0
 
@@ -33,7 +33,7 @@ func _physics_process(delta):
 	for collision_index in range(get_slide_collision_count()):
 		var collision = get_slide_collision(collision_index)
 		var collider = collision.get_collider()
-		if collider is Mario:
+		if collider is Player:
 			collider.kill()
 		else:
 			var collision_direction = collision.get_normal().x

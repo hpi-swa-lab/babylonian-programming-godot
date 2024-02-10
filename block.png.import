@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b0cfesdy3ipqk"
-path="res://.godot/imported/goomba.png-984e0975dbee1415dfa6be23f977deda.ctex"
+uid="uid://dowurx3cji8oy"
+path="res://.godot/imported/block.png-b7fed0a755ada244f74f9622a987e81f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://goomba.png"
-dest_files=["res://.godot/imported/goomba.png-984e0975dbee1415dfa6be23f977deda.ctex"]
+source_file="res://block.png"
+dest_files=["res://.godot/imported/block.png-b7fed0a755ada244f74f9622a987e81f.ctex"]
 
 [params]
 

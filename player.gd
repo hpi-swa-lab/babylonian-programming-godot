@@ -1,5 +1,5 @@
 extends CharacterBody2D
-class_name Mario
+class_name Player
 
 
 const SPEED = 500.0
@@ -60,7 +60,7 @@ func _physics_process(delta):
 				
 				collider.apply_force(force)
 			
-			if collider is Goomba and not collider.is_dead:
+			if collider is Enemy and not collider.is_dead:
 				if collision.get_normal().y < 0:
 					collider.kill()
 					velocity.y = JUMP_VELOCITY * 0.5
