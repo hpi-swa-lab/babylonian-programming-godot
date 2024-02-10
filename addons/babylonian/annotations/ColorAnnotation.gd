@@ -1,9 +1,6 @@
 extends Annotation
 class_name ColorAnnotation
 
-static func name():
-	return "Color"
-	
 static func is_instance(annotation: Annotation) -> bool:
 	return annotation is ColorAnnotation
 

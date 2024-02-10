@@ -1,9 +1,6 @@
 extends Annotation
 class_name VectorAnnotation
 
-static func name():
-	return "Vector"
-
 static func is_instance(annotation: Annotation) -> bool:
 	return annotation is VectorAnnotation
 
