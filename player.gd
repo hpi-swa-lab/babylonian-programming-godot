@@ -39,7 +39,7 @@ func _physics_process(delta):
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var direction = Input.get_axis("ui_left", "ui_right")
 	if direction:
-		velocity.x = B.probe(direction) * B.probe(SPEED)
+		velocity.x = B.probe(direction) * SPEED
 	else:
 		velocity.x = lerp(velocity.x, 0.0, 0.2)
 
