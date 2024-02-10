@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://b32bqgjmfmd0h"]
+[gd_scene load_steps=10 format=3 uid="uid://b32bqgjmfmd0h"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_sndap"]
 [ext_resource type="Texture2D" uid="uid://cys57js4ku8k0" path="res://player.png" id="2_neqnv"]
@@ -11,13 +11,17 @@ region = Rect2(0, 0, 16, 16)
 atlas = ExtResource("2_neqnv")
 region = Rect2(16, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_rj3fd"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_3ua4n"]
 atlas = ExtResource("2_neqnv")
-region = Rect2(0, 0, 16, 16)
+region = Rect2(32, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_trfoe"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_kpqce"]
 atlas = ExtResource("2_neqnv")
-region = Rect2(16, 0, 16, 16)
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j6gug"]
+atlas = ExtResource("2_neqnv")
+region = Rect2(64, 0, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_6ur5u"]
 animations = [{
@@ -39,10 +43,13 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_rj3fd")
+"texture": SubResource("AtlasTexture_3ua4n")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_trfoe")
+"texture": SubResource("AtlasTexture_kpqce")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j6gug")
 }],
 "loop": true,
 "name": &"walk",
