@@ -7,7 +7,5 @@ static func can_display(value: Variant) -> bool:
 	return value is Vector2
 
 func create_display():
-	var popup = PopupDisplay.new()
-	display = popup
-	var vector = popup.set_inner(VectorDisplay.new())
-	popup.set_size(get_line_height_square())
+	popup_display.set_inner(VectorDisplay.new())
+	popup_display.set_size(get_line_height_square())

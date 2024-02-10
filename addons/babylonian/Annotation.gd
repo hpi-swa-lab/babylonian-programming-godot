@@ -5,9 +5,9 @@ const ANNOTATION_OFFSET = Vector2(40, 0)
 var probe_group#: ProbeGroup
 var line = 0
 var parent: Node
-var display: Display : set = set_display
-var last_scroll_pos
-var last_column
+var popup_display: PopupDisplay
+var last_scroll_pos: float
+var last_column: int
 
 var probe_regex = RegEx.create_from_string("(B\\.(?:game_)?probe\\()(.*)(\\))")
 
@@ -21,17 +21,18 @@ func _init(_line: int, _parent: Node, _probe_group):
 	line = _line
 	parent = _parent
 	probe_group = _probe_group
-	create_display()
+	create_popup_display()
+
+func create_popup_display():
+	popup_display = PopupDisplay.new()
+	popup_display.annotation = self
+	self.create_display()
 
 func create_display():
 	pass
 
 static func from(other: Annotation, new_class: RefCounted):
 	return new_class.new(other.line, other.parent, other.probe_group)
-
-func set_display(new_display: Display):
-	display = new_display
-	new_display.annotation = self
 
 func is_valid():
 	return is_probe_valid()
@@ -81,17 +82,17 @@ func update():
 		last_column = column
 		var rect = parent.get_rect_at_line_column(line, column)
 		if rect.position.y >= 0:
-			display.show()
-			display.set_position((
+			popup_display.show()
+			popup_display.set_position((
 				Vector2(rect.end.x, rect.position.y) +
 				get_offset() +
-				display.get_annotation_offset() +
+				popup_display.get_annotation_offset() +
 				ANNOTATION_OFFSET))
 		else:
-			display.hide()
+			popup_display.hide()
 	else:
-		display.show()
-		display.set_position(get_offset() + display.get_annotation_offset())
+		popup_display.show()
+		popup_display.set_position(get_offset() + popup_display.get_annotation_offset())
 
 func update_value(value: Variant):
-	display.update_value(value)
+	popup_display.update_value(value)
