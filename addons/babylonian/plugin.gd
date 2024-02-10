@@ -17,30 +17,12 @@ func _enter_tree():
 	add_debugger_plugin(debugger)
 	for singleton in singletons:
 		add_autoload_singleton(singleton, singleton + ".gd")
-	add_play_snapshot_button()
 
 func _exit_tree():
 	probe_manager.on_exit()
 	remove_debugger_plugin(debugger)
 	for singleton in singletons:
 		remove_autoload_singleton(singleton)
-	remove_play_snapshot_button()
-
-var play_snapshot_button: Control
-const play_snapshot_button_container = CONTAINER_TOOLBAR
-
-func add_play_snapshot_button():
-	play_snapshot_button = Button.new()
-	play_snapshot_button.text = "Play Snapshot"
-	play_snapshot_button.pressed.connect(self.play_snapshot)
-	add_control_to_container(play_snapshot_button_container, play_snapshot_button)
-
-func play_snapshot():
-	get_editor_interface().play_custom_scene("res://addons/babylonian/snapshots/snapshot_loader.tscn")
-
-func remove_play_snapshot_button():
-	remove_control_from_container(play_snapshot_button_container, play_snapshot_button)
-	play_snapshot_button.queue_free()
 
 func _on_gui_focus_changed(node: Node):
 	if node is TextEdit:
