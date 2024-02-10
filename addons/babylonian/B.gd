@@ -37,4 +37,4 @@ func probe(value: Variant, group = null, show_in_game = false):
 	return value
 
 func game_probe(value: Variant, group = null):
-	probe(value, group, true)
+	return probe(value, group, true)
