@@ -1,5 +1,4 @@
-extends Object
-class_name Serializer
+class_name Serializer extends Object
 
 var objects = {}
 

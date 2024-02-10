@@ -1,5 +1,4 @@
-extends EditorDebuggerPlugin
-class_name ProbeEditorDebugger
+class_name ProbeEditorDebugger extends EditorDebuggerPlugin
 
 var plugin: BabylonianPlugin
 

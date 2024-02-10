@@ -1,5 +1,4 @@
-extends Display
-class_name PausableDisplay
+class_name PausableDisplay extends Display
 
 var is_paused = false
 var inner: Display

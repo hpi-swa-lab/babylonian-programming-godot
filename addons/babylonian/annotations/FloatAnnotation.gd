@@ -1,5 +1,4 @@
-extends Annotation
-class_name FloatAnnotation
+class_name FloatAnnotation extends Annotation
 
 static func is_instance(annotation: Annotation) -> bool:
 	return annotation is FloatAnnotation

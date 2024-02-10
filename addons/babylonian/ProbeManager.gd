@@ -1,5 +1,4 @@
-extends Node
-class_name ProbeManager
+class_name ProbeManager extends Node
 
 var probes: Array[Probe] = []
 var current_parent: Node = null:

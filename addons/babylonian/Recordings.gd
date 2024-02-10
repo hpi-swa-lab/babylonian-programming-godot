@@ -1,5 +1,4 @@
-extends Node
-class_name Recordings
+class_name Recordings extends Node
 
 enum RecordMode {
 	NONE,

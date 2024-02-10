@@ -1,5 +1,4 @@
-extends Display
-class_name CycleDisplay
+class_name CycleDisplay extends Display
 
 var index = 0
 var displays: Array[Display]

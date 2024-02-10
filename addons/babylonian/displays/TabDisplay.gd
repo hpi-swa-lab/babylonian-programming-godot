@@ -1,5 +1,4 @@
-extends Display
-class_name TabDisplay
+class_name TabDisplay extends Display
 
 var tab_container: TabContainer
 var tabs: Array[Display] = []

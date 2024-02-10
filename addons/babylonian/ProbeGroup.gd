@@ -1,5 +1,4 @@
-extends Node
-class_name ProbeGroup
+class_name ProbeGroup extends Node
 
 var annotation_classes = [ColorAnnotation, FloatAnnotation, VectorAnnotation, TextAnnotation]
 

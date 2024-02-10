@@ -1,5 +1,4 @@
-extends Display
-class_name TextDisplay
+class_name TextDisplay extends Display
 
 var label: Label
 

@@ -1,5 +1,4 @@
-extends Display
-class_name ColorDisplay
+class_name ColorDisplay extends Display
 
 var color_rect: ColorRect
 

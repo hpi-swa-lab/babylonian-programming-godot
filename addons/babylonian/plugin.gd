@@ -1,6 +1,5 @@
 @tool
-extends EditorPlugin
-class_name BabylonianPlugin
+class_name BabylonianPlugin extends EditorPlugin
 
 var probe_manager = ProbeManager.new()
 var debugger = ProbeEditorDebugger.new()

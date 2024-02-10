@@ -1,5 +1,4 @@
-extends Display
-class_name ColorEditorDisplay
+class_name ColorEditorDisplay extends Display
 
 var color_override = null
 var color_picker_button: ColorPickerButton

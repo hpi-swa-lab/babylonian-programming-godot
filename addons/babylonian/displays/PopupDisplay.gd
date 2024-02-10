@@ -1,5 +1,4 @@
-extends Display
-class_name PopupDisplay
+class_name PopupDisplay extends Display
 
 var inner_display: Display
 var offset = Vector2.ZERO

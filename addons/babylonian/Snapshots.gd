@@ -1,5 +1,4 @@
-extends Node
-class_name Snapshots
+class_name Snapshots extends Node
 
 func snapshot_target():
 	return get_tree().current_scene

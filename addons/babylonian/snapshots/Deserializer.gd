@@ -1,5 +1,4 @@
-extends Object
-class_name Deserializer
+class_name Deserializer extends Object
 
 var objects: Dictionary
 var deserialized_objects = {}

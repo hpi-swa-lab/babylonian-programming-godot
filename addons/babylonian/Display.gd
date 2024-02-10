@@ -1,5 +1,4 @@
-extends Control
-class_name Display
+class_name Display extends Control
 
 var annotation: Annotation
 

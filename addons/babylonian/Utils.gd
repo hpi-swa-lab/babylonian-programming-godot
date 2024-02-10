@@ -1,5 +1,4 @@
-extends Object
-class_name Utils
+class_name Utils extends Object
 
 static func full_replace_by(original: Node, replacement: Node):
 	var parent = original.get_parent()

@@ -1,5 +1,4 @@
-extends Display
-class_name FloatOverTimeDisplay
+class_name FloatOverTimeDisplay extends Display
 
 var length: int = 2 * 60
 var ring_buffer = PackedFloat64Array()

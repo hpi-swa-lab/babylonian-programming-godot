@@ -1,5 +1,4 @@
-extends HBoxContainer
-class_name ExampleSlot
+class_name ExampleSlot extends HBoxContainer
 
 signal set_loop_example_slot(index: int, loop: bool)
 signal save_example_slot(index: int, suggested_name: String)

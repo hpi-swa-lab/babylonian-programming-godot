@@ -1,12 +1,11 @@
-extends Display
-class_name VectorDisplay
+class_name VectorDisplay extends Display
 
 var value: Vector2
 
 func _draw():
 	var rect = get_rect()
 	var start = rect.size / 2
-	var length = min(rect.size.x, rect.size.y) 
+	var length = min(rect.size.x, rect.size.y)
 	var pointer = value.normalized() * length
 	var end = start + pointer
 	var right_tip = end + pointer.rotated(PI * 3 / 4) / 3

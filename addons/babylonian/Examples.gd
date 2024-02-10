@@ -1,5 +1,4 @@
-extends Node
-class_name Examples
+class_name Examples extends Node
 
 const examples_path = "res://examples"
 

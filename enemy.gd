@@ -1,5 +1,4 @@
-extends CharacterBody2D
-class_name Enemy
+class_name Enemy extends CharacterBody2D
 
 const SPEED = 200.0
 
@@ -18,7 +17,7 @@ func _ready():
 func _physics_process(delta):
 	if is_dead:
 		return
-	
+
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y += gravity * delta
