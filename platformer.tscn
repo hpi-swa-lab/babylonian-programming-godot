@@ -1,8 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://cb6dsf0prkabc"]
+[gd_scene load_steps=6 format=3 uid="uid://cb6dsf0prkabc"]
 
 [ext_resource type="PackedScene" uid="uid://b32bqgjmfmd0h" path="res://player.tscn" id="1_ucqkw"]
 [ext_resource type="PackedScene" uid="uid://d3j3msm2jiigd" path="res://block.tscn" id="2_7ah1a"]
-[ext_resource type="Script" path="res://camera.gd" id="3_3wdf0"]
 [ext_resource type="PackedScene" uid="uid://bc48xekaedh6e" path="res://enemy.tscn" id="4_onwt2"]
 [ext_resource type="PackedScene" uid="uid://hh1xymp2mv5r" path="res://spike.tscn" id="5_4plkg"]
 [ext_resource type="PackedScene" uid="uid://cd2kr4abyrbqt" path="res://column.tscn" id="6_u1s8i"]
@@ -11,6 +10,12 @@
 
 [node name="Player" parent="." instance=ExtResource("1_ucqkw")]
 position = Vector2(130, 456)
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+position = Vector2(89.2, -26.4)
+scale = Vector2(0.2, 0.2)
+position_smoothing_enabled = true
+position_smoothing_speed = 3.0
 
 [node name="Blocks" parent="." instance=ExtResource("2_7ah1a")]
 position = Vector2(-22, 672)
@@ -29,11 +34,6 @@ position = Vector2(6275, 885)
 
 [node name="Blocks6" parent="." instance=ExtResource("2_7ah1a")]
 position = Vector2(6275, 241)
-
-[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("target")]
-position = Vector2(576, 324)
-script = ExtResource("3_3wdf0")
-target = NodePath("../Player")
 
 [node name="Enemy" parent="." instance=ExtResource("4_onwt2")]
 position = Vector2(4744, 856)
