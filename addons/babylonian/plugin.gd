@@ -13,7 +13,6 @@ func _enter_tree():
 	get_viewport().gui_focus_changed.connect(self._on_gui_focus_changed)
 	probe_manager.plugin = self
 	debugger.plugin = self
-	in_game_ui.debugger = debugger
 	add_debugger_plugin(debugger)
 	for singleton in singletons:
 		add_autoload_singleton(singleton, singleton + ".gd")
