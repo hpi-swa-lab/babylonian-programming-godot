@@ -42,14 +42,13 @@ func set_inner(display: Display):
 func update_value(new_value: Variant):
 	inner_display.update_value(new_value)
 
-func draw_origin_connection():
+func should_draw_origin_connection():
 	var group = get_group()
-	return Engine.is_editor_hint() or is_instance_valid(group) and group is Node2D
+	return Engine.is_editor_hint() or \
+		is_instance_valid(group) and group is Node2D
 
 func _draw():
-	if not draw_origin_connection():
+	if not should_draw_origin_connection():
 		return
 	var half_line_height = Vector2(0, annotation.get_line_height() / 2)
 	draw_line(half_line_height, half_line_height - offset, Color.WHITE)
-	# for debugging
-	#draw_rect(Rect2(Vector2.ZERO, size), Color.RED)

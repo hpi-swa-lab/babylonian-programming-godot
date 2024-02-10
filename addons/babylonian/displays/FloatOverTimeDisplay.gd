@@ -1,6 +1,6 @@
 class_name FloatOverTimeDisplay extends Display
 
-var length: int = 2 * 60
+var length: int = 2 * 60 # two seconds at 60 updates per second
 var ring_buffer = PackedFloat64Array()
 var start = 0
 var end = 0
@@ -83,7 +83,6 @@ func draw_float(position: Vector2, value: float, font_size: int):
 
 func _draw():
 	var rect = get_rect()
-	#draw_rect(Rect2(Vector2.ZERO, rect.size), Color.BLACK)
 	if buffer_size() < 2:
 		return
 	var min_max = get_min_max()
