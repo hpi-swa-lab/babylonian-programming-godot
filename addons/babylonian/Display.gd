@@ -13,8 +13,8 @@ func update_value(value: Variant):
 func get_annotation_offset() -> Vector2:
 	return Vector2.ZERO
 
-func get_watch_group() -> WatchGroup:
-	return annotation.watch_group
+func get_probe_group() -> ProbeGroup:
+	return annotation.probe_group
 
 func get_group():
-	return get_watch_group().group
+	return get_probe_group().group

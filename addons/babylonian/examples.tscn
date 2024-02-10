@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://df3k352fau6x7"]
 
-[ext_resource type="Script" path="res://addons/watch/Examples.gd" id="1_3yfx3"]
-[ext_resource type="Script" path="res://addons/watch/ToggleVisibilityButton.gd" id="2_gu3p0"]
+[ext_resource type="Script" path="res://addons/babylonian/Examples.gd" id="1_3yfx3"]
+[ext_resource type="Script" path="res://addons/babylonian/ToggleVisibilityButton.gd" id="2_gu3p0"]
 
 [sub_resource type="Theme" id="Theme_nhwpp"]
 default_font_size = 30

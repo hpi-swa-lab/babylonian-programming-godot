@@ -15,10 +15,10 @@ func _ready():
 
 func _physics_process(delta):
 	# Add the gravity.
-	B.watch(abs(velocity.x))
-	
-	
-	
+	B.probe(abs(velocity.x))
+
+
+
 	if not is_on_floor():
 		velocity.y += gravity * delta
 		$Sprite.animation = "jump"
@@ -26,10 +26,10 @@ func _physics_process(delta):
 		$Sprite.animation = "walk"
 	else:
 		$Sprite.animation = "stand"
-	
-	B.watch(velocity)
-	
-	B.watch($Sprite.animation)
+
+	B.probe(velocity)
+
+	B.probe($Sprite.animation)
 
 	# Handle Jump.
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
@@ -39,11 +39,11 @@ func _physics_process(delta):
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var direction = Input.get_axis("ui_left", "ui_right")
 	if direction:
-		velocity.x = B.watch(direction) * B.watch(SPEED)
+		velocity.x = B.probe(direction) * B.probe(SPEED)
 	else:
 		velocity.x = lerp(velocity.x, 0.0, 0.2)
-		
-	B.watch(Color.hex(0x16622ff))
+
+	B.probe(Color.hex(0x16622ff))
 
 	if move_and_slide():
 		for i in get_slide_collision_count():
@@ -51,25 +51,25 @@ func _physics_process(delta):
 			var collider = collision.get_collider()
 			if collider is RigidBody2D:
 				var force = (2 * Vector2.UP - collision.get_normal()) * velocity.length()
-				B.watch(collider.name)
-				
-				B.watch(force)
-				
-				B.watch(str(force.length()))
-				B.watch(Color.hex(0xcff00ff))
-				
+				B.probe(collider.name)
+
+				B.probe(force)
+
+				B.probe(str(force.length()))
+				B.probe(Color.hex(0xcff00ff))
+
 				collider.apply_force(force)
-			
+
 			if collider is Enemy and not collider.is_dead:
 				if collision.get_normal().y < 0:
 					collider.kill()
 					velocity.y = JUMP_VELOCITY * 0.5
 				else:
 					self.kill()
-			
+
 			if collider.is_in_group("spike"):
 				self.kill()
-	
+
 	$Sprite.flip_h = velocity.x < 0
 	$Sprite.speed_scale = velocity.x / 150
 	if global_position.y > 1200:

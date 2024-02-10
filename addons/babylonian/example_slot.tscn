@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bv7ltl5b31pda"]
 
-[ext_resource type="Script" path="res://addons/watch/example_slot.gd" id="1_q120w"]
+[ext_resource type="Script" path="res://addons/babylonian/example_slot.gd" id="1_q120w"]
 
 [node name="ExampleSlot" type="HBoxContainer"]
 anchors_preset = 14

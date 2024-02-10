@@ -10,19 +10,19 @@ config_version=5
 
 [application]
 
-config/name="Watch"
+config/name="Babylonian"
 run/main_scene="res://platformer.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
-B="*res://addons/watch/B.gd"
-InGameUI="*res://addons/watch/InGameUI.gd"
+B="*res://addons/babylonian/B.gd"
+InGameUI="*res://addons/babylonian/InGameUI.gd"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/watch/plugin.cfg")
+enabled=PackedStringArray("res://addons/babylonian/plugin.cfg")
 
 [rendering]
 

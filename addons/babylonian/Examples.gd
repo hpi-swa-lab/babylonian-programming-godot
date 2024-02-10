@@ -68,7 +68,7 @@ func add_example_slot(example):
 var example_slot_uis = []
 
 func add_example_slot_ui(example, index: int):
-	var example_slot = preload("res://addons/watch/example_slot.tscn").instantiate()
+	var example_slot = preload("res://addons/babylonian/example_slot.tscn").instantiate()
 	example_slot.set_loop_example_slot.connect(self.set_loop_slot)
 	example_slot.save_example_slot.connect(self.save_slot)
 	example_slot.restore_example_slot.connect(self.restore_slot)

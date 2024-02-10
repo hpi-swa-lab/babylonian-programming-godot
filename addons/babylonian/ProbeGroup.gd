@@ -1,21 +1,21 @@
 extends Node
-class_name WatchGroup
+class_name ProbeGroup
 
 var annotation_classes = [ColorAnnotation, FloatAnnotation, VectorAnnotation, TextAnnotation]
 
-var watch#: Watch
+var probe#: Probe
 var group
 var current_value: Variant
 var current_annotation: Annotation
 var to_be_removed = false
 
 func create_annotation(parent: Node):
-	if not watch.belongs_to_current_script() or current_annotation != null:
+	if not probe.belongs_to_current_script() or current_annotation != null:
 		return
 
 	# Godot source uses 1-indexing, TextEdit uses 0-indexing
-	var new_annotation = Annotation.new(watch.line - 1, parent, self)
-	if not new_annotation.is_watch_valid():
+	var new_annotation = Annotation.new(probe.line - 1, parent, self)
+	if not new_annotation.is_probe_valid():
 		return
 	current_annotation = new_annotation
 
@@ -27,7 +27,7 @@ func update():
 			current_annotation.update()
 		else:
 			remove_annotation()
-			if watch.belongs_to_current_script():
+			if probe.belongs_to_current_script():
 				to_be_removed = true
 
 func update_value(new_value: Variant):

@@ -1,15 +1,15 @@
 extends Node
 
-var watch_manager = WatchManager.new()
+var probe_manager = ProbeManager.new()
 
 func _ready():
-	watch_manager.current_parent = InGameUI
+	probe_manager.current_parent = InGameUI
 
 func _process(delta):
-	watch_manager.update()
+	probe_manager.update()
 
 func _exit_tree():
-	watch_manager.on_exit()
+	probe_manager.on_exit()
 
 func get_caller_stack_frame():
 	var stack = get_stack()
@@ -22,19 +22,19 @@ func get_caller_stack_frame():
 			return frame
 	return stack[len(stack) - 1]
 
-func watch(value: Variant, group = null, show_in_game = false):
+func probe(value: Variant, group = null, show_in_game = false):
 	var location = get_caller_stack_frame()
 	if location == null:
-		print("Watching is unsupported without access to a stack")
+		print("Probing is unsupported without access to a stack")
 		return value
 	var source = location["source"]
 	var line = location["line"]
 	var sent_group = Utils.group_key(group)
 	var data = [source, line, value, sent_group]
-	EngineDebugger.send_message("watch:watch", data)
+	EngineDebugger.send_message("babylonian:probe", data)
 	if show_in_game:
-		watch_manager.on_watch(source, line, value, group)
+		probe_manager.on_probe(source, line, value, group)
 	return value
 
-func game_watch(value: Variant, group = null):
-	watch(value, group, true)
+func game_probe(value: Variant, group = null):
+	probe(value, group, true)

@@ -1,9 +1,9 @@
 @tool
 extends EditorPlugin
-class_name WatchPlugin
+class_name BabylonianPlugin
 
-var watch_manager = WatchManager.new()
-var debugger = WatchEditorDebugger.new()
+var probe_manager = ProbeManager.new()
+var debugger = ProbeEditorDebugger.new()
 var in_game_ui = preload("./InGameUI.gd").new()
 
 var singletons = ["B", "InGameUI"]
@@ -11,7 +11,7 @@ var singletons = ["B", "InGameUI"]
 func _enter_tree():
 	# Initialization of the plugin goes here.
 	get_viewport().gui_focus_changed.connect(self._on_gui_focus_changed)
-	watch_manager.plugin = self
+	probe_manager.plugin = self
 	debugger.plugin = self
 	in_game_ui.debugger = debugger
 	add_debugger_plugin(debugger)
@@ -20,7 +20,7 @@ func _enter_tree():
 	add_play_snapshot_button()
 
 func _exit_tree():
-	watch_manager.on_exit()
+	probe_manager.on_exit()
 	remove_debugger_plugin(debugger)
 	for singleton in singletons:
 		remove_autoload_singleton(singleton)
@@ -36,7 +36,7 @@ func add_play_snapshot_button():
 	add_control_to_container(play_snapshot_button_container, play_snapshot_button)
 
 func play_snapshot():
-	get_editor_interface().play_custom_scene("res://addons/watch/snapshots/snapshot_loader.tscn")
+	get_editor_interface().play_custom_scene("res://addons/babylonian/snapshots/snapshot_loader.tscn")
 
 func remove_play_snapshot_button():
 	remove_control_from_container(play_snapshot_button_container, play_snapshot_button)
@@ -47,10 +47,10 @@ func _on_gui_focus_changed(node: Node):
 		handle_new_text_edit(node)
 
 func handle_new_text_edit(text_edit: TextEdit):
-	watch_manager.current_parent = text_edit
-	add_wrap_in_watch_menu_item(text_edit)
+	probe_manager.current_parent = text_edit
+	add_wrap_in_probe_menu_item(text_edit)
 
-const WRAP_IN_WATCH_ITEM_ID = 1000 # large enough to probably not conflict with anything else
+const WRAP_IN_PROBE_ITEM_ID = 1000 # large enough to probably not conflict with anything else
 
 func get_context_menu() -> PopupMenu:
 	var script_text_editor = get_editor_interface().get_script_editor().get_current_editor()
@@ -62,7 +62,7 @@ func get_context_menu() -> PopupMenu:
 
 var registered_context_menus = []
 
-func add_wrap_in_watch_menu_item(text_edit: TextEdit):
+func add_wrap_in_probe_menu_item(text_edit: TextEdit):
 	var menu = get_context_menu()
 	# only add listeners once
 	if registered_context_menus.has(menu):
@@ -71,19 +71,19 @@ func add_wrap_in_watch_menu_item(text_edit: TextEdit):
 
 	menu.id_pressed.connect(
 		func(id: int):
-			if id == WRAP_IN_WATCH_ITEM_ID:
-				wrap_selections_in_watch(text_edit))
+			if id == WRAP_IN_PROBE_ITEM_ID:
+				wrap_selections_in_probe(text_edit))
 	menu.about_to_popup.connect(
 		func():
-			menu.add_item("Wrap in watch", WRAP_IN_WATCH_ITEM_ID))
+			menu.add_item("Wrap in probe", WRAP_IN_PROBE_ITEM_ID))
 
-func wrap_selections_in_watch(text_edit: TextEdit):
+func wrap_selections_in_probe(text_edit: TextEdit):
 	text_edit.start_action(TextEdit.ACTION_TYPING)
 	text_edit.cut()
-	text_edit.insert_text_at_caret("B.watch(")
+	text_edit.insert_text_at_caret("B.probe(")
 	text_edit.paste()
 	text_edit.insert_text_at_caret(")")
 	text_edit.end_action()
 
 func _process(delta):
-	watch_manager.update()
+	probe_manager.update()

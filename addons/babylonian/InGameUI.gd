@@ -39,7 +39,7 @@ func game_init():
 	pass
 
 func game_ready():
-	examples = preload("res://addons/watch/examples.tscn").instantiate()
+	examples = preload("res://addons/babylonian/examples.tscn").instantiate()
 	add_child(examples)
 
 func game_process(delta):

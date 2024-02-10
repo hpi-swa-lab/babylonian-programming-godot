@@ -2,14 +2,14 @@ class_name Annotation
 
 const ANNOTATION_OFFSET = Vector2(40, 0)
 
-var watch_group#: WatchGroup
+var probe_group#: ProbeGroup
 var line = 0
 var parent: Node
 var display: Display : set = set_display
 var last_scroll_pos
 var last_column
 
-var watch_regex = RegEx.create_from_string("(B\\.(?:game_)?watch\\()(.*)(\\))")
+var probe_regex = RegEx.create_from_string("(B\\.(?:game_)?probe\\()(.*)(\\))")
 
 static func is_instance(annotation: Annotation) -> bool:
 	return false
@@ -17,27 +17,27 @@ static func is_instance(annotation: Annotation) -> bool:
 static func can_display(value: Variant) -> bool:
 	return false
 
-func _init(_line: int, _parent: Node, _watch_group):
+func _init(_line: int, _parent: Node, _probe_group):
 	line = _line
 	parent = _parent
-	watch_group = _watch_group
+	probe_group = _probe_group
 	create_display()
 
 func create_display():
 	pass
 
 static func from(other: Annotation, new_class: RefCounted):
-	return new_class.new(other.line, other.parent, other.watch_group)
+	return new_class.new(other.line, other.parent, other.probe_group)
 
 func set_display(new_display: Display):
 	display = new_display
 	new_display.annotation = self
 
 func is_valid():
-	return is_watch_valid()
+	return is_probe_valid()
 
-func is_watch_valid() -> bool:
-	return not (parent is TextEdit) or watch_regex.search(get_line()) != null
+func is_probe_valid() -> bool:
+	return not (parent is TextEdit) or probe_regex.search(get_line()) != null
 
 func get_line_height():
 	if parent is TextEdit:
@@ -69,7 +69,7 @@ func update_text_edit_line_drawing_cache():
 		parent.queue_redraw()
 
 func replace_source(new_source: String):
-	set_line(watch_regex.sub(get_line(), "$1" + new_source.replace("$", "$$") + "$3"))
+	set_line(probe_regex.sub(get_line(), "$1" + new_source.replace("$", "$$") + "$3"))
 	update_text_edit_line_drawing_cache()
 
 func update():
