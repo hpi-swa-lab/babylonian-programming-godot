@@ -304,7 +304,7 @@ func set_signals(object: Object, signals: Dictionary):
 	for name in signals:
 		var connections = signals[name]
 		for connection in connections:
-			if name not in skipped_signals:
+			if name not in skipped_signals and not object.is_connected(name, connection["callable"]):
 				object.connect(name, connection["callable"], connection["flags"])
 
 func set_groups(node: Node, groups: Array):
