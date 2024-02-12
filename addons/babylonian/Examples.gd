@@ -128,7 +128,7 @@ func example_to_string(example):
 	return JSON.stringify({
 		"snapshot": example["snapshot"],
 		"recording": recordings.recording_to_serializable(example["recording"]),
-	})
+	}, "    ", false, true)
 
 func example_from_string(json):
 	var example = JSON.parse_string(json)

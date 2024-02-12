@@ -3,8 +3,8 @@ class_name Deserializer extends Object
 var objects: Dictionary
 var deserialized_objects = {}
 
-static func deserialize_json(json: String):
-	return Deserializer.new().deserialize(JSON.parse_string(json))
+static func deserialize_json(json: Dictionary):
+	return Deserializer.new().deserialize(json)
 
 func deserialize(serialized: Dictionary):
 	objects = serialized["objects"]

@@ -4,7 +4,7 @@ var objects = {}
 
 static func serialize_to_json(root: Variant):
 	var serialized = Serializer.new().serialize(root)
-	return JSON.stringify(serialized, "    ", false, true)
+	return serialized
 
 func serialize(root: Variant):
 	return {"root": serialize_variant(root), "objects": objects}
