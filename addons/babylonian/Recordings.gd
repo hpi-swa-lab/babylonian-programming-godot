@@ -15,6 +15,7 @@ var next_played_event_index = 0
 var recording_start_ticks = 0
 
 signal looped_playback_ended
+signal stop_recording_pressed
 
 func current_ticks():
 	return Time.get_ticks_usec()
@@ -24,6 +25,10 @@ func current_relative_ticks():
 
 func _input(event: InputEvent):
 	if record_mode != RecordMode.RECORD:
+		return
+	if event is InputEventKey and event.pressed and event.ctrl_pressed and event.keycode == KEY_S:
+		stop_recording_pressed.emit()
+		get_viewport().set_input_as_handled()
 		return
 	var ticks = current_relative_ticks()
 	recorded_events.append([ticks, event])
@@ -99,10 +104,12 @@ func do_recording():
 	var stop_button = Button.new()
 	stop_button.text = "Stop recording"
 	stop_button.theme = theme
+	stop_button.pressed.connect(func():
+		stop_recording_pressed.emit())
 	# TODO: positioning
 	add_child(stop_button)
 	start_recording()
-	await stop_button.pressed
+	await stop_recording_pressed
 	stop_recording()
 	stop_button.queue_free()
 	return recorded_events

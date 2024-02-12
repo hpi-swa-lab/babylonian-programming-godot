@@ -100,13 +100,19 @@ func set_loop_slot(index: int, loop: bool):
 func example_name(index: int):
 	return "Example " + str(index + 1)
 
+var is_recording = false
+
 func record_example():
+	if is_recording:
+		return
+	is_recording = true
 	var snapshot = null
 	var recording = null
 	if snapshot_enabled:
 		snapshot = snapshots.take_snapshot()
 	if recording_enabled:
 		recording = await recordings.do_recording()
+	is_recording = false
 	if snapshot == null and recording == null:
 		return
 	var example = create_example(snapshot, recording)
