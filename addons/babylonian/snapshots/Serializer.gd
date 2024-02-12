@@ -240,6 +240,7 @@ const skipped_properties = [
 	"scene_file_path",
 	"global_position",
 	"global_rotation",
+	"global_rotation_degrees",
 	"global_scale",
 	"global_skew",
 	"global_transform",
