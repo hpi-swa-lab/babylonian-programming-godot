@@ -2,19 +2,22 @@ class_name Deserializer extends Object
 
 var objects: Dictionary
 var deserialized_objects = {}
+var tree: SceneTree
 
-static func deserialize_json(json: Dictionary):
-	return Deserializer.new().deserialize(json)
+static func deserialize_json(json: Dictionary, parent: Node):
+	var deserializer = Deserializer.new()
+	deserializer.tree = parent.get_tree()
+	return deserializer.deserialize(json, parent)
 
-func deserialize(serialized: Dictionary):
+func deserialize(serialized: Dictionary, parent: Node):
 	objects = serialized["objects"]
-	return deserialize_variant(serialized["root"])
+	return deserialize_variant(serialized["root"], parent)
 
 func deserializer_error(type: String, value: Variant):
 	push_error("Cannot deserialize " + value + " of type " + type)
 	return null
 
-func deserialize_variant(variant: Variant):
+func deserialize_variant(variant: Variant, parent = null):
 	var type = typeof(variant)
 	match type:
 		TYPE_NIL:
@@ -26,16 +29,16 @@ func deserialize_variant(variant: Variant):
 		TYPE_STRING:
 			return deserialize_string(variant)
 		TYPE_DICTIONARY:
-			return deserialize_type_wrapped(variant)
+			return deserialize_type_wrapped(variant, parent)
 		TYPE_ARRAY:
-			return deserialize_array(variant)
+			return deserialize_array(variant, parent)
 		_:
 			return deserializer_error(type, variant)
 
 func unwrap(variant: Dictionary):
 	return variant["$value"]
 
-func deserialize_type_wrapped(variant: Dictionary):
+func deserialize_type_wrapped(variant: Dictionary, parent = null):
 	var type = variant["$type"]
 	var value = variant["$value"]
 	match type:
@@ -78,7 +81,7 @@ func deserialize_type_wrapped(variant: Dictionary):
 		"NodePath":
 			return deserialize_node_path(value)
 		"Object":
-			return deserialize_object(value)
+			return deserialize_object(value, parent)
 		"Callable":
 			return deserialize_callable(value)
 		"Signal":
@@ -245,14 +248,13 @@ func deserialize_node_path(variant: String):
 func deserialize_rid(variant: Variant):
 	return deserializer_error("RID", variant)
 
-var node_setters = {
-	"$children": set_children,
+var special_setters = {
 	"$signals": set_signals,
 	"$groups": set_groups,
 	"$is_playing": set_is_playing,
 }
 
-func deserialize_object(id: String):
+func deserialize_object(id: String, parent: Node = null):
 	id = deserialize_string(id)
 	if id in deserialized_objects:
 		return deserialized_objects[id]
@@ -261,20 +263,27 @@ func deserialize_object(id: String):
 	deserialized_objects[id] = object
 	if object is Resource:
 		return object
-	for key in properties:
-		if key == "$str":
-			continue
-		if key in node_setters:
-			node_setters[key].call(object as Node, deserialize_variant(properties[key]))
-			continue
-		set_key(object, key, deserialize_variant(properties[key]))
+	var set_properties = func():
+		for key in properties:
+			if key == "$str":
+				continue
+			if key in special_setters:
+				special_setters[key].call(object, deserialize_variant(properties[key]))
+				continue
+			set_key(object, key, deserialize_variant(properties[key]))
+	if object is Node and parent != null:
+		set_children(object, properties["$children"])
+		object.name = deserialize_variant(properties["name"])
+		parent.add_child(object)
+		set_properties.call_deferred()
+	else:
+		set_properties.call()
 	return object
 
 func set_children(node: Node, children: Array):
 	for child in node.get_children():
 		node.remove_child(child)
-	for child in children:
-		node.add_child(child)
+	deserialize_variant(children, node)
 
 func set_signals(object: Object, signals: Dictionary):
 	for signal_description in object.get_signal_list():
@@ -324,11 +333,11 @@ func deserialize_dictionary(variant: Dictionary):
 		copy[key] = deserialize_variant(variant[key])
 	return copy
 
-func deserialize_array(variant: Array):
+func deserialize_array(variant: Array, parent = null):
 	var copy = []
 	copy.resize(len(variant))
 	for index in range(len(copy)):
-		copy[index] = deserialize_variant(variant[index])
+		copy[index] = deserialize_variant(variant[index], parent)
 	return copy
 
 func deserialize_packed_byte_array(variant: Array):

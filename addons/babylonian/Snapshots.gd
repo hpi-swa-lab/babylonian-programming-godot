@@ -10,6 +10,10 @@ func take_snapshot():
 	return Serializer.serialize_to_json(snapshot_target())
 
 func restore_snapshot(snapshot):
-	var restored = Deserializer.deserialize_json(snapshot)
-	Utils.full_replace_by(snapshot_target(), restored)
+	var current = snapshot_target()
+	var parent = current.get_parent()
+	var index = current.get_index()
+	parent.remove_child(current)
+	var restored = Deserializer.deserialize_json(snapshot, parent)
+	parent.move_child(restored, index)
 	set_snapshot_target(restored)
