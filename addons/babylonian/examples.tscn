@@ -43,8 +43,12 @@ Use Ctrl+R followed by:
 - Ctrl+R to restore the last used example.
 Mode for next example:"
 
-[node name="ModeSelector" type="OptionButton" parent="ScrollContainer/SlotsContainer"]
+[node name="HBoxContainer1" type="HBoxContainer" parent="ScrollContainer/SlotsContainer"]
 layout_mode = 2
+
+[node name="ModeSelector" type="OptionButton" parent="ScrollContainer/SlotsContainer/HBoxContainer1"]
+layout_mode = 2
+size_flags_horizontal = 3
 focus_mode = 0
 item_count = 3
 selected = 0
@@ -55,20 +59,26 @@ popup/item_1/id = 1
 popup/item_2/text = "Input Recording only"
 popup/item_2/id = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/SlotsContainer"]
+[node name="StartExampleButton" type="Button" parent="ScrollContainer/SlotsContainer/HBoxContainer1"]
+layout_mode = 2
+focus_mode = 0
+text = "Start Example"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ScrollContainer/SlotsContainer"]
 layout_mode = 2
 
-[node name="SaveExampleCheckbox" type="CheckBox" parent="ScrollContainer/SlotsContainer/HBoxContainer"]
+[node name="SaveExampleCheckbox" type="CheckBox" parent="ScrollContainer/SlotsContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
 text = "Save next example to disk"
 
-[node name="LoadExampleButton" type="Button" parent="ScrollContainer/SlotsContainer/HBoxContainer"]
+[node name="LoadExampleButton" type="Button" parent="ScrollContainer/SlotsContainer/HBoxContainer2"]
 layout_mode = 2
 focus_mode = 0
 text = "Load from disk"
 
-[connection signal="item_selected" from="ScrollContainer/SlotsContainer/ModeSelector" to="." method="_on_mode_selector_item_selected"]
-[connection signal="toggled" from="ScrollContainer/SlotsContainer/HBoxContainer/SaveExampleCheckbox" to="." method="_on_save_example_checkbox_toggled"]
-[connection signal="pressed" from="ScrollContainer/SlotsContainer/HBoxContainer/LoadExampleButton" to="." method="load_example"]
+[connection signal="item_selected" from="ScrollContainer/SlotsContainer/HBoxContainer1/ModeSelector" to="." method="_on_mode_selector_item_selected"]
+[connection signal="pressed" from="ScrollContainer/SlotsContainer/HBoxContainer1/StartExampleButton" to="." method="record_example"]
+[connection signal="toggled" from="ScrollContainer/SlotsContainer/HBoxContainer2/SaveExampleCheckbox" to="." method="_on_save_example_checkbox_toggled"]
+[connection signal="pressed" from="ScrollContainer/SlotsContainer/HBoxContainer2/LoadExampleButton" to="." method="load_example"]
