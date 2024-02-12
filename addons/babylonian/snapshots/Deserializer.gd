@@ -245,17 +245,6 @@ func deserialize_node_path(variant: String):
 func deserialize_rid(variant: Variant):
 	return deserializer_error("RID", variant)
 
-const skipped_properties = [
-	"script",
-	"owner",
-	"scene_file_path",
-	"global_position",
-	"global_rotation",
-	"global_scale",
-	"global_skew",
-	"global_transform",
-]
-
 var node_setters = {
 	"$children": set_children,
 	"$groups": set_groups,
