@@ -36,3 +36,9 @@ static func swap_remove(array: Array, index: int):
 	if index != last:
 		array[index] = array[last]
 	array.resize(last)
+
+static func is_descendant(descendant: Node, root: Node):
+	if descendant == root:
+		return true
+	var path = descendant.get_path_to(root)
+	return path.get_name(0) == ".."

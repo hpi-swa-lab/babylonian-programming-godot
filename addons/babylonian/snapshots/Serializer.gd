@@ -1,12 +1,15 @@
 class_name Serializer extends Object
 
 var objects = {}
+var root: Variant
 
 static func serialize_to_json(root: Variant):
-	var serialized = Serializer.new().serialize(root)
+	var serializer = Serializer.new()
+	serializer.root = root
+	var serialized = serializer.serialize()
 	return serialized
 
-func serialize(root: Variant):
+func serialize():
 	return {"root": serialize_variant(root), "objects": objects}
 
 func serialize_variant(variant: Variant):
@@ -249,6 +252,8 @@ const skipped_properties = [
 func serialize_object(object: Object):
 	if object == null:
 		return null
+	if should_serialize_node_reference(object):
+		return serialize_node_reference(object)
 	var id = str(object.get_instance_id())
 	var reference = type_wrapped("Object", serialize_string(id))
 	if id in objects:
@@ -271,6 +276,15 @@ func serialize_object(object: Object):
 	if object is AnimatedSprite2D or object is AnimatedSprite3D:
 		properties["$is_playing"] = serialize_variant(object.is_playing())
 	return reference
+
+func should_serialize_node_reference(object: Object):
+	return \
+		object is Node and root is Node and \
+		object.is_inside_tree() and root.is_inside_tree() and \
+		not Utils.is_descendant(object, root)
+
+func serialize_node_reference(node: Node):
+	return type_wrapped("Node", serialize_node_path(node.get_path()))
 
 func serialize_signals(object: Object):
 	var signals = {}

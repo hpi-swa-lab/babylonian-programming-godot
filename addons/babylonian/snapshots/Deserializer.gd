@@ -82,6 +82,8 @@ func deserialize_type_wrapped(variant: Dictionary, parent = null):
 			return deserialize_node_path(value)
 		"Object":
 			return deserialize_object(value, parent)
+		"Node":
+			return deserialize_node_reference(value)
 		"Callable":
 			return deserialize_callable(value)
 		"Signal":
@@ -312,6 +314,10 @@ func set_key(object: Object, key: String, value: Variant):
 	if object is Camera2D and key == "custom_viewport" and value == null:
 		return
 	object.set(key, value)
+
+func deserialize_node_reference(variant: Dictionary):
+	var path = deserialize_node_path(unwrap(variant))
+	return tree.root.get_node(path)
 
 func deserialize_callable(variant: Dictionary):
 	var object = deserialize_variant(variant["object"])
