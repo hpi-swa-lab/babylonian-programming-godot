@@ -51,7 +51,7 @@ We currently support probes for colors, floats, strings and vectors. We automati
     - Perform the user input (e. g. jump around).
     - Press _Stop recording_ or <kbd>Ctrl</kbd>+<kbd>S</kbd>.
 7. The new example appears below the UI:
-    ![image](https://hackmd.io/_uploads/SyfWEySo6.png)
+    ![example slot](https://github.com/hpi-swa-lab/babylonian-programming-godot/assets/41512063/a23d0d37-d06a-44b9-b9f7-b8cd78f0594b)
     - The number (_1_) indicates the index of the example _slot_.
     - The parentheses indicate the mode of the example: _S_ stands for Snapshot and _R_ for Input Recording.
     - The _[last]_ brackets show the last used slot.
