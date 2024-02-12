@@ -249,8 +249,8 @@ const skipped_properties = [
 func serialize_object(object: Object):
 	if object == null:
 		return null
-	var id = object.get_instance_id()
-	var reference = type_wrapped("Object", serialize_int_value(id))
+	var id = str(object.get_instance_id())
+	var reference = type_wrapped("Object", serialize_string(id))
 	if id in objects:
 		return reference
 	var properties = {}

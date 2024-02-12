@@ -251,6 +251,7 @@ var node_setters = {
 }
 
 func deserialize_object(id: String):
+	id = deserialize_string(id)
 	if id in deserialized_objects:
 		return deserialized_objects[id]
 	var properties = objects[id]
