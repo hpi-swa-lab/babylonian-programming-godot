@@ -313,6 +313,8 @@ func set_is_playing(node: Node, is_playing: bool):
 func set_key(object: Object, key: String, value: Variant):
 	if object is Camera2D and key == "custom_viewport" and value == null:
 		return
+	if key == "autoplay" and (object is AnimatedSprite2D or object is AudioStreamPlayer2D or object is VideoStreamPlayer or object is AnimatedSprite3D or object is AudioListener3D or object is AnimationPlayer or object is AudioStreamPlayer):
+		return
 	object.set(key, value)
 
 func deserialize_node_reference(variant: Dictionary):
