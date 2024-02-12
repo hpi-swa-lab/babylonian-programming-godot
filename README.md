@@ -17,7 +17,7 @@ Clone this repository and remove anything outside `addons/babylonian` that you d
 
 ## Demo
 
-<video src="./docs/demo.mp4"></video>
+https://github.com/hpi-swa-lab/babylonian-programming-godot/assets/41512063/44eb4ce2-2119-400b-b367-f0939ab6fe97
 
 ## How to use
 
