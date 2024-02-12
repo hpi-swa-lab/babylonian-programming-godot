@@ -95,7 +95,7 @@ func type_wrapped(type: String, value: Variant):
 	return {"$type": type, "$value": value}
 
 func serializer_error(type: String, value: Variant):
-	push_error("Cannot serialize " + value + " of type " + type)
+	push_error("Cannot serialize " + str(value) + " of type " + type)
 	return null
 
 func serialize_nil(variant):
