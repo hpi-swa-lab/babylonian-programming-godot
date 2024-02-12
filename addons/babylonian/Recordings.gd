@@ -1,5 +1,7 @@
 class_name Recordings extends Node
 
+var theme: Theme
+
 enum RecordMode {
 	NONE,
 	RECORD,
@@ -83,6 +85,7 @@ func add_stop_playback_button():
 		return
 	stop_playback_button = Button.new()
 	stop_playback_button.text = "Stop playback"
+	stop_playback_button.theme = theme
 	stop_playback_button.pressed.connect(self.stop_playback)
 	add_child(stop_playback_button)
 
@@ -95,6 +98,7 @@ func stop_playback():
 func do_recording():
 	var stop_button = Button.new()
 	stop_button.text = "Stop recording"
+	stop_button.theme = theme
 	# TODO: positioning
 	add_child(stop_button)
 	start_recording()

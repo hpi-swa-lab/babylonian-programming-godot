@@ -1,4 +1,4 @@
-class_name Examples extends Node
+class_name Examples extends Control
 
 const examples_path = "res://examples"
 
@@ -17,6 +17,7 @@ func _ready():
 	for child in [snapshots, recordings]:
 		add_child(child)
 	recordings.looped_playback_ended.connect(self.looped_playback_ended)
+	recordings.theme = theme
 
 func create_example(snapshot, recording):
 	return {
