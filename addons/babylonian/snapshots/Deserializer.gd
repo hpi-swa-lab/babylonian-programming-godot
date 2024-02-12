@@ -254,6 +254,7 @@ var special_setters = {
 	"$signals": set_signals,
 	"$groups": set_groups,
 	"$is_playing": set_is_playing,
+	"$is_stopped": set_is_stopped,
 }
 
 func deserialize_object(id: String, parent: Node = null):
@@ -280,6 +281,10 @@ func deserialize_object(id: String, parent: Node = null):
 		set_properties.call_deferred()
 	else:
 		set_properties.call()
+	# Godot causes a crash without any errors in some games otherwise
+	if object is AnimationPlayer:
+		for library_name in object.get_animation_library_list():
+			object.remove_animation_library(library_name)
 	return object
 
 func set_children(node: Node, children: Array):
@@ -287,16 +292,20 @@ func set_children(node: Node, children: Array):
 		node.remove_child(child)
 	deserialize_variant(children, node)
 
+var skipped_signals = ["child_order_changed", "item_rect_changed"]
+
 func set_signals(object: Object, signals: Dictionary):
 	for signal_description in object.get_signal_list():
 		var name = signal_description["name"]
 		var connections = object.get_signal_connection_list(name)
 		for connection in connections:
-			object.disconnect(name, connection["callable"])
+			if name not in skipped_signals:
+				object.disconnect(name, connection["callable"])
 	for name in signals:
 		var connections = signals[name]
 		for connection in connections:
-			object.connect(name, connection["callable"], connection["flags"])
+			if name not in skipped_signals:
+				object.connect(name, connection["callable"], connection["flags"])
 
 func set_groups(node: Node, groups: Array):
 	for group in node.get_groups():
@@ -309,6 +318,12 @@ func set_is_playing(node: Node, is_playing: bool):
 		node.play()
 	else:
 		node.stop()
+
+func set_is_stopped(node: Timer, is_stopped: bool):
+	if is_stopped:
+		node.stop()
+	else:
+		node.start()
 
 func set_key(object: Object, key: String, value: Variant):
 	if object is Camera2D and key == "custom_viewport" and value == null:

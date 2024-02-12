@@ -273,8 +273,10 @@ func serialize_object(object: Object):
 	if object is Node:
 		properties["$children"] = serialize_variant(object.get_children())
 		properties["$groups"] = serialize_variant(object.get_groups())
-	if object is AnimatedSprite2D or object is AnimatedSprite3D:
+	if object is AnimatedSprite2D or object is AnimatedSprite3D or object is AnimationPlayer:
 		properties["$is_playing"] = serialize_variant(object.is_playing())
+	if object is Timer:
+		properties["$is_stopped"] = serialize_variant(object.is_stopped())
 	return reference
 
 func should_serialize_node_reference(object: Object):
