@@ -264,10 +264,21 @@ func serialize_object(object: Object):
 			continue
 		var value = object.get(key)
 		properties[key] = serialize_variant(value)
+	properties["$signals"] = serialize_signals(object)
 	if object is Node:
 		properties["$children"] = serialize_variant(object.get_children())
 		properties["$groups"] = serialize_variant(object.get_groups())
 	return reference
+
+func serialize_signals(object: Object):
+	var signals = {}
+	for signal_description in object.get_signal_list():
+		var name = signal_description["name"]
+		var connections = object.get_signal_connection_list(name)
+		if len(connections) == 0:
+			continue
+		signals[name] = connections
+	return serialize_variant(signals)
 
 func serialize_callable(variant: Callable):
 	return type_wrapped("Callable", {

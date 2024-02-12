@@ -247,6 +247,7 @@ func deserialize_rid(variant: Variant):
 
 var node_setters = {
 	"$children": set_children,
+	"$signals": set_signals,
 	"$groups": set_groups,
 }
 
@@ -273,6 +274,17 @@ func set_children(node: Node, children: Array):
 		node.remove_child(child)
 	for child in children:
 		node.add_child(child)
+
+func set_signals(object: Object, signals: Dictionary):
+	for signal_description in object.get_signal_list():
+		var name = signal_description["name"]
+		var connections = object.get_signal_connection_list(name)
+		for connection in connections:
+			object.disconnect(name, connection["callable"])
+	for name in signals:
+		var connections = signals[name]
+		for connection in connections:
+			object.connect(name, connection["callable"], connection["flags"])
 
 func set_groups(node: Node, groups: Array):
 	for group in node.get_groups():
