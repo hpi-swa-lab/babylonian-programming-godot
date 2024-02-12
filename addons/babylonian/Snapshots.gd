@@ -16,4 +16,5 @@ func restore_snapshot(snapshot):
 	parent.remove_child(current)
 	var restored = Deserializer.deserialize_json(snapshot, parent)
 	parent.move_child(restored, index)
+	current.queue_free()
 	set_snapshot_target(restored)
