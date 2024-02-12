@@ -268,6 +268,8 @@ func serialize_object(object: Object):
 	if object is Node:
 		properties["$children"] = serialize_variant(object.get_children())
 		properties["$groups"] = serialize_variant(object.get_groups())
+	if object is AnimatedSprite2D or object is AnimatedSprite3D:
+		properties["$is_playing"] = serialize_variant(object.is_playing())
 	return reference
 
 func serialize_signals(object: Object):

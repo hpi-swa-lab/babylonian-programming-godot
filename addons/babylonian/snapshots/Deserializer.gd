@@ -249,6 +249,7 @@ var node_setters = {
 	"$children": set_children,
 	"$signals": set_signals,
 	"$groups": set_groups,
+	"$is_playing": set_is_playing,
 }
 
 func deserialize_object(id: String):
@@ -291,6 +292,12 @@ func set_groups(node: Node, groups: Array):
 		node.remove_from_group(group)
 	for group in groups:
 		node.add_to_group(group)
+
+func set_is_playing(node: Node, is_playing: bool):
+	if is_playing:
+		node.play()
+	else:
+		node.stop()
 
 func set_key(object: Object, key: String, value: Variant):
 	if object is Camera2D and key == "custom_viewport" and value == null:
