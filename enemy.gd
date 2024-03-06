@@ -26,6 +26,9 @@ func _physics_process(delta):
 		velocity.x = direction * SPEED
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
+	
+	
+	B.game_probe(velocity, self)
 
 	move_and_slide()
 

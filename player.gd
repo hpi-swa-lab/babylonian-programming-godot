@@ -14,9 +14,10 @@ func _ready():
 
 func _physics_process(delta):
 	# Add the gravity.
+	
+	B.game_probe(abs(velocity))
 	B.probe(abs(velocity.x))
-
-
+	B.probe(Color.HOT_PINK)
 
 	if not is_on_floor():
 		velocity.y += gravity * delta
@@ -25,10 +26,6 @@ func _physics_process(delta):
 		$Sprite.animation = "walk"
 	else:
 		$Sprite.animation = "stand"
-
-	B.probe(velocity)
-
-	B.probe($Sprite.animation)
 
 	# Handle Jump.
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
@@ -39,10 +36,10 @@ func _physics_process(delta):
 	var direction = Input.get_axis("ui_left", "ui_right")
 	if direction:
 		velocity.x = B.probe(direction) * SPEED
+		velocity.x = direction * SPEED
 	else:
 		velocity.x = lerp(velocity.x, 0.0, 0.2)
 
-	B.probe(Color.hex(0x16622ff))
 
 	if move_and_slide():
 		for i in get_slide_collision_count():
@@ -50,12 +47,7 @@ func _physics_process(delta):
 			var collider = collision.get_collider()
 			if collider is RigidBody2D:
 				var force = (2 * Vector2.UP - collision.get_normal()) * velocity.length()
-				B.probe(collider.name)
-
-				B.probe(force)
-
-				B.probe(str(force.length()))
-				B.probe(Color.hex(0xcff00ff))
+				
 
 				collider.apply_force(force)
 
