@@ -1,15 +1,23 @@
-[gd_scene load_steps=6 format=3 uid="uid://cb6dsf0prkabc"]
+[gd_scene load_steps=8 format=3 uid="uid://cb6dsf0prkabc"]
 
+[ext_resource type="Texture2D" uid="uid://8tvo5h3a4fiq" path="res://Universitetshusetmedmagnolior21.jpg" id="1_2k25i"]
 [ext_resource type="PackedScene" uid="uid://b32bqgjmfmd0h" path="res://player.tscn" id="1_ucqkw"]
 [ext_resource type="PackedScene" uid="uid://d3j3msm2jiigd" path="res://block.tscn" id="2_7ah1a"]
 [ext_resource type="PackedScene" uid="uid://bc48xekaedh6e" path="res://enemy.tscn" id="4_onwt2"]
 [ext_resource type="PackedScene" uid="uid://hh1xymp2mv5r" path="res://spike.tscn" id="5_4plkg"]
 [ext_resource type="PackedScene" uid="uid://cd2kr4abyrbqt" path="res://column.tscn" id="6_u1s8i"]
+[ext_resource type="PackedScene" uid="uid://bo3maphx2epbo" path="res://block_small.tscn" id="7_aj81j"]
 
 [node name="platformer" type="Node2D"]
 
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+visibility_layer = 2
+position = Vector2(6977, 277)
+scale = Vector2(0.514358, 0.514358)
+texture = ExtResource("1_2k25i")
+
 [node name="Player" parent="." instance=ExtResource("1_ucqkw")]
-position = Vector2(130, 456)
+position = Vector2(340, 446)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2(89.2, -26.4)
@@ -21,85 +29,85 @@ position_smoothing_speed = 3.0
 position = Vector2(-22, 672)
 
 [node name="Blocks2" parent="." instance=ExtResource("2_7ah1a")]
-position = Vector2(1581, 672)
+position = Vector2(1421, 502)
 
 [node name="Blocks3" parent="." instance=ExtResource("2_7ah1a")]
-position = Vector2(3061, 552)
+position = Vector2(2861, 696)
 
 [node name="Blocks4" parent="." instance=ExtResource("2_7ah1a")]
-position = Vector2(4584, 939)
+position = Vector2(4358, 592)
 
 [node name="Blocks5" parent="." instance=ExtResource("2_7ah1a")]
-position = Vector2(6275, 885)
+position = Vector2(6634, 515)
 
 [node name="Blocks6" parent="." instance=ExtResource("2_7ah1a")]
-position = Vector2(6275, 241)
+position = Vector2(6634, -129)
 
 [node name="Enemy" parent="." instance=ExtResource("4_onwt2")]
-position = Vector2(4744, 856)
+position = Vector2(4518, 509)
 
 [node name="Enemy2" parent="." instance=ExtResource("4_onwt2")]
-position = Vector2(4902, 856)
+position = Vector2(4676, 509)
 
 [node name="Enemy3" parent="." instance=ExtResource("4_onwt2")]
-position = Vector2(5061, 856)
+position = Vector2(4835, 509)
 
 [node name="Enemy4" parent="." instance=ExtResource("4_onwt2")]
-position = Vector2(5223, 856)
+position = Vector2(4997, 509)
 
 [node name="Enemy5" parent="." instance=ExtResource("4_onwt2")]
-position = Vector2(5382, 856)
+position = Vector2(5156, 509)
 
 [node name="Enemy6" parent="." instance=ExtResource("4_onwt2")]
-position = Vector2(2568, 587)
+position = Vector2(3792, 557)
 
 [node name="Spike" parent="." instance=ExtResource("5_4plkg")]
-position = Vector2(472, 90)
+position = Vector2(3246, 482)
 
 [node name="Spike2" parent="." instance=ExtResource("5_4plkg")]
-position = Vector2(536, 90)
+position = Vector2(3310, 482)
 
 [node name="Spike3" parent="." instance=ExtResource("5_4plkg")]
-position = Vector2(599, 90)
+position = Vector2(3373, 482)
 
 [node name="Spike4" parent="." instance=ExtResource("5_4plkg")]
-position = Vector2(664, 90)
+position = Vector2(3438, 482)
 
 [node name="Spike5" parent="." instance=ExtResource("5_4plkg")]
-position = Vector2(729, 90)
+position = Vector2(3503, 482)
 
 [node name="Spike6" parent="." instance=ExtResource("5_4plkg")]
-position = Vector2(793, 90)
+position = Vector2(3567, 482)
 
 [node name="Spike7" parent="." instance=ExtResource("5_4plkg")]
-position = Vector2(856, 90)
+position = Vector2(3630, 482)
 
 [node name="Spike8" parent="." instance=ExtResource("5_4plkg")]
-position = Vector2(921, 90)
+position = Vector2(3695, 482)
 
 [node name="Spike9" parent="." instance=ExtResource("5_4plkg")]
-position = Vector2(1624, 256)
+position = Vector2(1700, 316)
 
 [node name="Spike10" parent="." instance=ExtResource("5_4plkg")]
-position = Vector2(1688, 256)
+position = Vector2(1764, 316)
 
 [node name="Spike11" parent="." instance=ExtResource("5_4plkg")]
-position = Vector2(1751, 256)
+position = Vector2(1827, 316)
 
 [node name="Spike12" parent="." instance=ExtResource("5_4plkg")]
-position = Vector2(1816, 256)
+position = Vector2(1892, 316)
 
 [node name="Spike13" parent="." instance=ExtResource("5_4plkg")]
-position = Vector2(1881, 256)
+position = Vector2(1957, 316)
 
 [node name="Spike14" parent="." instance=ExtResource("5_4plkg")]
-position = Vector2(1945, 256)
+position = Vector2(2021, 316)
 
 [node name="Spike15" parent="." instance=ExtResource("5_4plkg")]
-position = Vector2(2008, 256)
+position = Vector2(2084, 316)
 
 [node name="Spike16" parent="." instance=ExtResource("5_4plkg")]
-position = Vector2(2073, 256)
+position = Vector2(2149, 316)
 
 [node name="Spike17" parent="." instance=ExtResource("5_4plkg")]
 position = Vector2(2726, -94)
@@ -126,34 +134,37 @@ position = Vector2(3110, -94)
 position = Vector2(3175, -94)
 
 [node name="Spike25" parent="." instance=ExtResource("5_4plkg")]
-position = Vector2(4077, 223)
+position = Vector2(3972, -98)
 
 [node name="Spike26" parent="." instance=ExtResource("5_4plkg")]
-position = Vector2(4141, 223)
+position = Vector2(4036, -98)
 
 [node name="Spike27" parent="." instance=ExtResource("5_4plkg")]
-position = Vector2(4204, 223)
+position = Vector2(4099, -98)
 
 [node name="Spike28" parent="." instance=ExtResource("5_4plkg")]
-position = Vector2(4269, 223)
+position = Vector2(4164, -98)
 
 [node name="Spike29" parent="." instance=ExtResource("5_4plkg")]
-position = Vector2(4334, 223)
+position = Vector2(4229, -98)
 
 [node name="Spike30" parent="." instance=ExtResource("5_4plkg")]
-position = Vector2(4398, 223)
+position = Vector2(4293, -98)
 
 [node name="Spike31" parent="." instance=ExtResource("5_4plkg")]
-position = Vector2(4461, 223)
+position = Vector2(4356, -98)
 
 [node name="Spike32" parent="." instance=ExtResource("5_4plkg")]
-position = Vector2(4526, 223)
+position = Vector2(4421, -98)
 
 [node name="Spike33" parent="." instance=ExtResource("5_4plkg")]
-position = Vector2(6137, 481)
+position = Vector2(6496, 111)
 
 [node name="Spike34" parent="." instance=ExtResource("5_4plkg")]
-position = Vector2(6202, 481)
+position = Vector2(6561, 111)
 
 [node name="Blocks7" parent="." instance=ExtResource("6_u1s8i")]
-position = Vector2(6275, 645)
+position = Vector2(6634, 275)
+
+[node name="Blocks8" parent="." instance=ExtResource("7_aj81j")]
+position = Vector2(5920, 500)

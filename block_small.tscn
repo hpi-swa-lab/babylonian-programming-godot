@@ -1,0 +1,205 @@
+[gd_scene load_steps=3 format=3 uid="uid://bo3maphx2epbo"]
+
+[ext_resource type="Texture2D" uid="uid://dowurx3cji8oy" path="res://block.png" id="1_0ki02"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_psdxy"]
+size = Vector2(96, 64)
+
+[node name="Blocks" type="StaticBody2D"]
+scale = Vector2(5, 5)
+
+[node name="Sprite33" type="Sprite2D" parent="."]
+texture_filter = 1
+texture_repeat = 2
+position = Vector2(7.32422e-05, 32)
+texture = ExtResource("1_0ki02")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="Sprite34" type="Sprite2D" parent="."]
+texture_filter = 1
+texture_repeat = 2
+position = Vector2(16, 32)
+texture = ExtResource("1_0ki02")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="Sprite35" type="Sprite2D" parent="."]
+texture_filter = 1
+texture_repeat = 2
+position = Vector2(32, 32)
+texture = ExtResource("1_0ki02")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="Sprite36" type="Sprite2D" parent="."]
+texture_filter = 1
+texture_repeat = 2
+position = Vector2(48.0001, 32)
+texture = ExtResource("1_0ki02")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="Sprite37" type="Sprite2D" parent="."]
+texture_filter = 1
+texture_repeat = 2
+position = Vector2(64.0001, 32)
+texture = ExtResource("1_0ki02")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="Sprite38" type="Sprite2D" parent="."]
+texture_filter = 1
+texture_repeat = 2
+position = Vector2(80, 32)
+texture = ExtResource("1_0ki02")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="Sprite49" type="Sprite2D" parent="."]
+texture_filter = 1
+texture_repeat = 2
+position = Vector2(7.32422e-05, 48)
+texture = ExtResource("1_0ki02")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="Sprite50" type="Sprite2D" parent="."]
+texture_filter = 1
+texture_repeat = 2
+position = Vector2(16.0001, 48)
+texture = ExtResource("1_0ki02")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="Sprite51" type="Sprite2D" parent="."]
+texture_filter = 1
+texture_repeat = 2
+position = Vector2(32.0001, 48)
+texture = ExtResource("1_0ki02")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="Sprite52" type="Sprite2D" parent="."]
+texture_filter = 1
+texture_repeat = 2
+position = Vector2(48.0001, 48)
+texture = ExtResource("1_0ki02")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="Sprite53" type="Sprite2D" parent="."]
+texture_filter = 1
+texture_repeat = 2
+position = Vector2(64.0001, 48)
+texture = ExtResource("1_0ki02")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="Sprite54" type="Sprite2D" parent="."]
+texture_filter = 1
+texture_repeat = 2
+position = Vector2(80.0001, 48)
+texture = ExtResource("1_0ki02")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="Sprite17" type="Sprite2D" parent="."]
+texture_filter = 1
+texture_repeat = 2
+position = Vector2(2.44141e-05, 16)
+texture = ExtResource("1_0ki02")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="Sprite18" type="Sprite2D" parent="."]
+texture_filter = 1
+texture_repeat = 2
+position = Vector2(16, 16)
+texture = ExtResource("1_0ki02")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="Sprite19" type="Sprite2D" parent="."]
+texture_filter = 1
+texture_repeat = 2
+position = Vector2(32, 16)
+texture = ExtResource("1_0ki02")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="Sprite20" type="Sprite2D" parent="."]
+texture_filter = 1
+texture_repeat = 2
+position = Vector2(48, 16)
+texture = ExtResource("1_0ki02")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="Sprite21" type="Sprite2D" parent="."]
+texture_filter = 1
+texture_repeat = 2
+position = Vector2(64, 16)
+texture = ExtResource("1_0ki02")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="Sprite22" type="Sprite2D" parent="."]
+texture_filter = 1
+texture_repeat = 2
+position = Vector2(80, 16)
+texture = ExtResource("1_0ki02")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("1_0ki02")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="Sprite2" type="Sprite2D" parent="."]
+texture_filter = 1
+texture_repeat = 2
+position = Vector2(16, 0)
+texture = ExtResource("1_0ki02")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="Sprite3" type="Sprite2D" parent="."]
+texture_filter = 1
+texture_repeat = 2
+position = Vector2(32, 0)
+texture = ExtResource("1_0ki02")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="Sprite4" type="Sprite2D" parent="."]
+texture_filter = 1
+texture_repeat = 2
+position = Vector2(48, 0)
+texture = ExtResource("1_0ki02")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="Sprite5" type="Sprite2D" parent="."]
+texture_filter = 1
+texture_repeat = 2
+position = Vector2(64, 0)
+texture = ExtResource("1_0ki02")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="Sprite6" type="Sprite2D" parent="."]
+texture_filter = 1
+texture_repeat = 2
+position = Vector2(80, 0)
+texture = ExtResource("1_0ki02")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(40, 24)
+shape = SubResource("RectangleShape2D_psdxy")
+metadata/_edit_lock_ = true

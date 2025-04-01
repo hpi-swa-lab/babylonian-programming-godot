@@ -2,7 +2,7 @@ class_name Player extends CharacterBody2D
 
 
 const SPEED = 500.0
-const JUMP_VELOCITY = -600.0
+const JUMP_VELOCITY = -780.0
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -15,9 +15,15 @@ func _ready():
 func _physics_process(delta):
 	# Add the gravity.
 	
-	B.game_probe(abs(velocity))
-	B.probe(abs(velocity.x))
-	B.probe(Color.HOT_PINK)
+	# Probe Demos
+	#B.game_probe(abs(velocity))
+	#B.probe(abs(velocity.x))
+	#B.probe(Color.HOT_PINK)
+	#B.game_probe(velocity.y)
+	
+	
+	
+	
 
 	if not is_on_floor():
 		velocity.y += gravity * delta
@@ -35,11 +41,16 @@ func _physics_process(delta):
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var direction = Input.get_axis("ui_left", "ui_right")
 	if direction:
-		velocity.x = B.probe(direction) * SPEED
+		# DEMO
+		#velocity.x = B.probe(direction) * SPEED
 		velocity.x = direction * SPEED
 	else:
 		velocity.x = lerp(velocity.x, 0.0, 0.2)
 
+	# DEMO
+	#B.probe(velocity.x)
+	#B.game_probe(velocity.x)
+	#print(velocity.x)
 
 	if move_and_slide():
 		for i in get_slide_collision_count():
