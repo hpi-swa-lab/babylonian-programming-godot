@@ -1,10 +1,10 @@
 [gd_scene load_steps=6 format=3 uid="uid://cb6dsf0prkabc"]
 
-[ext_resource type="PackedScene" uid="uid://b32bqgjmfmd0h" path="res://player.tscn" id="1_ucqkw"]
-[ext_resource type="PackedScene" uid="uid://d3j3msm2jiigd" path="res://block.tscn" id="2_7ah1a"]
-[ext_resource type="PackedScene" uid="uid://bc48xekaedh6e" path="res://enemy.tscn" id="4_onwt2"]
-[ext_resource type="PackedScene" uid="uid://hh1xymp2mv5r" path="res://spike.tscn" id="5_4plkg"]
-[ext_resource type="PackedScene" uid="uid://cd2kr4abyrbqt" path="res://column.tscn" id="6_u1s8i"]
+[ext_resource type="PackedScene" uid="uid://b32bqgjmfmd0h" path="res://platformer1/player.tscn" id="1_ucqkw"]
+[ext_resource type="PackedScene" uid="uid://d3j3msm2jiigd" path="res://platformer1/block.tscn" id="2_7ah1a"]
+[ext_resource type="PackedScene" uid="uid://bc48xekaedh6e" path="res://platformer1/enemy.tscn" id="4_onwt2"]
+[ext_resource type="PackedScene" uid="uid://hh1xymp2mv5r" path="res://platformer1/spike.tscn" id="5_4plkg"]
+[ext_resource type="PackedScene" uid="uid://cd2kr4abyrbqt" path="res://platformer1/column.tscn" id="6_u1s8i"]
 
 [node name="platformer" type="Node2D"]
 

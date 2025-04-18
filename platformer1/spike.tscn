@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://hh1xymp2mv5r"]
 
-[ext_resource type="Texture2D" uid="uid://cd6cr1cgaph6r" path="res://spike.png" id="1_8wnwy"]
+[ext_resource type="Texture2D" uid="uid://cd6cr1cgaph6r" path="res://platformer1/spike.png" id="1_8wnwy"]
 
 [node name="Spike" type="StaticBody2D" groups=["spike"]]
 
