@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://bp85k8tbfdqk8"]
+
+[ext_resource type="Theme" uid="uid://brgv3slrtq5v1" path="res://addons/object-inspector/inspector_theme.tres" id="1_ypvp2"]
+[ext_resource type="Script" uid="uid://bqyqbwhc5tmoa" path="res://addons/object-inspector/scripts/inspector.gd" id="2_cq372"]
+
+[node name="HaloInspectorWindow" type="Window"]
+position = Vector2i(64, 36)
+size = Vector2i(256, 512)
+
+[node name="Inspector" type="VBoxContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("1_ypvp2")
+theme_type_variation = &"Inspector"
+alignment = 1
+script = ExtResource("2_cq372")
+usage_flags = 448

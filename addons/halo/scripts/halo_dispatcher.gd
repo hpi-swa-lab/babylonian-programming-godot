@@ -3,6 +3,8 @@ extends Node2D
 var halo_target: CanvasItem = null
 var halo: Node2D = null
 
+var show_tree_lines: bool = false
+
 const MOUSE_BUTTON: int = MOUSE_BUTTON_MIDDLE
 const UP_KEY: int = KEY_SHIFT
 const DOWN_KEY: int = KEY_CTRL
@@ -108,6 +110,7 @@ func find_target(root: Node, screen_pos: Vector2, go_up: bool, go_down: bool, ex
 
 func set_target(target: CanvasItem) -> void:
 	if self.halo:
+		self.halo.get_node("TreeVisibilityButton").button_down.disconnect(_on_tree_visibility_button_down)
 		self.halo.queue_free()
 		
 	self.halo_target = target
@@ -116,4 +119,10 @@ func set_target(target: CanvasItem) -> void:
 		self.halo = preload("res://addons/halo/scenes/halo.tscn").instantiate()
 		self.halo_target.add_child(self.halo)
 		self.halo.set_target(self.halo_target)
+		self.halo.set_tree_line_visibility(self.show_tree_lines)
+		self.halo.get_node("TreeVisibilityButton").button_down.connect(_on_tree_visibility_button_down)
+		
+func _on_tree_visibility_button_down() -> void:
+	self.show_tree_lines = not self.show_tree_lines
+	self.halo.set_tree_line_visibility(self.show_tree_lines)
 	
