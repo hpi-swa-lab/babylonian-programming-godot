@@ -53,6 +53,7 @@ script = ExtResource("1_d3xw1")
 [node name="DeleteButton" type="TextureButton" parent="."]
 self_modulate = Color(1, 0.270588, 0, 1)
 z_index = 128
+z_as_relative = false
 offset_left = -23.0
 offset_top = -22.0
 offset_right = 27.0
@@ -65,6 +66,7 @@ stretch_mode = 3
 [node name="MoveButton" type="TextureButton" parent="."]
 self_modulate = Color(1, 0.870588, 0.678431, 1)
 z_index = 128
+z_as_relative = false
 offset_left = 10.0
 offset_top = -22.0
 offset_right = 60.0
@@ -76,6 +78,7 @@ texture_normal = SubResource("AtlasTexture_18ah5")
 [node name="MoveVButton" type="TextureButton" parent="."]
 self_modulate = Color(1, 0.870588, 0.678431, 1)
 z_index = 128
+z_as_relative = false
 offset_left = 10.0
 offset_top = -10.0
 offset_right = 60.0
@@ -87,6 +90,7 @@ texture_normal = SubResource("AtlasTexture_7jlp7")
 [node name="MoveHButton" type="TextureButton" parent="."]
 self_modulate = Color(1, 0.870588, 0.678431, 1)
 z_index = 128
+z_as_relative = false
 offset_left = -3.0
 offset_top = -23.0
 offset_right = 47.0
@@ -98,6 +102,7 @@ texture_normal = SubResource("AtlasTexture_2otp5")
 [node name="InspectButton" type="TextureButton" parent="."]
 self_modulate = Color(1, 0.870588, 0.678431, 1)
 z_index = 128
+z_as_relative = false
 offset_left = -35.0
 offset_top = 19.0
 offset_right = 15.0
@@ -109,6 +114,7 @@ texture_normal = SubResource("AtlasTexture_d3xw1")
 [node name="TreeVisibilityButton" type="TextureButton" parent="."]
 self_modulate = Color(1, 0.870588, 0.678431, 1)
 z_index = 128
+z_as_relative = false
 offset_left = -42.0
 offset_top = 3.0
 offset_right = 8.0
@@ -120,6 +126,7 @@ texture_normal = SubResource("AtlasTexture_27p3b")
 [node name="RotateButton" type="TextureButton" parent="."]
 self_modulate = Color(1, 0.870588, 0.678431, 1)
 z_index = 128
+z_as_relative = false
 offset_left = -42.0
 offset_top = 3.0
 offset_right = 8.0
@@ -131,6 +138,7 @@ texture_normal = SubResource("AtlasTexture_0yywk")
 [node name="ResetRotationButton" type="TextureButton" parent="."]
 self_modulate = Color(1, 0.870588, 0.678431, 1)
 z_index = 128
+z_as_relative = false
 offset_left = -42.0
 offset_top = 3.0
 offset_right = 8.0
@@ -142,6 +150,7 @@ texture_normal = SubResource("AtlasTexture_uj1vl")
 [node name="NameTag" type="Label" parent="."]
 self_modulate = Color(1, 0.870588, 0.678431, 1)
 z_index = 128
+z_as_relative = false
 offset_left = -12.0
 offset_top = 14.0
 offset_right = 28.0
@@ -151,6 +160,18 @@ text = "Test"
 label_settings = SubResource("LabelSettings_d3xw1")
 
 [node name="HaloInspectorWindow" parent="." instance=ExtResource("4_27p3b")]
+
+[node name="SelectionRect" type="ColorRect" parent="."]
+z_index = 127
+z_as_relative = false
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+color = Color(0, 0.658824, 1, 0.25098)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
 
 [connection signal="pressed" from="DeleteButton" to="." method="_on_delete_button_pressed"]
 [connection signal="button_down" from="MoveButton" to="." method="_on_move_button_button_down"]
