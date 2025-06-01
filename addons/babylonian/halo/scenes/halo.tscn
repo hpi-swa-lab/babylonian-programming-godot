@@ -177,7 +177,7 @@ z_as_relative = false
 offset_right = 40.0
 offset_bottom = 40.0
 mouse_filter = 2
-color = Color(0, 0.658824, 1, 0.25098)
+color = Color(0, 0.659, 1, 0.5)
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 offset_right = 40.0
