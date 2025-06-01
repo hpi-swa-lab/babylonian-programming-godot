@@ -25,7 +25,7 @@ var show_tree_lines: bool = false
 
 const RADIUS: float = 16.0
 const TREE_LINE_PARENT_COLOR: Color = Color.ORANGE
-const TREE_LINE_CHILD_COLOR: Color = Color.BLUE
+const TREE_LINE_CHILD_COLOR: Color = Color.DEEP_SKY_BLUE
 const TREE_LINE_CENTER_COLOR: Color = Color.ANTIQUE_WHITE
 const TREE_LINE_ALPHA: float = 0.8
 
@@ -39,10 +39,7 @@ var target_is_root: bool = false
 func set_target(target: CanvasItem, target_is_root: bool, additional_buttons: Array) -> void:
 	self.target = target
 	self.target_is_root = target_is_root
-	self.additional_buttons = additional_buttons
-	for button in additional_buttons:
-		if not self.is_ancestor_of(button):
-			self.add_child(button)
+	self.set_additional_buttons(additional_buttons)
 	
 	self.name_tag.text = self.target.name + " (" + str(self.get_depth()) + ")"
 	self.angle_tag.text = self.rotation_string()
@@ -53,15 +50,24 @@ func set_target(target: CanvasItem, target_is_root: bool, additional_buttons: Ar
 	var inspector = self.window.get_node("Inspector")
 	inspector.set_object(self.target)
 	
+	self.set_button_visibility()
+	
+	self.place_buttons()
+	self.reposition()
+	self.place_tree_lines()
+	
+func set_additional_buttons(additional_buttons: Array) -> void:
+	self.additional_buttons = additional_buttons
+	for button in additional_buttons:
+		if not self.is_ancestor_of(button):
+			self.add_child(button)
+	
+func set_button_visibility() -> void:
 	self.move_button.visible = not self.target_is_root
 	self.move_v_button.visible = not self.target_is_root
 	self.move_h_button.visible = not self.target_is_root
 	self.rotate_button.visible = not self.target_is_root
 	self.reset_rotation_button.visible = not self.target_is_root
-	
-	self.place_buttons()
-	self.reposition()
-	self.place_tree_lines()
 	
 func rotation_string() -> String:
 	return str(int(360 * self.target.rotation / (2 * PI)))
@@ -88,8 +94,8 @@ func set_tree_line_visibility(visibility: bool) -> void:
 	self.show_tree_lines = visibility
 	for tree_line in self.tree_lines:
 		tree_line.visible = visibility
-	
-func place_buttons() -> void:
+		
+func fill_button_array() -> void:
 	self.buttons = []
 	if not self.target_is_root:
 		self.buttons.append_array([
@@ -106,6 +112,7 @@ func place_buttons() -> void:
 	])
 	self.buttons.append_array(self.additional_buttons)
 	
+func position_buttons() -> void:
 	for i in buttons.size():
 		var angle: float = i * 2 * PI / buttons.size()
 		buttons[i].position = Vector2(
@@ -121,6 +128,7 @@ func place_buttons() -> void:
 		-sin(1.5 * PI) * RADIUS
 	) + Vector2(-string_size.x / 2, string_size.y)
 	
+func position_tags() -> void:
 	self.angle_tag.position = Vector2(
 		2 * cos(PI) * RADIUS,
 		0
@@ -129,25 +137,36 @@ func place_buttons() -> void:
 		1.5 * cos(0) * RADIUS,
 		0
 	)
-		
+	
+func place_buttons() -> void:
+	self.fill_button_array()
+	self.position_buttons()
+	self.position_tags()
+	
 func reposition() -> void:
 	if not self.target_is_root:
 		self.global_position = self.target.global_position
 	else:
 		self.global_position = Vector2.ZERO
 		
+	self.place_area_rect()
+		
+func place_area_rect() -> void:
 	if self.target is Control:
 		self.selection_rect.size = self.target.get_global_rect().size
 		self.selection_rect.global_position = self.target.global_position - self.selection_rect.size / 2
 		self.selection_rect.visible = true
+		
 	elif self.target is Sprite2D:
 		self.selection_rect.size = self.target.texture.get_size()
 		self.selection_rect.global_position = self.target.global_position - self.selection_rect.size / 2
 		self.selection_rect.visible = true
+		
 	elif self.target is CollisionShape2D:
 		self.selection_rect.size = self.target.shape.get_rect().size
 		self.selection_rect.global_position = self.target.global_position - self.selection_rect.size / 2
 		self.selection_rect.visible = true
+		
 	else:
 		self.selection_rect.visible = false
 	
@@ -167,10 +186,15 @@ func place_tree_line(node: CanvasItem, is_parent: bool = false):
 	self.tree_lines.append(tree_line)
 	
 func place_tree_lines() -> void:
+	# remove old tree lines
 	for tree_line in self.tree_lines:
 		tree_line.queue_free()
 	self.tree_lines.clear()
 	
+	self.place_children_tree_lines()
+	self.place_parent_tree_line()
+	
+func place_children_tree_lines() -> void:
 	var queue: Array = self.target.get_children()
 	while not queue.is_empty():
 		var child: Node = queue.pop_front()
@@ -178,7 +202,8 @@ func place_tree_lines() -> void:
 			self.place_tree_line(child)
 		elif child is not Halo:
 			queue.append_array(child.get_children())
-	
+			
+func place_parent_tree_line() -> void:
 	var parent: Node = self.target.get_parent()
 	if parent:
 		while parent is not CanvasItem:
@@ -188,8 +213,7 @@ func place_tree_lines() -> void:
 	if parent:
 		self.place_tree_line(parent, true)
 		
-
-func perform_dragging() -> void:
+func perform_dragging_translation() -> void:
 	var button: TextureButton = null
 	if self.dragging:
 		button = self.move_button
@@ -198,12 +222,7 @@ func perform_dragging() -> void:
 	elif self.dragging_h:
 		button = self.move_h_button
 	if self.dragging or self.dragging_h or self.dragging_v:
-		var new_position: Vector2 = (
-			get_global_mouse_position() 
-			#- button.position - (
-				#button.size * button.scale
-			#) / 2
-		)
+		var new_position: Vector2 = get_global_mouse_position() 
 		if self.dragging:
 			self.target.global_position = new_position
 		elif self.dragging_v:
@@ -212,7 +231,8 @@ func perform_dragging() -> void:
 			self.target.global_position.x = new_position.x
 			
 		self.reposition()
-			
+		
+func perform_dragging_rotation() -> void:
 	if self.rotating:
 		var angle: float = atan2(
 			-self.target.global_position.y + get_global_mouse_position().y,
@@ -222,14 +242,20 @@ func perform_dragging() -> void:
 		var angle_offset: float = button_index * 2 * PI / buttons.size()
 		self.target.rotation = angle - angle_offset
 		
+func perform_dragging() -> void:
+	self.perform_dragging_translation()
+	self.perform_dragging_rotation()
+		
 func _process(delta: float) -> void:
 	self.perform_dragging()
 	self.reposition()
 	self.place_tree_lines()
+	self.set_state_strings()
 	
+func set_state_strings() -> void:
 	self.angle_tag.text = self.rotation_string()
 	self.position_tag.text = self.position_string()
-
+	
 func _on_delete_button_pressed() -> void:
 	target.queue_free()
 	self.queue_free()
