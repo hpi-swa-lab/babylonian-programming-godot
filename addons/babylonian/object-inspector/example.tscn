@@ -1,0 +1,472 @@
+[gd_scene load_steps=4 format=3 uid="uid://bm2diaagh617j"]
+
+[ext_resource type="Theme" uid="uid://brgv3slrtq5v1" path="res://addons/babylonian/object-inspector/inspector_theme.tres" id="1_l7vgg"]
+[ext_resource type="Script" uid="uid://bqyqbwhc5tmoa" path="res://addons/babylonian/object-inspector/scripts/inspector.gd" id="2_fnmlx"]
+
+[sub_resource type="GDScript" id="example_script"]
+script/source = "# Copyright (c) 2022-2025 Mansur Isaev and contributors - MIT License
+# See `LICENSE.md` included in the source distribution for details.
+
+@tool
+extends PanelContainer
+
+
+const READ_ONLY = PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_READ_ONLY
+
+
+class ExampleObject extends RefCounted:
+	enum Type {
+		BOOL,
+		INT,
+		FLOAT,
+		STRING,
+		STRING_NAME,
+		COLOR,
+		VECTOR_2,
+		VECTOR_2I,
+		VECTOR_3,
+		VECTOR_3I,
+		MAX,
+	}
+
+	const ARRAY_MAX_SIZE = 10_000
+	const DICT_MAX_SIZE = 1_000
+
+	@export_category(\"Simple Types\")
+
+	@export_group(\"Boolean\")
+	@export var boolean: bool = randi() % 2
+	@export_custom(PROPERTY_HINT_NONE, \"\", READ_ONLY)
+	var boolean_readonly: bool = randi() % 2
+
+	@export_group(\"Integer\")
+	@export var integer: int = randi()
+	@export_custom(PROPERTY_HINT_NONE, \"\", READ_ONLY)
+	var integer_readonly: int = randi() % 100
+
+	@export_range(0, 1000) var integer_range: int = randi_range(0, 1000)
+	@export_range(0, 1000, 10) var integer_range_step: int = snappedi(randi_range(0, 1000), 10)
+
+	@export_group(\"Float\")
+	@export var floating_point: float = randf_range(-100_000, 100_000)
+	@export_custom(PROPERTY_HINT_NONE, \"\", READ_ONLY)
+	var floating_point_readonly: float = randf_range(-100_000, 100_000)
+
+	@export_range(0.0, 100.0) var float_range: float = randf_range(0.0, 100.0)
+	@export_range(0.0, 1.0, 0.1) var float_range_step: float = snappedf(randf(), 0.1)
+
+	@export_group(\"String\")
+	@export var string: String = \"The quick brown fox jumps over the lazy dog\"
+	@export_custom(PROPERTY_HINT_NONE, \"\", READ_ONLY)
+	var string_readonly: String = \"The quick brown fox jumps over the lazy dog\"
+
+	@export var string_name: StringName = \"%05X\" % randi_range(0, 1000)
+	@export_custom(PROPERTY_HINT_NONE, \"\", READ_ONLY)
+	var string_name_readonly: StringName = \"%05X\" % randi_range(0, 1000)
+
+	@export_group(\"Color\")
+	@export var color: Color = Color(randf(), randf(), randf(), 0.5)
+	@export_custom(PROPERTY_HINT_NONE, \"\", READ_ONLY)
+	var color_readonly: Color = Color(randf(), randf(), randf(), 0.5)
+
+	@export_color_no_alpha var color_no_alpha: Color = Color(randf(), randf(), randf())
+	@export_custom(PROPERTY_HINT_NONE + PROPERTY_HINT_COLOR_NO_ALPHA, \"\", READ_ONLY)
+	var color_no_alpha_readonly: Color = Color(randf(), randf(), randf())
+
+	@export_group(\"Vector2\")
+	@export var vector_2 := Vector2(randf(), randf())
+	@export_custom(PROPERTY_HINT_NONE, \"\", READ_ONLY)
+	var vector_2_readonly := Vector2(randf(), randf())
+
+	@export var vector_2i := Vector2i(randi(), randi())
+	@export_custom(PROPERTY_HINT_NONE, \"\", READ_ONLY)
+	var vector_2i_readonly := Vector2i(randi(), randi())
+
+	@export_group(\"Vector2\")
+	@export var vector_3 := Vector3(randf(), randf(), randf())
+	@export_custom(PROPERTY_HINT_NONE, \"\", READ_ONLY)
+	var vector_3_readonly := Vector3(randf(), randf(), randf())
+
+	@export var vector_3i := Vector3i(randi(), randi(), randi())
+	@export_custom(PROPERTY_HINT_NONE, \"\", READ_ONLY)
+	var vector_3i_readonly := Vector3i(randi(), randi(), randi())
+
+	@export_group(\"Enum\")
+	@export var enumeration: Type = randi_range(Type.BOOL, Type.MAX)
+
+	@export_group(\"Flags\")
+	@export_flags(\"One\", \"Two\", \"Three\", \"Four\", \"Five\") var flags := 0
+
+	@export_category(\"Arrays\")
+	@export_group(\"Untyped\")
+	@export var untyped: Array = random_array()
+	@export_custom(PROPERTY_HINT_NONE, \"\", READ_ONLY)
+	var untyped_readonly: Array = random_array()
+
+	@export_group(\"Typed\")
+	@export_subgroup(\"Editable\")
+	@export var array_bool: Array[bool] = random_typed_array(Type.BOOL)
+	@export var array_int: Array[int] = random_typed_array(Type.INT)
+	@export var array_float: Array[float] = random_typed_array(Type.FLOAT)
+	@export var array_string: Array[String] = random_typed_array(Type.STRING)
+	@export var array_string_name: Array[StringName] = random_typed_array(Type.STRING_NAME)
+	@export var array_color: Array[Color] = random_typed_array(Type.COLOR)
+	@export var array_vector_2: Array[Vector2] = random_typed_array(Type.VECTOR_2)
+	@export var array_vector_2i: Array[Vector2i] = random_typed_array(Type.VECTOR_2I)
+	@export var array_vector_3: Array[Vector3] = random_typed_array(Type.VECTOR_3)
+	@export var array_vector_3i: Array[Vector3i] = random_typed_array(Type.VECTOR_3I)
+
+	@export_subgroup(\"Read-only\")
+	@export_custom(PROPERTY_HINT_NONE, \"\", READ_ONLY)
+	var array_bool_readonly: Array[bool] = random_typed_array(Type.BOOL)
+
+	@export_custom(PROPERTY_HINT_NONE, \"\", READ_ONLY)
+	var array_int_readonly: Array[int] = random_typed_array(Type.INT)
+
+	@export_custom(PROPERTY_HINT_NONE, \"\", READ_ONLY)
+	var array_float_readonly: Array[float] = random_typed_array(Type.FLOAT)
+
+	@export_custom(PROPERTY_HINT_NONE, \"\", READ_ONLY)
+	var array_string_readonly: Array[String] = random_typed_array(Type.STRING)
+
+	@export_custom(PROPERTY_HINT_NONE, \"\", READ_ONLY)
+	var array_string_name_readonly: Array[StringName] = random_typed_array(Type.STRING_NAME)
+
+	@export_custom(PROPERTY_HINT_NONE, \"\", READ_ONLY)
+	var array_color_readonly: Array[Color] = random_typed_array(Type.COLOR)
+
+	@export_custom(PROPERTY_HINT_NONE, \"\", READ_ONLY)
+	var array_vector_2_readonly: Array[Vector2] = random_typed_array(Type.VECTOR_2)
+
+	@export_custom(PROPERTY_HINT_NONE, \"\", READ_ONLY)
+	var array_vector_2i_readonly: Array[Vector2i] = random_typed_array(Type.VECTOR_2I)
+
+	@export_custom(PROPERTY_HINT_NONE, \"\", READ_ONLY)
+	var array_vector_3_readonly: Array[Vector3] = random_typed_array(Type.VECTOR_3)
+
+	@export_custom(PROPERTY_HINT_NONE, \"\", READ_ONLY)
+	var array_vector_3i_readonly: Array[Vector3i] = random_typed_array(Type.VECTOR_3I)
+
+	@export_group(\"Packed Arrays\")
+	@export_subgroup(\"Editable\")
+	@export var packed_byte: PackedByteArray
+	@export var packed_int_32: PackedInt32Array = random_typed_array(Type.INT)
+	@export var packed_int_64: PackedInt64Array = random_typed_array(Type.INT)
+	@export var packed_float_32: PackedFloat32Array = random_typed_array(Type.FLOAT)
+	@export var packed_float_64: PackedFloat64Array = random_typed_array(Type.FLOAT)
+	@export var packed_string: PackedStringArray = random_typed_array(Type.STRING)
+	@export var packed_color: PackedColorArray = random_typed_array(Type.COLOR)
+	@export var packed_vector_2: PackedVector2Array = random_typed_array(Type.VECTOR_2)
+	@export var packed_vector_3: PackedVector3Array = random_typed_array(Type.VECTOR_3)
+
+	@export_subgroup(\"Read-only\")
+	@export_custom(PROPERTY_HINT_NONE, \"\", READ_ONLY)
+	var packed_byte_readonly: PackedByteArray
+
+	@export_custom(PROPERTY_HINT_NONE, \"\", READ_ONLY)
+	var packed_int_32_readonly: PackedInt32Array = random_typed_array(Type.INT, true)
+
+	@export_custom(PROPERTY_HINT_NONE, \"\", READ_ONLY)
+	var packed_int_64_readonly: PackedInt64Array = random_typed_array(Type.INT, true)
+
+	@export_custom(PROPERTY_HINT_NONE, \"\", READ_ONLY)
+	var packed_float_32_readonly: PackedFloat32Array = random_typed_array(Type.FLOAT, true)
+
+	@export_custom(PROPERTY_HINT_NONE, \"\", READ_ONLY)
+	var packed_float_64_readonly: PackedFloat64Array = random_typed_array(Type.FLOAT, true)
+
+	@export_custom(PROPERTY_HINT_NONE, \"\", READ_ONLY)
+	var packed_string_readonly: PackedStringArray = random_typed_array(Type.STRING, true)
+
+	@export_custom(PROPERTY_HINT_NONE, \"\", READ_ONLY)
+	var packed_color_readonly: PackedColorArray = random_typed_array(Type.COLOR, true)
+
+	@export_custom(PROPERTY_HINT_NONE, \"\", READ_ONLY)
+	var packed_vector_2_readonly: PackedVector2Array = random_typed_array(Type.VECTOR_2, true)
+
+	@export_custom(PROPERTY_HINT_NONE, \"\", READ_ONLY)
+	var packed_vector_3_readonly: PackedVector3Array = random_typed_array(Type.VECTOR_3, true)
+
+	@export_category(\"Dictionary\")
+	@export_group(\"Untyped\")
+	@export var dictionary: Dictionary = random_dict()
+
+	@export_custom(PROPERTY_HINT_NONE, \"\", READ_ONLY)
+	var dictionary_readonly: Dictionary = random_dict(true)
+
+	@export_group(\"Typed\")
+	@export var dict_int_bool: Dictionary[int, bool] = random_typed_dict(Type.INT, Type.BOOL)
+	@export var dict_float_string: Dictionary[float, String] = random_typed_dict(Type.FLOAT, Type.STRING)
+
+	@export var dict_int_color: Dictionary[int, Color] = random_typed_dict(Type.INT, Type.COLOR)
+	@export var dict_string_name_color: Dictionary[StringName, Color] = random_typed_dict(Type.STRING_NAME, Type.COLOR)
+
+	@export var dict_vector2i_vector2: Dictionary[Vector2i, Vector2] = random_typed_dict(Type.VECTOR_2I, Type.VECTOR_2)
+	@export var dict_vector3i_vector3: Dictionary[Vector3i, Vector3] = random_typed_dict(Type.VECTOR_3I, Type.VECTOR_3)
+
+	@export_category(\"Buttons\")
+	@export_tool_button(\"Random int\") var random_int: Callable = func() -> void:
+		print(randi())
+
+	@export_tool_button(\"Random float\") var random_float := func() -> void:
+		print(randf())
+
+	# Example registers custom property descriptions.
+	static func _static_init() -> void:
+		Inspector.add_script_property_description(ExampleObject, \"boolean\", \"Toggleable boolean property.\")
+		Inspector.add_script_property_description(ExampleObject, \"boolean_readonly\", \"Read-only boolean property.\")
+		# Additional properties can be registered similarly as needed.
+
+	static func to_builtin_type(type: Type) -> Variant.Type:
+		match type:
+			Type.BOOL:
+				return TYPE_BOOL
+			Type.INT:
+				return TYPE_INT
+			Type.FLOAT:
+				return TYPE_FLOAT
+			Type.STRING:
+				return TYPE_STRING
+			Type.STRING_NAME:
+				return TYPE_STRING_NAME
+			Type.COLOR:
+				return TYPE_COLOR
+			Type.VECTOR_2:
+				return TYPE_VECTOR2
+			Type.VECTOR_2I:
+				return TYPE_VECTOR2I
+			Type.VECTOR_3:
+				return TYPE_VECTOR3
+			Type.VECTOR_3I:
+				return TYPE_VECTOR3I
+
+		return TYPE_NIL
+
+	static func random_value(type: Type) -> Variant:
+		match type:
+			Type.BOOL:
+				return bool(randi() % 2)
+			Type.INT:
+				return randi()
+			Type.FLOAT:
+				return randf()
+			Type.STRING:
+				return \"string %d\" % randi()
+			Type.STRING_NAME:
+				return StringName(\"%05X\" % randi())
+			Type.COLOR:
+				return Color(randf(), randf(), randf())
+			Type.VECTOR_2:
+				return Vector2(randf(), randf())
+			Type.VECTOR_2I:
+				return Vector2i(randi(), randi())
+			Type.VECTOR_3:
+				return Vector3(randf(), randf(), randf())
+			Type.VECTOR_3I:
+				return Vector3i(randi(), randi(), randi())
+
+		return null
+
+	static func random_array(readonly: bool = false) -> Array:
+		var array: Array = []
+		if array.resize(randi_range(0, ARRAY_MAX_SIZE)):
+			return array
+
+		for i: int in array.size():
+			array[i] = random_value(randi_range(Type.BOOL, Type.MAX - 1))
+
+		if readonly:
+			array.make_read_only()
+
+		return array
+
+	static func random_typed_array(type: int, readonly: bool = false) -> Array:
+		var array := Array([], to_builtin_type(type), &\"\", null)
+		if array.resize(randi_range(0, ARRAY_MAX_SIZE)):
+			return array
+
+		for i: int in array.size():
+			array[i] = random_value(type)
+
+		if readonly:
+			array.make_read_only()
+
+		return array
+
+	static func random_dict(readonly: bool = false) -> Dictionary:
+		var dict: Dictionary = {}
+
+		for t: Dictionary in InspectorPropertyType.get_type_list():
+			dict[t.name] = type_convert(null, t.type)
+
+		if readonly:
+			dict.make_read_only()
+
+		return dict
+
+	static func random_typed_dict(key_type: Type, value_type: Type, readonly: bool = false) -> Dictionary:
+		var dict := Dictionary({}, to_builtin_type(key_type), &\"\", null, to_builtin_type(value_type), &\"\", null)
+
+		for i: int in randi_range(0, DICT_MAX_SIZE):
+			dict[random_value(key_type)] = random_value(value_type)
+
+		if readonly:
+			dict.make_read_only()
+
+		return dict
+
+
+@onready var inspector: Inspector = $SplitContainer/PanelContainer/Inspector/Inspector
+
+
+func _on_open_pressed() -> void:
+	var object := ExampleObject.new()
+	inspector.set_object(object)
+
+
+func _on_close_pressed() -> void:
+	inspector.clear()
+
+
+func _on_update_pressed() -> void:
+	inspector.update_inspector()
+
+
+func _on_helper_pressed() -> void:
+	var data: Dictionary[StringName, Variant] = {
+		&\"name\": \"Name %d\" % randi(),
+		&\"description\": \"Description %d\" % randi(),
+		&\"price\": randi_range(0, 9999),
+		&\"rating\": snappedf(randf_range(0.0, 5.0), 0.01),
+		&\"color\": Color(randf(), randf(), randf())
+	}
+
+	var property_helper := PropertyHelper.new()
+	property_helper.add_category(\"PropertyHelper\")
+	property_helper.add_property(
+		\"name\",
+		TYPE_STRING,
+		PropertyHelper.dictionary_setter(data, &\"name\"),
+		PropertyHelper.dictionary_getter(data, &\"name\"),
+		\"[b]Item Name:[/b]\\n[i]A unique name to identify the item (e.g., 'Iron Sword').[/i]\"
+	)
+	property_helper.add_property(
+		\"description\",
+		TYPE_STRING,
+		PropertyHelper.dictionary_setter(data, &\"description\"),
+		PropertyHelper.dictionary_getter(data, &\"description\"),
+		\"[b]Item Description:[/b]\\n[i]Details about the item, like its purpose or lore.[/i]\",
+		PROPERTY_HINT_MULTILINE_TEXT,
+	)
+	property_helper.add_property(
+		\"price\",
+		TYPE_INT,
+		PropertyHelper.dictionary_setter(data, &\"price\"),
+		PropertyHelper.dictionary_getter(data, &\"price\"),
+		\"[b]Item Price:[/b]\\n[i]The item's value in in-game currency (e.g., '150 gold').[/i]\",
+		PROPERTY_HINT_RANGE,
+		PropertyHelper.range_to_hint_string(0, 9999, 1),
+	)
+	property_helper.add_property(
+		\"rating\",
+		TYPE_FLOAT,
+		PropertyHelper.dictionary_setter(data, &\"rating\"),
+		PropertyHelper.dictionary_getter(data, &\"rating\"),
+		\"[b]Item Rating:[/b]\\n[i]A float between [color=blue]0.0[/color] and [color=blue]5.0[/color] showing quality (e.g., '4.5').[/i]\",
+		PROPERTY_HINT_RANGE,
+		PropertyHelper.range_to_hint_string(0, 5, 0.01),
+	)
+	property_helper.add_property(
+		\"color\",
+		TYPE_COLOR,
+		PropertyHelper.dictionary_setter(data, &\"color\"),
+		PropertyHelper.dictionary_getter(data, &\"color\"),
+		\"[b]Item Color:[/b]\\n[i]The item's color.[/i]\",
+		PROPERTY_HINT_COLOR_NO_ALPHA,
+	)
+
+	property_helper.add_category(\"Buttons\")
+	property_helper.add_button(
+		\"Random int\",
+		func(): print(randi()),
+		\"\",
+		\"Prints random integer\"
+	)
+	property_helper.add_button(
+		\"Print Time\",
+		func(): print(Time.get_time_string_from_system()),
+		\"res://addons/object-inspector/icons/inspector.svg\",
+		\"Prints current system time\"
+	)
+
+	property_helper.property_changed.connect(prints)
+
+	inspector.set_object(property_helper)
+"
+
+[node name="Example" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("example_script")
+
+[node name="SplitContainer" type="HSplitContainer" parent="."]
+layout_mode = 2
+
+[node name="PanelContainer" type="TabContainer" parent="SplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.3
+current_tab = 0
+
+[node name="Inspector" type="VSplitContainer" parent="SplitContainer/PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+metadata/_tab_index = 0
+
+[node name="Inspector" type="VBoxContainer" parent="SplitContainer/PanelContainer/Inspector"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("1_l7vgg")
+theme_type_variation = &"Inspector"
+script = ExtResource("2_fnmlx")
+
+[node name="Buttons" type="HBoxContainer" parent="SplitContainer/PanelContainer/Inspector"]
+layout_mode = 2
+
+[node name="Open" type="Button" parent="SplitContainer/PanelContainer/Inspector/Buttons"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Open"
+
+[node name="Helper" type="Button" parent="SplitContainer/PanelContainer/Inspector/Buttons"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Helper"
+
+[node name="Update" type="Button" parent="SplitContainer/PanelContainer/Inspector/Buttons"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Update"
+
+[node name="Separator" type="VSeparator" parent="SplitContainer/PanelContainer/Inspector/Buttons"]
+layout_mode = 2
+
+[node name="Close" type="Button" parent="SplitContainer/PanelContainer/Inspector/Buttons"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Close"
+
+[node name="Placeholder" type="Label" parent="SplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+text = "PLACEHOLDER"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="SplitContainer/PanelContainer/Inspector/Buttons/Open" to="." method="_on_open_pressed"]
+[connection signal="pressed" from="SplitContainer/PanelContainer/Inspector/Buttons/Helper" to="." method="_on_helper_pressed"]
+[connection signal="pressed" from="SplitContainer/PanelContainer/Inspector/Buttons/Update" to="." method="_on_update_pressed"]
+[connection signal="pressed" from="SplitContainer/PanelContainer/Inspector/Buttons/Close" to="." method="_on_close_pressed"]

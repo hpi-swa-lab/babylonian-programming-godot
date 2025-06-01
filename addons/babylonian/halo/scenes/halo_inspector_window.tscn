@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bp85k8tbfdqk8"]
 
-[ext_resource type="Theme" uid="uid://brgv3slrtq5v1" path="res://addons/object-inspector/inspector_theme.tres" id="1_ypvp2"]
-[ext_resource type="Script" uid="uid://bqyqbwhc5tmoa" path="res://addons/object-inspector/scripts/inspector.gd" id="2_cq372"]
+[ext_resource type="Theme" uid="uid://brgv3slrtq5v1" path="res://addons/babylonian/object-inspector/inspector_theme.tres" id="1_ioplc"]
+[ext_resource type="Script" uid="uid://bqyqbwhc5tmoa" path="res://addons/babylonian/object-inspector/scripts/inspector.gd" id="2_aroim"]
 
 [node name="HaloInspectorWindow" type="Window"]
 position = Vector2i(64, 36)
@@ -16,8 +16,8 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme = ExtResource("1_ypvp2")
+theme = ExtResource("1_ioplc")
 theme_type_variation = &"Inspector"
 alignment = 1
-script = ExtResource("2_cq372")
+script = ExtResource("2_aroim")
 usage_flags = 448
