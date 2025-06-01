@@ -2,14 +2,14 @@ class_name TargetFinder extends RefCounted
 
 const MAX_DISTANCE: int = 32
 
-var dispatcher: HaloDispatcher
+var _dispatcher: HaloDispatcher
 
 func init(dispatcher: HaloDispatcher) -> TargetFinder:
-	self.dispatcher = dispatcher
+	self._dispatcher = dispatcher
 	return self
 
 func _get_world_position(screen_position: Vector2) -> Vector2:
-	var cam = self.dispatcher.get_viewport().get_camera_2d()
+	var cam = self._dispatcher.get_viewport().get_camera_2d()
 	if cam == null:
 		push_warning("No Camera2D found in viewport; cannot convert click to world coordinates.")
 		return Vector2.INF
@@ -17,7 +17,7 @@ func _get_world_position(screen_position: Vector2) -> Vector2:
 
 # Finds the first Area2D (CanvasItem) collider at a given world position.
 func _find_area_target(world_position: Vector2, root: Node, exclude_root: bool = false) -> CanvasItem:
-	var space_state = self.dispatcher.get_world_2d().direct_space_state
+	var space_state = self._dispatcher.get_world_2d().direct_space_state
 	var parameters: PhysicsPointQueryParameters2D = PhysicsPointQueryParameters2D.new()
 	parameters.position = world_position
 	parameters.collide_with_areas = true
