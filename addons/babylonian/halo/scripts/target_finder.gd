@@ -40,7 +40,7 @@ func _find_point_target(world_position: Vector2, root: Node, exclude_root: bool 
 	var best_target: CanvasItem = null
 	var best_distance = INF
 	
-	var queue: Array = [root]
+	var queue: Array[Node] = [root]
 	while not queue.is_empty():
 		var node: Node = queue.pop_front()
 		if node is Halo:

@@ -3,16 +3,16 @@ class_name UndoManager extends RefCounted
 const UNDO_KEY: int = KEY_Z
 const REDO_KEY: int = KEY_Y
 
-var undo_stack: Array = []
-var redo_stack: Array = []
+var undo_stack: Array[CanvasItem] = []
+var redo_stack: Array[CanvasItem] = []
 var set_target_callback: Callable
 
 func init(set_target_callback: Callable) -> UndoManager:
 	self.set_target_callback = set_target_callback
 	return self
 
-func _undo_redo(stack: Array, scene_root: Node, halo_target: CanvasItem) -> void:
-	var other_stack: Array = self.undo_stack if stack == self.redo_stack else self.redo_stack
+func _undo_redo(stack: Array[CanvasItem], scene_root: Node, halo_target: CanvasItem) -> void:
+	var other_stack: Array[CanvasItem] = self.undo_stack if stack == self.redo_stack else self.redo_stack
 	
 	if stack.is_empty():
 		if stack == self.undo_stack:

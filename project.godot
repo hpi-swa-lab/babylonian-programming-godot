@@ -24,7 +24,7 @@ HaloDispatcher="*res://addons/babylonian/halo/scripts/halo_dispatcher.gd"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/babylonian/plugin.cfg", "res://addons/halo/plugin.cfg")
+enabled=PackedStringArray("res://addons/babylonian/plugin.cfg")
 
 [input]
 

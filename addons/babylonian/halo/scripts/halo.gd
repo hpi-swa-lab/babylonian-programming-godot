@@ -17,10 +17,10 @@ class_name Halo extends Node2D
 
 @export var target: Node = null
 
-var buttons: Array = []
-var additional_buttons: Array = []
+var buttons: Array[TextureButton] = []
+var additional_buttons: Array[TextureButton] = []
 
-var tree_lines: Array = []
+var tree_lines: Array[Line2D] = []
 var show_tree_lines: bool = false
 
 const RADIUS: float = 16.0
@@ -36,7 +36,7 @@ var rotating: bool = false
 
 var target_is_root: bool = false	
 
-func set_target(target: CanvasItem, target_is_root: bool, additional_buttons: Array) -> void:
+func set_target(target: CanvasItem, target_is_root: bool, additional_buttons: Array[TextureButton]) -> void:
 	self.target = target
 	self.target_is_root = target_is_root
 	self.set_additional_buttons(additional_buttons)
@@ -56,7 +56,7 @@ func set_target(target: CanvasItem, target_is_root: bool, additional_buttons: Ar
 	self.reposition()
 	self.place_tree_lines()
 	
-func set_additional_buttons(additional_buttons: Array) -> void:
+func set_additional_buttons(additional_buttons: Array[TextureButton]) -> void:
 	self.additional_buttons = additional_buttons
 	for button in additional_buttons:
 		if not self.is_ancestor_of(button):
@@ -195,7 +195,7 @@ func place_tree_lines() -> void:
 	self.place_parent_tree_line()
 	
 func place_children_tree_lines() -> void:
-	var queue: Array = self.target.get_children()
+	var queue: Array[Node] = self.target.get_children()
 	while not queue.is_empty():
 		var child: Node = queue.pop_front()
 		if child is CanvasItem:
