@@ -6,6 +6,7 @@
 [node name="HaloInspectorWindow" type="Window"]
 position = Vector2i(64, 36)
 size = Vector2i(256, 512)
+theme_override_colors/title_color = Color(1, 0.501961, 0, 1)
 
 [node name="Inspector" type="VBoxContainer" parent="."]
 anchors_preset = 15

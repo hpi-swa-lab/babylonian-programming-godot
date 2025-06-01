@@ -12,6 +12,8 @@ class_name Halo extends Node2D
 @onready var selection_rect: ColorRect = $SelectionRect
 
 @onready var name_tag: Label = $NameTag
+@onready var angle_tag: Label = $AngleTag
+@onready var position_tag: Label = $PositionTag
 
 @export var target: Node = null
 
@@ -22,10 +24,10 @@ var tree_lines: Array = []
 var show_tree_lines: bool = false
 
 const RADIUS: float = 16.0
-const TREE_LINE_PARENT_COLOR: Color = Color.INDIAN_RED
-const TREE_LINE_CHILD_COLOR: Color = Color.SEA_GREEN
+const TREE_LINE_PARENT_COLOR: Color = Color.ORANGE
+const TREE_LINE_CHILD_COLOR: Color = Color.BLUE
 const TREE_LINE_CENTER_COLOR: Color = Color.ANTIQUE_WHITE
-const TREE_LINE_ALPHA: float = 0.5
+const TREE_LINE_ALPHA: float = 0.8
 
 var dragging: bool = false
 var dragging_v: bool = false
@@ -43,6 +45,8 @@ func set_target(target: CanvasItem, target_is_root: bool, additional_buttons: Ar
 			self.add_child(button)
 	
 	self.name_tag.text = self.target.name + " (" + str(self.get_depth()) + ")"
+	self.angle_tag.text = self.rotation_string()
+	self.position_tag.text = self.position_string()
 	self.window.visible = false 
 	self.window.title = self.target.get_class()
 	self.target.item_rect_changed.connect(reposition)
@@ -58,6 +62,18 @@ func set_target(target: CanvasItem, target_is_root: bool, additional_buttons: Ar
 	self.place_buttons()
 	self.reposition()
 	self.place_tree_lines()
+	
+func rotation_string() -> String:
+	return str(int(360 * self.target.rotation / (2 * PI)))
+	
+func position_string() -> String:
+	var position: Vector2 = self.target.global_position
+	var result: String = "("
+	result += str(position.x).pad_decimals(2)
+	result += ", "
+	result += str(position.y).pad_decimals(2)
+	result += ")"
+	return result
 	
 func get_depth() -> int:
 	var depth: int = 0
@@ -96,6 +112,7 @@ func place_buttons() -> void:
 			cos(angle) * self.RADIUS,
 			sin(angle) * self.RADIUS
 		) - (buttons[i].size * buttons[i].scale) / 2
+		
 	var string_size: Vector2 = self.name_tag.theme.default_font.get_string_size(
 		self.name_tag.text, HORIZONTAL_ALIGNMENT_LEFT, -1, self.name_tag.theme.default_font_size
 	)
@@ -103,6 +120,15 @@ func place_buttons() -> void:
 		0, 
 		-sin(1.5 * PI) * RADIUS
 	) + Vector2(-string_size.x / 2, string_size.y)
+	
+	self.angle_tag.position = Vector2(
+		2 * cos(PI) * RADIUS,
+		0
+	)
+	self.position_tag.position = Vector2(
+		1.5 * cos(0) * RADIUS,
+		0
+	)
 		
 func reposition() -> void:
 	if not self.target_is_root:
@@ -126,7 +152,7 @@ func reposition() -> void:
 		self.selection_rect.visible = false
 	
 func place_tree_line(node: CanvasItem, is_parent: bool = false):
-	var tree_line: Line2D = preload("res://addons/halo/scenes/tree_line.tscn").instantiate()
+	var tree_line: Line2D = preload("res://addons/halo/scenes/connection_line.tscn").instantiate()
 	tree_line.points[0] = to_local(self.target.global_position)
 	tree_line.points[1] = to_local(node.global_position)
 	var line_color = self.TREE_LINE_CHILD_COLOR
@@ -200,6 +226,9 @@ func _process(delta: float) -> void:
 	self.perform_dragging()
 	self.reposition()
 	self.place_tree_lines()
+	
+	self.angle_tag.text = self.rotation_string()
+	self.position_tag.text = self.position_string()
 
 func _on_delete_button_pressed() -> void:
 	target.queue_free()

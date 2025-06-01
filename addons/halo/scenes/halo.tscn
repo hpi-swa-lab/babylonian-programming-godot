@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dkkwh55src4ok"]
+[gd_scene load_steps=17 format=3 uid="uid://dkkwh55src4ok"]
 
 [ext_resource type="Script" uid="uid://c02qxvms43idk" path="res://addons/halo/scripts/halo.gd" id="1_d3xw1"]
 [ext_resource type="Texture2D" uid="uid://bm6wiyrtbqv8g" path="res://addons/halo/assets/ui_0.png" id="2_27p3b"]
@@ -46,6 +46,16 @@ font_size = 8
 outline_size = 2
 outline_color = Color(0, 0, 0, 1)
 shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_27p3b"]
+font = ExtResource("3_0yywk")
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_0yywk"]
+font = ExtResource("3_0yywk")
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
 
 [node name="Halo" type="Node2D"]
 script = ExtResource("1_d3xw1")
@@ -149,7 +159,7 @@ texture_normal = SubResource("AtlasTexture_uj1vl")
 
 [node name="NameTag" type="Label" parent="."]
 self_modulate = Color(1, 0.870588, 0.678431, 1)
-z_index = 128
+z_index = 127
 z_as_relative = false
 offset_left = -12.0
 offset_top = 14.0
@@ -172,6 +182,32 @@ color = Color(0, 0.658824, 1, 0.25098)
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 offset_right = 40.0
 offset_bottom = 40.0
+
+[node name="AngleTag" type="Label" parent="."]
+self_modulate = Color(1, 0.870588, 0.678431, 1)
+z_index = 127
+z_as_relative = false
+offset_left = -65.0
+offset_top = -7.0
+offset_right = -11.0
+offset_bottom = 16.0
+scale = Vector2(0.25, 0.25)
+theme = SubResource("Theme_2otp5")
+text = "Test"
+label_settings = SubResource("LabelSettings_27p3b")
+
+[node name="PositionTag" type="Label" parent="."]
+self_modulate = Color(1, 0.870588, 0.678431, 1)
+z_index = 127
+z_as_relative = false
+offset_left = -30.0
+offset_top = 57.0
+offset_right = 24.0
+offset_bottom = 80.0
+scale = Vector2(0.25, 0.25)
+theme = SubResource("Theme_2otp5")
+text = "xxx"
+label_settings = SubResource("LabelSettings_0yywk")
 
 [connection signal="pressed" from="DeleteButton" to="." method="_on_delete_button_pressed"]
 [connection signal="button_down" from="MoveButton" to="." method="_on_move_button_button_down"]

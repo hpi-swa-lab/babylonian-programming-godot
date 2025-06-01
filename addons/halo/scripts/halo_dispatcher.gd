@@ -149,6 +149,10 @@ func find_target(root: Node, screen_pos: Vector2, go_up: bool, go_down: bool, ex
 		
 	else:
 		return area_target
+		
+func put_halo_on(target: CanvasItem) -> void:
+	if self.halo_target != target:
+		self.set_target(target, self.get_scene_root())
 
 func set_target(target: CanvasItem, scene_root: Node, is_undo_redo: bool = false) -> void:
 	if not self.halo:

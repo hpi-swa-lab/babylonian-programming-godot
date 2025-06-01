@@ -14,7 +14,7 @@ func _ready() -> void:
 	texture.height = 32
 	texture.gradient = Gradient.new()
 	texture.gradient.colors = PackedColorArray([Color.WHITE, Color.BLACK])
-	HaloDispatcher.add_button(GradientTexture2D.new(), print_func)
+	#HaloDispatcher.add_button(GradientTexture2D.new(), print_func)
 
 
 func _physics_process(delta: float) -> void:
