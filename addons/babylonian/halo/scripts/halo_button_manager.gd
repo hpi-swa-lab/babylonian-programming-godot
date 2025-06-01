@@ -3,10 +3,15 @@ class_name HaloButtonManager extends RefCounted
 var _buttons: Dictionary[int, TextureButton] = {}
 var _node_types: Dictionary = {}
 var _next_button_id: int = 0
+var _dispatcher: HaloDispatcher
+
+func init(dispatcher: HaloDispatcher) -> HaloButtonManager:
+	self._dispatcher = dispatcher
+	return self
 
 func add_button(texture: Texture2D, callback: Callable, node_types: Array[String] = [], color_modulation: Color = Color.WHITE) -> int:
 	var button_signal_handler = func() -> void:
-		callback.call(self.halo_target)
+		callback.call(self._dispatcher.halo_target)
 	
 	var button: TextureButton = TextureButton.new()
 	button.texture_normal = texture

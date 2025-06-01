@@ -6,16 +6,6 @@ const JUMP_VELOCITY = -300.0
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
-func _ready() -> void:
-	var print_func = func(target) -> void : 
-		print(target)
-	var texture: GradientTexture2D = GradientTexture2D.new()
-	texture.width = 32
-	texture.height = 32
-	texture.gradient = Gradient.new()
-	texture.gradient.colors = PackedColorArray([Color.WHITE, Color.BLACK])
-	#HaloDispatcher.add_button(GradientTexture2D.new(), print_func)
-
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.

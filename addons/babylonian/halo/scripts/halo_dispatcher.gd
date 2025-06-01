@@ -4,7 +4,7 @@ var _target_finder: TargetFinder
 var button_manager: HaloButtonManager
 var _undo_manager: UndoManager
 
-var _halo_target: CanvasItem = null
+var halo_target: CanvasItem = null
 var _halo: Node2D = null
 
 var _show_tree_lines: bool = false
@@ -17,7 +17,7 @@ const MODIFIER_KEY: int = KEY_CTRL
 func _ready():
 	set_process_input(true)
 	self._target_finder = TargetFinder.new().init(self)
-	self.button_manager = HaloButtonManager.new()
+	self.button_manager = HaloButtonManager.new().init(self)
 	self._undo_manager = UndoManager.new().init(self._set_target)
 	
 func _input(event: InputEvent) -> void:
@@ -38,19 +38,19 @@ func _handle_selection_input(event: InputEventMouseButton) -> void:
 	var scene_root: Node = self._get_scene_root()
 	var target: CanvasItem
 	if Input.is_key_pressed(self.UP_KEY):
-		target = self._target_finder.find_target_above(scene_root, self._halo_target, event.position)
+		target = self._target_finder.find_target_above(scene_root, self.halo_target, event.position)
 	elif Input.is_key_pressed(self.DOWN_KEY):
-		target = self._target_finder.find_target_below(scene_root, self._halo_target, event.position)
+		target = self._target_finder.find_target_below(scene_root, self.halo_target, event.position)
 	else:
-		target = self._target_finder.find_target(scene_root, self._halo_target, event.position)
+		target = self._target_finder.find_target(scene_root, self.halo_target, event.position)
 	self._set_target(target, scene_root)
 
 func _handle_undo_redo_input(event: InputEventKey) -> void:
 	var scene_root: Node = self._get_scene_root()
 	if event.keycode == self._undo_manager.UNDO_KEY:
-		self._undo_manager.undo(scene_root, self._halo_target)
+		self._undo_manager.undo(scene_root, self.halo_target)
 	elif event.keycode == self._undo_manager.REDO_KEY:
-		self._undo_manager.redo(scene_root, self._halo_target)
+		self._undo_manager.redo(scene_root, self.halo_target)
 
 func _set_target(target: CanvasItem, scene_root: Node, is_undo_redo: bool = false) -> void:
 	if not self._halo:
@@ -58,13 +58,13 @@ func _set_target(target: CanvasItem, scene_root: Node, is_undo_redo: bool = fals
 		scene_root.add_child(self._halo)
 		self._halo.get_node("TreeVisibilityButton").button_down.connect(_on_tree_visibility_button_down)
 
-	if self._halo_target and not is_undo_redo:
-		self._undo_manager.push_to_undo_stack(self._halo_target)
+	if self.halo_target and not is_undo_redo:
+		self._undo_manager.push_to_undo_stack(self.halo_target)
 
-	self._halo_target = target
+	self.halo_target = target
 	if target:
 		var buttons: Array[TextureButton] = self.button_manager.get_buttons(target)
-		self._halo.set_target(self._halo_target, self._halo_target == scene_root, buttons)
+		self._halo.set_target(self.halo_target, self.halo_target == scene_root, buttons)
 		self._halo.set_tree_line_visibility(self._show_tree_lines)
 		self._halo.visible = true
 	else:
@@ -74,7 +74,7 @@ func _set_target(target: CanvasItem, scene_root: Node, is_undo_redo: bool = fals
 		self._undo_manager.clear_redo_stack()
 
 func put_halo_on(target: CanvasItem) -> void:
-	if self._halo_target != target:
+	if self.halo_target != target:
 		self._set_target(target, self._get_scene_root())
 
 func _on_tree_visibility_button_down() -> void:
