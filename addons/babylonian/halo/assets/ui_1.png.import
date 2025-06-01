@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://or06nupok2wn"
-path="res://.godot/imported/ui_1.png-3459295c64424fb6cdb4181bc9d293da.ctex"
+path="res://.godot/imported/ui_1.png-fb0d3bc5d5ff98070eea6291639a54a1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/halo/assets/ui_1.png"
-dest_files=["res://.godot/imported/ui_1.png-3459295c64424fb6cdb4181bc9d293da.ctex"]
+source_file="res://addons/babylonian/halo/assets/ui_1.png"
+dest_files=["res://.godot/imported/ui_1.png-fb0d3bc5d5ff98070eea6291639a54a1.ctex"]
 
 [params]
 

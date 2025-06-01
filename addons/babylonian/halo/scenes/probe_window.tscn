@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://boxotowlih5ak"]
 
-[ext_resource type="Script" uid="uid://g6tuy3hugsq3" path="res://addons/halo/scripts/probe_window.gd" id="1_m648c"]
+[ext_resource type="Script" uid="uid://g6tuy3hugsq3" path="res://addons/babylonian/halo/scripts/probe_window.gd" id="1_m648c"]
 
 [node name="ProbeWindow" type="Window"]
 position = Vector2i(50, 50)

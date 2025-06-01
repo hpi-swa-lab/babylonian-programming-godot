@@ -1,9 +1,9 @@
 [gd_scene load_steps=17 format=3 uid="uid://dkkwh55src4ok"]
 
-[ext_resource type="Script" uid="uid://c02qxvms43idk" path="res://addons/halo/scripts/halo.gd" id="1_d3xw1"]
-[ext_resource type="Texture2D" uid="uid://bm6wiyrtbqv8g" path="res://addons/halo/assets/ui_0.png" id="2_27p3b"]
-[ext_resource type="FontFile" uid="uid://ctxr55gmptx25" path="res://addons/halo/assets/PixelOperator8.ttf" id="3_0yywk"]
-[ext_resource type="PackedScene" uid="uid://bp85k8tbfdqk8" path="res://addons/halo/scenes/halo_inspector_window.tscn" id="4_27p3b"]
+[ext_resource type="Script" uid="uid://c02qxvms43idk" path="res://addons/babylonian/halo/scripts/halo.gd" id="1_d3xw1"]
+[ext_resource type="Texture2D" uid="uid://bm6wiyrtbqv8g" path="res://addons/babylonian/halo/assets/ui_0.png" id="2_27p3b"]
+[ext_resource type="FontFile" uid="uid://ctxr55gmptx25" path="res://addons/babylonian/halo/assets/PixelOperator8.ttf" id="3_0yywk"]
+[ext_resource type="PackedScene" uid="uid://bp85k8tbfdqk8" path="res://addons/babylonian/halo/scenes/halo_inspector_window.tscn" id="4_27p3b"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ckini"]
 atlas = ExtResource("2_27p3b")

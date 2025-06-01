@@ -152,7 +152,7 @@ func reposition() -> void:
 		self.selection_rect.visible = false
 	
 func place_tree_line(node: CanvasItem, is_parent: bool = false):
-	var tree_line: Line2D = preload("res://addons/halo/scenes/connection_line.tscn").instantiate()
+	var tree_line: Line2D = preload("res://addons/babylonian/halo/scenes/connection_line.tscn").instantiate()
 	tree_line.points[0] = to_local(self.target.global_position)
 	tree_line.points[1] = to_local(node.global_position)
 	var line_color = self.TREE_LINE_CHILD_COLOR

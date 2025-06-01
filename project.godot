@@ -20,7 +20,7 @@ config/icon="res://icon.svg"
 B="*res://addons/babylonian/B.gd"
 InGameUI="*res://addons/babylonian/InGameUI.gd"
 Music="*res://platformer2/scenes/music.tscn"
-HaloDispatcher="*res://addons/halo/scripts/halo_dispatcher.gd"
+HaloDispatcher="*res://addons/babylonian/halo/scripts/halo_dispatcher.gd"
 
 [editor_plugins]
 

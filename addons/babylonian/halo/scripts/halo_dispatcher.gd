@@ -156,7 +156,7 @@ func put_halo_on(target: CanvasItem) -> void:
 
 func set_target(target: CanvasItem, scene_root: Node, is_undo_redo: bool = false) -> void:
 	if not self.halo:
-		self.halo = preload("res://addons/halo/scenes/halo.tscn").instantiate()
+		self.halo = preload("res://addons/babylonian/halo/scenes/halo.tscn").instantiate()
 		scene_root.add_child(self.halo)
 		self.halo.get_node("TreeVisibilityButton").button_down.connect(_on_tree_visibility_button_down)
 		

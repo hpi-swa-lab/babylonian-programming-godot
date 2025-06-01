@@ -3,12 +3,12 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://ctxr55gmptx25"
-path="res://.godot/imported/PixelOperator8.ttf-ca37de54fa48c406a2083f73689d9ea9.fontdata"
+path="res://.godot/imported/PixelOperator8.ttf-172a955b3643df69c7547771e3b83c3e.fontdata"
 
 [deps]
 
-source_file="res://addons/halo/assets/PixelOperator8.ttf"
-dest_files=["res://.godot/imported/PixelOperator8.ttf-ca37de54fa48c406a2083f73689d9ea9.fontdata"]
+source_file="res://addons/babylonian/halo/assets/PixelOperator8.ttf"
+dest_files=["res://.godot/imported/PixelOperator8.ttf-172a955b3643df69c7547771e3b83c3e.fontdata"]
 
 [params]
 
