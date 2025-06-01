@@ -20,11 +20,11 @@ func add_button(texture: Texture2D, callback: Callable, node_types: Array[String
 	self._node_types[self._next_button_id] = node_types
 	self._next_button_id += 1
 	return self._next_button_id - 1
-	
+
 func remove_button(button_id: int) -> void:
 	self._buttons.erase(button_id)
 	self._node_types.erase(button_id)
-	
+
 func get_buttons(target: CanvasItem) -> Array[TextureButton]:
 	var halo_buttons: Array[TextureButton] = []
 	for button_id in self._buttons:

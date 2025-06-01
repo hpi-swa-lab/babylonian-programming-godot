@@ -8,6 +8,15 @@ func init(dispatcher: HaloDispatcher) -> TargetFinder:
 	self._dispatcher = dispatcher
 	return self
 
+func find_target_above(root: Node, halo_target: CanvasItem, screen_pos: Vector2) -> CanvasItem:
+	return _find_target(root, halo_target, screen_pos, true, false, false)
+
+func find_target_below(root: Node, halo_target: CanvasItem, screen_pos: Vector2) -> CanvasItem:
+	return _find_target(root, halo_target, screen_pos, false, true, false)
+
+func find_target(root: Node, halo_target: CanvasItem, screen_pos: Vector2) -> CanvasItem:
+	return _find_target(root, halo_target, screen_pos, false, false, false)
+
 func _get_world_position(screen_position: Vector2) -> Vector2:
 	var cam = self._dispatcher.get_viewport().get_camera_2d()
 	if cam == null:
@@ -15,7 +24,6 @@ func _get_world_position(screen_position: Vector2) -> Vector2:
 		return Vector2.INF
 	return cam.get_canvas_transform().affine_inverse() * screen_position
 
-# Finds the first Area2D (CanvasItem) collider at a given world position.
 func _find_area_target(world_position: Vector2, root: Node, exclude_root: bool = false) -> CanvasItem:
 	var space_state = self._dispatcher.get_world_2d().direct_space_state
 	var parameters: PhysicsPointQueryParameters2D = PhysicsPointQueryParameters2D.new()
@@ -35,7 +43,6 @@ func _find_area_target(world_position: Vector2, root: Node, exclude_root: bool =
 		return collider
 	return null
 
-# Finds the closest CanvasItem to the world position within MAX_DISTANCE.
 func _find_point_target(world_position: Vector2, root: Node, exclude_root: bool = false) -> CanvasItem:
 	var best_target: CanvasItem = null
 	var best_distance = INF
@@ -57,7 +64,6 @@ func _find_point_target(world_position: Vector2, root: Node, exclude_root: bool 
 
 	return best_target
 
-# Finds the closest CanvasItem ancestor of the given node.
 func _find_parent_target(node: CanvasItem) -> CanvasItem:
 	var parent: Node = node.get_parent()
 	while parent is not CanvasItem:
@@ -66,7 +72,6 @@ func _find_parent_target(node: CanvasItem) -> CanvasItem:
 			return node
 	return parent
 
-# Resolves the most relevant target based on position, context, and navigation intent.
 func _find_target(root: Node, halo_target: CanvasItem, screen_pos: Vector2, go_up: bool, go_down: bool, exclude_root: bool = false) -> CanvasItem:
 	var world_pos = _get_world_position(screen_pos)
 	var point_target: CanvasItem = _find_point_target(world_pos, root, exclude_root)
@@ -94,12 +99,3 @@ func _find_target(root: Node, halo_target: CanvasItem, screen_pos: Vector2, go_u
 		
 	else:
 		return area_target
-		
-func find_target_above(root: Node, halo_target: CanvasItem, screen_pos: Vector2) -> CanvasItem:
-	return _find_target(root, halo_target, screen_pos, true, false, false)
-	
-func find_target_below(root: Node, halo_target: CanvasItem, screen_pos: Vector2) -> CanvasItem:
-	return _find_target(root, halo_target, screen_pos, false, true, false)
-	
-func find_target(root: Node, halo_target: CanvasItem, screen_pos: Vector2) -> CanvasItem:
-	return _find_target(root, halo_target, screen_pos, false, false, false)
