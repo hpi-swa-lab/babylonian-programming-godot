@@ -6,6 +6,7 @@ class_name Halo extends Node2D
 @onready var _move_h_button: TextureButton = $MoveHButton
 @onready var _rotate_button: TextureButton = $RotateButton
 @onready var _reset_rotation_button: TextureButton = $ResetRotationButton
+@onready var _duplicate_button: TextureButton = $DuplicateButton
 @onready var _inspect_button: TextureButton = $InspectButton
 @onready var _tree_visibility_button: TextureButton = $TreeVisibilityButton
 @onready var _window: Window = $HaloInspectorWindow
@@ -17,6 +18,8 @@ class_name Halo extends Node2D
 
 var _target: Node = null
 var _target_is_root: bool = false	
+var _target_has_scene_file: bool = false
+var _target_scene_filename: String = ""
 var _buttons: Array[TextureButton] = []
 var _additional_buttons: Array[TextureButton] = []
 var _tree_lines: Array[Line2D] = []
@@ -27,6 +30,7 @@ const TREE_LINE_PARENT_COLOR: Color = Color.ORANGE
 const TREE_LINE_CHILD_COLOR: Color = Color.DEEP_SKY_BLUE
 const TREE_LINE_CENTER_COLOR: Color = Color.ANTIQUE_WHITE
 const TREE_LINE_ALPHA: float = 0.8
+const COPY_OFFSET: Vector2 = Vector2(10, 10)
 
 var _dragging: bool = false
 var _dragging_v: bool = false
@@ -36,6 +40,9 @@ var _rotating: bool = false
 func set_target(target: CanvasItem, target_is_root: bool, additional_buttons: Array[TextureButton]) -> void:
 	self._target = target
 	self._target_is_root = target_is_root
+	self._target_scene_filename = target.scene_file_path
+	if target.scene_file_path != "" and not target_is_root:
+		self._target_has_scene_file = true
 	self._set_additional_buttons(additional_buttons)
 	self._name_tag.text = self._target.name + " (" + str(self._get_depth()) + ")"
 	self._angle_tag.text = self._rotation_string()
@@ -64,6 +71,10 @@ func _fill_button_array() -> void:
 			self._move_h_button,
 			self._rotate_button,
 			self._reset_rotation_button
+		])
+	if self._target_has_scene_file:
+		self._buttons.append_array([
+			self._duplicate_button
 		])
 	self._buttons.append_array([
 		self._inspect_button,
@@ -278,3 +289,9 @@ func _on_rotate_button_button_up() -> void:
 
 func _on_reset_rotation_button_pressed() -> void:
 	self._target.rotation = 0
+
+func _on_duplicate_button_pressed() -> void:
+	var target_parent: Node = self._target.get_parent()
+	var copy: CanvasItem = load(self._target_scene_filename).instantiate()
+	copy.global_position = self._target.global_position + self.COPY_OFFSET
+	target_parent.add_child(copy)
