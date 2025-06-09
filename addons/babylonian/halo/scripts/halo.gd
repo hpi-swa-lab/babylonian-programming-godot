@@ -25,12 +25,14 @@ var _additional_buttons: Array[TextureButton] = []
 var _tree_lines: Array[Line2D] = []
 var _show_tree_lines: bool = false
 
-const RADIUS: float = 16.0
+const RADIUS_8: float = 16.0
 const TREE_LINE_PARENT_COLOR: Color = Color.ORANGE
 const TREE_LINE_CHILD_COLOR: Color = Color.DEEP_SKY_BLUE
 const TREE_LINE_CENTER_COLOR: Color = Color.ANTIQUE_WHITE
 const TREE_LINE_ALPHA: float = 0.8
 const COPY_OFFSET: Vector2 = Vector2(10, 10)
+
+var _radius: float = RADIUS_8
 
 var _dragging: bool = false
 var _dragging_v: bool = false
@@ -72,7 +74,7 @@ func _fill_button_array() -> void:
 			self._rotate_button,
 			self._reset_rotation_button
 		])
-	if self._target_has_scene_file:
+	if self._target_has_scene_file and not self._target_is_root:
 		self._buttons.append_array([
 			self._duplicate_button
 		])
@@ -95,6 +97,7 @@ func _set_button_visibility() -> void:
 	self._move_h_button.visible = not self._target_is_root
 	self._rotate_button.visible = not self._target_is_root
 	self._reset_rotation_button.visible = not self._target_is_root
+	self._duplicate_button.visible = self._target_has_scene_file and not self._target_is_root
 
 func _rotation_string() -> String:
 	return str(int(360 * self._target.rotation / (2 * PI)))
@@ -119,31 +122,35 @@ func _get_depth() -> int:
 
 func _place_buttons() -> void:
 	self._fill_button_array()
+	self._set_radius()
 	self._position_buttons()
 	self._position_tags()
+	
+func _set_radius() -> void:
+	self._radius = self.RADIUS_8 * (sin(PI / 8) / sin(PI / self._buttons.size()))
 
 func _position_buttons() -> void:
 	for i in self._buttons.size():
 		var angle: float = i * 2 * PI / self._buttons.size()
 		self._buttons[i].position = Vector2(
-			cos(angle) * self.RADIUS,
-			sin(angle) * self.RADIUS
+			cos(angle) * self._radius,
+			sin(angle) * self._radius
 		) - (self._buttons[i].size * self._buttons[i].scale) / 2
 	var string_size: Vector2 = self._name_tag.theme.default_font.get_string_size(
 		self._name_tag.text, HORIZONTAL_ALIGNMENT_LEFT, -1, self._name_tag.theme.default_font_size
 	)
 	self._name_tag.position = Vector2(
 		0, 
-		-sin(1.5 * PI) * RADIUS
+		-sin(1.5 * PI) * self._radius
 	) + Vector2(-string_size.x / 2, string_size.y)
 
 func _position_tags() -> void:
 	self._angle_tag.position = Vector2(
-		2 * cos(PI) * RADIUS,
+		2 * cos(PI) * self._radius,
 		0
 	)
 	self._position_tag.position = Vector2(
-		1.5 * cos(0) * RADIUS,
+		1.5 * cos(0) * self._radius,
 		0
 	)
 
