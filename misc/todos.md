@@ -4,7 +4,7 @@
 - [ ] Testen in komplexerer, unbekannter Szene (Gamedev Club fragen, Godot user group in berlin)
 - [ ] Screencasts der use cases
 - [ ] Präsentation bauen
-- [ ] Repair dragging (BUG)
+- [x] Repair dragging (BUG)
 - [ ] Selektion nachdem in Objekt gelöscht wurde (BUG)
 
 ## Should Have

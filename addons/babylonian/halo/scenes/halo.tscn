@@ -1,8 +1,9 @@
-[gd_scene load_steps=19 format=3 uid="uid://dkkwh55src4ok"]
+[gd_scene load_steps=20 format=3 uid="uid://dkkwh55src4ok"]
 
 [ext_resource type="Script" uid="uid://c02qxvms43idk" path="res://addons/babylonian/halo/scripts/halo.gd" id="1_d3xw1"]
 [ext_resource type="Texture2D" uid="uid://bm6wiyrtbqv8g" path="res://addons/babylonian/halo/assets/ui_0.png" id="2_27p3b"]
 [ext_resource type="FontFile" uid="uid://ctxr55gmptx25" path="res://addons/babylonian/halo/assets/PixelOperator8.ttf" id="3_0yywk"]
+[ext_resource type="Texture2D" uid="uid://or06nupok2wn" path="res://addons/babylonian/halo/assets/ui_1.png" id="3_rryoj"]
 [ext_resource type="PackedScene" uid="uid://bp85k8tbfdqk8" path="res://addons/babylonian/halo/scenes/halo_inspector_window.tscn" id="4_27p3b"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ckini"]
@@ -34,8 +35,8 @@ atlas = ExtResource("2_27p3b")
 region = Rect2(200, 50, 50, 50)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_uj1vl"]
-atlas = ExtResource("2_27p3b")
-region = Rect2(250, 200, 50, 50)
+atlas = ExtResource("3_rryoj")
+region = Rect2(350, 400, 50, 50)
 
 [sub_resource type="Theme" id="Theme_2otp5"]
 default_font = ExtResource("3_0yywk")
@@ -186,10 +187,6 @@ offset_bottom = 40.0
 mouse_filter = 2
 color = Color(0, 0.659, 1, 0.5)
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
-offset_right = 40.0
-offset_bottom = 40.0
-
 [node name="AngleTag" type="Label" parent="."]
 self_modulate = Color(1, 0.870588, 0.678431, 1)
 z_index = 127
@@ -234,6 +231,7 @@ stretch_mode = 3
 [connection signal="button_up" from="MoveButton" to="." method="_on_move_button_button_up"]
 [connection signal="button_down" from="MoveVButton" to="." method="_on_move_v_button_button_down"]
 [connection signal="button_up" from="MoveVButton" to="." method="_on_move_v_button_button_up"]
+[connection signal="pressed" from="MoveVButton" to="." method="_on_move_v_button_pressed"]
 [connection signal="button_down" from="MoveHButton" to="." method="_on_move_h_button_button_down"]
 [connection signal="button_up" from="MoveHButton" to="." method="_on_move_h_button_button_up"]
 [connection signal="pressed" from="InspectButton" to="." method="_on_inspect_button_pressed"]

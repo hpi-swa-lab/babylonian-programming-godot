@@ -259,6 +259,10 @@ func _process(delta: float) -> void:
 	self._reposition()
 	self._place_tree_lines()
 	self._set_state_strings()
+	
+	B.game_probe(self._dragging_v)
+	B.game_probe(self._dragging_h)
+	B.game_probe(self._dragging)
 
 func _on_delete_button_pressed() -> void:
 	self._target.queue_free()
@@ -302,3 +306,7 @@ func _on_duplicate_button_pressed() -> void:
 	var copy: CanvasItem = load(self._target_scene_filename).instantiate()
 	copy.global_position = self._target.global_position + self.COPY_OFFSET
 	target_parent.add_child(copy)
+
+
+func _on_move_v_button_pressed() -> void:
+	print("PRESSED")
