@@ -82,18 +82,18 @@ func _find_target(root: Node, halo_target: CanvasItem, screen_pos: Vector2, go_u
 			return point_target
 		return area_target
 		
-	elif halo_target in [area_target, point_target] and not go_up and not go_down:
+	elif go_up:
+		return _find_parent_target(halo_target)
+		
+	elif go_down:
+		return _find_target(halo_target, halo_target, screen_pos, false, false, true)
+		
+	elif halo_target in [area_target, point_target]:
 		if halo_target == area_target:
 			return point_target
 		else:
 			return area_target
-			
-	elif halo_target in [area_target, point_target] and go_up:
-		return _find_parent_target(halo_target)
-		
-	elif halo_target in [area_target, point_target] and go_down:
-		return _find_target(halo_target, halo_target, screen_pos, false, false, true)
-		
+
 	elif point_target:
 		return point_target
 		

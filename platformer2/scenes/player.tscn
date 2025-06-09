@@ -1,9 +1,7 @@
-[gd_scene load_steps=29 format=3 uid="uid://dmqpjj0xgwiok"]
+[gd_scene load_steps=26 format=3 uid="uid://dmqpjj0xgwiok"]
 
 [ext_resource type="Texture2D" uid="uid://dt84viiab2quk" path="res://platformer2/assets/sprites/knight.png" id="1_5056c"]
 [ext_resource type="Script" uid="uid://djfbpmn4v5c1e" path="res://platformer2/scripts/player.gd" id="1_rn53p"]
-[ext_resource type="Script" uid="uid://dlv1trl07i6gl" path="res://platformer2/scripts/add_button.gd" id="3_6fci3"]
-[ext_resource type="Texture2D" uid="uid://bm6wiyrtbqv8g" path="res://addons/babylonian/halo/assets/ui_0.png" id="4_bdm1v"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rn53p"]
 atlas = ExtResource("1_5056c")
@@ -173,10 +171,6 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_o0n7m"]
 radius = 5.09902
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_8s076"]
-atlas = ExtResource("4_bdm1v")
-region = Rect2(400, 150, 50, 50)
-
 [node name="Player" type="CharacterBody2D"]
 z_index = 5
 collision_layer = 2
@@ -191,7 +185,3 @@ autoplay = "idle"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -5)
 shape = SubResource("CircleShape2D_o0n7m")
-
-[node name="Node" type="Node" parent="."]
-script = ExtResource("3_6fci3")
-texture = SubResource("AtlasTexture_8s076")

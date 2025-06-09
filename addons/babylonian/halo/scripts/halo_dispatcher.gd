@@ -6,6 +6,7 @@ var _undo_manager: UndoManager
 
 var halo_target: CanvasItem = null
 var _halo: Node2D = null
+var _halo_is_static: bool = false
 
 var _show_tree_lines: bool = false
 
@@ -13,6 +14,8 @@ const MOUSE_BUTTON: int = MOUSE_BUTTON_MIDDLE
 const UP_KEY: int = KEY_SHIFT
 const DOWN_KEY: int = KEY_CTRL
 const MODIFIER_KEY: int = KEY_CTRL
+const STATIC_HALO_KEY: int = KEY_F2
+const CENTER_HALO_KEY: int = KEY_F3
 
 func _ready():
 	set_process_input(true)
@@ -33,7 +36,27 @@ func _input(event: InputEvent) -> void:
 		and Input.is_key_pressed(self.MODIFIER_KEY)
 	):
 		self._handle_undo_redo_input(event)
+	elif (
+		event is InputEventKey
+		and event.pressed 
+		and Input.is_key_pressed(self.STATIC_HALO_KEY)
+	):
+		self._handle_static_halo()
+	elif (
+		event is InputEventKey
+		and event.pressed 
+		and Input.is_key_pressed(self.CENTER_HALO_KEY)
+	):
+		self._center_halo()
 		
+func _handle_static_halo() -> void:
+	if self._halo and self.halo_target:
+		self._halo.toggle_static()
+		
+func _center_halo() -> void:
+	if self._halo and self.halo_target:
+		self._halo.center()
+	
 func _handle_selection_input(event: InputEventMouseButton) -> void:
 	var scene_root: Node = self._get_scene_root()
 	var target: CanvasItem
@@ -53,10 +76,12 @@ func _handle_undo_redo_input(event: InputEventKey) -> void:
 		self._undo_manager.redo(scene_root, self.halo_target)
 
 func _set_target(target: CanvasItem, scene_root: Node, is_undo_redo: bool = false) -> void:
-	if not self._halo:
-		self._halo = preload("res://addons/babylonian/halo/scenes/halo.tscn").instantiate()
-		scene_root.add_child(self._halo)
-		self._halo.get_node("TreeVisibilityButton").button_down.connect(_on_tree_visibility_button_down)
+	if self._halo:
+		self._halo.queue_free()
+	
+	self._halo = preload("res://addons/babylonian/halo/scenes/halo.tscn").instantiate()
+	scene_root.add_child(self._halo)
+	self._halo.get_node("TreeVisibilityButton").button_down.connect(_on_tree_visibility_button_down)
 
 	if self.halo_target and not is_undo_redo:
 		self._undo_manager.push_to_undo_stack(self.halo_target)

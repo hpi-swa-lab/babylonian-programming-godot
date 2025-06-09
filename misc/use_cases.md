@@ -13,3 +13,5 @@ Player springt nicht richtig (Bug finden)
 Probes an alle nodes eines typs attachen
 
 3. Level ingame bauen
+
+4. Slime mit button stoppen, weil seine Bewegung beim Debugging/Levelbau stört

@@ -9,7 +9,7 @@
 
 ## Should Have
 - [ ] Probe Windows schöner machen
-- [ ] Use case in welchem custom buttons zum Halo hinzugefügt werden (copy, türme die nicht immer schießen)
+- [x] Use case in welchem custom buttons zum Halo hinzugefügt werden (copy, türme die nicht immer schießen)
 - [x] dynamische Halo-Größe (abhängig von Anzahl der Buttons)
 
 - [x] Squeakimage deepcopy von morph (Copy ist ein Problem, wie kann man das in Godot lösen?)

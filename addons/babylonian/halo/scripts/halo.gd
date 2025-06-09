@@ -26,6 +26,7 @@ var _buttons: Array[TextureButton] = []
 var _additional_buttons: Array[TextureButton] = []
 var _tree_lines: Array[Line2D] = []
 var _show_tree_lines: bool = false
+var _is_static: bool = false
 
 const RADIUS_8: float = 16.0
 const TREE_LINE_PARENT_COLOR: Color = Color.ORANGE
@@ -42,6 +43,7 @@ var _dragging_h: bool = false
 var _rotating: bool = false
 
 func set_target(target: CanvasItem, target_is_root: bool, additional_buttons: Array[TextureButton]) -> void:
+	self._is_static = false
 	self._target = target
 	self._target_is_root = target_is_root
 	self._target_scene_filename = target.scene_file_path
@@ -67,6 +69,27 @@ func set_tree_line_visibility(visibility: bool) -> void:
 	self._show_tree_lines = visibility
 	for tree_line in self._tree_lines:
 		tree_line.visible = visibility
+		
+func toggle_static() -> void:
+	self._is_static = not self._is_static
+	
+func center() -> void:
+	self._is_static = true
+	self.global_position = self._get_screen_center()
+	
+# Get the center of the screen in global coordinates
+func _get_screen_center() -> Vector2:
+	var viewport = get_viewport()
+	var screen_size = viewport.get_visible_rect().size
+	var screen_center = screen_size / 2
+	
+	# Convert screen position to global position
+	var camera = get_viewport().get_camera_2d()
+	if camera:
+		return camera.get_screen_center_position()
+	else:
+		# If no camera, screen coordinates = global coordinates
+		return screen_center
 
 func _fill_button_array() -> void:
 	self._buttons = []
@@ -267,7 +290,8 @@ func _set_state_strings() -> void:
 
 func _process(delta: float) -> void:
 	self._perform_dragging()
-	self._reposition()
+	if not self._is_static:
+		self._reposition()
 	self._place_tree_lines()
 	self._set_state_strings()
 
