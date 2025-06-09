@@ -18,7 +18,7 @@
 ## Could Have
 - [ ] Multiselect für ähnliche Sachen (attache Probe an alle)
 - [ ] Weitere Probe-Types
-- [ ] Child selection buttons
+- [x] Child selection buttons
 - [ ] zweite Kamera
 
 - [ ] Was fehlt, dass ich das Tools benutzen würde?

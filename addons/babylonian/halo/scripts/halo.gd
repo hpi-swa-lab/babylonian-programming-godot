@@ -9,7 +9,9 @@ class_name Halo extends Node2D
 @onready var _duplicate_button: TextureButton = $DuplicateButton
 @onready var _inspect_button: TextureButton = $InspectButton
 @onready var _tree_visibility_button: TextureButton = $TreeVisibilityButton
-@onready var _window: Window = $HaloInspectorWindow
+@onready var _children_button: TextureButton = $ChildrenButton
+@onready var _inspector_window: Window = $HaloInspectorWindow
+@onready var _children_window: Window = $HaloChildrenWindow
 @onready var _selection_rect: ColorRect = $SelectionRect
 
 @onready var _name_tag: Label = $NameTag
@@ -49,15 +51,17 @@ func set_target(target: CanvasItem, target_is_root: bool, additional_buttons: Ar
 	self._name_tag.text = self._target.name + " (" + str(self._get_depth()) + ")"
 	self._angle_tag.text = self._rotation_string()
 	self._position_tag.text = self._position_string()
-	self._window.visible = false 
-	self._window.title = self._target.get_class()
+	self._inspector_window.visible = false 
+	self._inspector_window.title = self._target.get_class()
+	self._children_window.title = self._target.get_class()
 	self._target.item_rect_changed.connect(self._reposition)
-	var inspector = self._window.get_node("Inspector")
+	var inspector = self._inspector_window.get_node("Inspector")
 	inspector.set_object(self._target)
 	self._set_button_visibility()
 	self._place_buttons()
 	self._reposition()
 	self._place_tree_lines()
+	self._children_window.set_children(self._get_children_for_halo())
 
 func set_tree_line_visibility(visibility: bool) -> void:
 	self._show_tree_lines = visibility
@@ -81,7 +85,8 @@ func _fill_button_array() -> void:
 	self._buttons.append_array([
 		self._inspect_button,
 		self._tree_visibility_button,
-		self._delete_button
+		self._delete_button,
+		self._children_button
 	])
 	self._buttons.append_array(self._additional_buttons)
 
@@ -183,15 +188,21 @@ func _place_tree_lines() -> void:
 	self._tree_lines.clear()
 	self._place_children_tree_lines()
 	self._place_parent_tree_line()
-
-func _place_children_tree_lines() -> void:
+	
+func _get_children_for_halo() -> Array[CanvasItem]:
+	var children: Array[CanvasItem] = []
 	var queue: Array[Node] = self._target.get_children()
 	while not queue.is_empty():
 		var child: Node = queue.pop_front()
 		if child is CanvasItem:
-			self._place_tree_line(child)
+			children.append(child)
 		elif child is not Halo:
 			queue.append_array(child.get_children())
+	return children
+
+func _place_children_tree_lines() -> void:
+	for child in self._get_children_for_halo():
+		self._place_tree_line(child)
 
 func _place_parent_tree_line() -> void:
 	var parent: Node = self._target.get_parent()
@@ -259,10 +270,6 @@ func _process(delta: float) -> void:
 	self._reposition()
 	self._place_tree_lines()
 	self._set_state_strings()
-	
-	B.game_probe(self._dragging_v)
-	B.game_probe(self._dragging_h)
-	B.game_probe(self._dragging)
 
 func _on_delete_button_pressed() -> void:
 	self._target.queue_free()
@@ -287,10 +294,10 @@ func _on_move_h_button_button_up() -> void:
 	self._dragging_h = false
 
 func _on_inspect_button_pressed() -> void:
-	self._window.visible = not self._window.visible  
+	self._inspector_window.visible = not self._inspector_window.visible  
 
 func _on_halo_inspector_window_close_requested() -> void:
-	self._window.visible = false
+	self._inspector_window.visible = false
 
 func _on_rotate_button_button_down() -> void:
 	self._rotating = true
@@ -307,6 +314,8 @@ func _on_duplicate_button_pressed() -> void:
 	copy.global_position = self._target.global_position + self.COPY_OFFSET
 	target_parent.add_child(copy)
 
+func _on_children_button_pressed() -> void:
+	self._children_window.visible = not self._children_window.visible 
 
-func _on_move_v_button_pressed() -> void:
-	print("PRESSED")
+func _on_halo_children_window_close_requested() -> void:
+	self._children_window.visible = false
