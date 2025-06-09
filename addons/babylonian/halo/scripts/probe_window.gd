@@ -21,7 +21,7 @@ func set_target(target: Node, property_name: String) -> void:
 	self.title = target.name + " - " + property_name
 	
 	self._set_display()
-	self._add_margin_container()
+	self._add_display()
 	self._add_select_button()
 
 func _set_display() -> void:
@@ -36,7 +36,7 @@ func _set_display() -> void:
 	else:
 		self._display = TextDisplay.new()
 
-func _add_margin_container() -> void:
+func _add_display() -> void:
 	self.margin_container.add_child(self._display)
 	self.margin_container.add_theme_constant_override("margin_top", self.MARGIN)
 	self.margin_container.add_theme_constant_override("margin_left", self.MARGIN)

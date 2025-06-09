@@ -8,7 +8,7 @@
 - [x] Selektion nachdem in Objekt gelöscht wurde (BUG)
 
 ## Should Have
-- [ ] Probe Windows schöner machen
+- [x] Probe Windows schöner machen
 - [x] Use case in welchem custom buttons zum Halo hinzugefügt werden (copy, türme die nicht immer schießen)
 - [x] dynamische Halo-Größe (abhängig von Anzahl der Buttons)
 
