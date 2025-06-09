@@ -66,9 +66,8 @@ func _set_target(target: CanvasItem, scene_root: Node, is_undo_redo: bool = fals
 		var buttons: Array[TextureButton] = self.button_manager.get_buttons(target)
 		self._halo.set_target(self.halo_target, self.halo_target == scene_root, buttons)
 		self._halo.set_tree_line_visibility(self._show_tree_lines)
-		self._halo.visible = true
 	else:
-		self._halo.visible = false
+		self._halo.queue_free()
 
 	if not is_undo_redo:
 		self._undo_manager.clear_redo_stack()

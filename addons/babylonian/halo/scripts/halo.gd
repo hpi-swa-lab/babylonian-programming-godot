@@ -266,7 +266,7 @@ func _process(delta: float) -> void:
 
 func _on_delete_button_pressed() -> void:
 	self._target.queue_free()
-	self.queue_free()
+	HaloDispatcher.put_halo_on(null)
 
 func _on_move_button_button_down() -> void:
 	self._dragging = true

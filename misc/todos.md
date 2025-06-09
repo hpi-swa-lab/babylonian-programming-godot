@@ -5,7 +5,7 @@
 - [ ] Screencasts der use cases
 - [ ] Präsentation bauen
 - [x] Repair dragging (BUG)
-- [ ] Selektion nachdem in Objekt gelöscht wurde (BUG)
+- [x] Selektion nachdem in Objekt gelöscht wurde (BUG)
 
 ## Should Have
 - [ ] Probe Windows schöner machen
