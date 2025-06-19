@@ -217,9 +217,11 @@ func _get_children_for_halo() -> Array[CanvasItem]:
 	var queue: Array[Node] = self._target.get_children()
 	while not queue.is_empty():
 		var child: Node = queue.pop_front()
+		if child is Halo:
+			continue
 		if child is CanvasItem:
 			children.append(child)
-		elif child is not Halo:
+		else:
 			queue.append_array(child.get_children())
 	return children
 
