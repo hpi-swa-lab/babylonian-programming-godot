@@ -20,6 +20,7 @@
 - [ ] Weitere Probe-Types
 - [x] Child selection buttons
 - [ ] zweite Kamera
+- [ ] Button um Anzahl coins zu erhöhen
 
 - [ ] Was fehlt, dass ich das Tools benutzen würde?
 
