@@ -6,16 +6,30 @@ const JUMP_VELOCITY = -300.0
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
+@export var gravity: Vector2
+
+var slowmo: bool = false
+
 
 func _physics_process(delta: float) -> void:
-	# Add the gravity.
+	# Add the gravity.     
+	gravity = get_gravity()
+	
+	if Input.is_action_just_pressed("slowmo"):
+		slowmo = true
+	if Input.is_action_just_released("slowmo"):
+		slowmo = false
+		
+	if slowmo and   velocity.y > 0: 
+		gravity *= 0.1
+	
 	if not is_on_floor():
-		velocity += get_gravity() * delta
+		velocity += gravity * delta
 
 	# Handle jump.
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
-
+	
 	# Get the input direction: -1, 0, 1
 	var direction := Input.get_axis("move_left", "move_right")
 	
@@ -32,7 +46,11 @@ func _physics_process(delta: float) -> void:
 		else:
 			animated_sprite.play("run")
 	else:
-		animated_sprite.play("jump")
+		if slowmo:
+			animated_sprite.play("roll")
+		else:
+			animated_sprite.play("jump")
+			
 	
 	# Apply movement
 	if direction:
