@@ -76,6 +76,9 @@ func _handle_undo_redo_input(event: InputEventKey) -> void:
 		self._undo_manager.redo(scene_root, self.halo_target)
 
 func _set_target(target: CanvasItem, scene_root: Node, is_undo_redo: bool = false) -> void:
+	if self.halo_target != null:
+		self.halo_target.disconnect("tree_exiting", self._on_target_tree_exiting)
+	
 	if self._halo:
 		self._halo.queue_free()
 	
@@ -89,6 +92,7 @@ func _set_target(target: CanvasItem, scene_root: Node, is_undo_redo: bool = fals
 	self.halo_target = target
 	if target:
 		var buttons: Array[TextureButton] = self.button_manager.get_buttons(target)
+		self.halo_target.connect("tree_exiting", self._on_target_tree_exiting)
 		self._halo.set_target(self.halo_target, self.halo_target == scene_root, buttons)
 		self._halo.set_tree_line_visibility(self._show_tree_lines)
 	else:
@@ -104,6 +108,10 @@ func put_halo_on(target: CanvasItem) -> void:
 func _on_tree_visibility_button_down() -> void:
 	self._show_tree_lines = not self._show_tree_lines
 	self._halo.set_tree_line_visibility(self._show_tree_lines)
+	
+func _on_target_tree_exiting() -> void:
+	self.halo_target.disconnect("tree_exiting", self._on_target_tree_exiting)
+	self.put_halo_on(null)
 
 func _get_scene_root() -> Node:
 	return get_tree().get_root().get_child(get_tree().get_root().get_child_count() - 1)
