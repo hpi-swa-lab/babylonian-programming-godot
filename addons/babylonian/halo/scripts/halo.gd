@@ -341,6 +341,7 @@ func _on_duplicate_button_pressed() -> void:
 	var copy: CanvasItem = load(self._target_scene_filename).instantiate()
 	copy.global_position = self._target.global_position + self.COPY_OFFSET
 	target_parent.add_child(copy)
+	HaloDispatcher.put_halo_on(copy)
 
 func _on_children_button_pressed() -> void:
 	self._children_window.visible = not self._children_window.visible 
