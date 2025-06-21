@@ -291,6 +291,8 @@ func _set_state_strings() -> void:
 	self._position_tag.text = self._position_string()
 
 func _process(delta: float) -> void:
+	if self._target == null:
+		return
 	self._perform_dragging()
 	if not self._is_static:
 		self._reposition()
