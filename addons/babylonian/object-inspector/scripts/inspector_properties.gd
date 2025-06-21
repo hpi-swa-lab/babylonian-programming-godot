@@ -728,6 +728,7 @@ static func _static_init() -> void:
 	InspectorProperty.declare_property(InspectorPropertySubgroup.can_handle, InspectorPropertySubgroup.new)
 	InspectorProperty.declare_property(InspectorPropertyButton.can_handle, InspectorPropertyButton.new)
 	InspectorProperty.declare_property(InspectorPropertyBool.can_handle, InspectorPropertyBool.new)
+	InspectorProperty.declare_property(InspectorPropertyObject.can_handle, InspectorPropertyObject.new)
 	InspectorProperty.declare_property(InspectorPropertyNumber.can_handle, InspectorPropertyNumber.new)
 	InspectorProperty.declare_property(InspectorPropertyString.can_handle, InspectorPropertyString.new)
 	InspectorProperty.declare_property(InspectorPropertyMultiline.can_handle, InspectorPropertyMultiline.new)
