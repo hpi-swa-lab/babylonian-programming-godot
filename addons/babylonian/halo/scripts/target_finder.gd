@@ -97,5 +97,8 @@ func _find_target(root: Node, halo_target: CanvasItem, screen_pos: Vector2, go_u
 	elif point_target:
 		return point_target
 		
-	else:
+	elif area_target:
 		return area_target
+		
+	else:
+		return null
