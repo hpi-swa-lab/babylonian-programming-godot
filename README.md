@@ -95,7 +95,13 @@ Examples can be saved to disk (see above). They will be saved as JSON files in t
 
 # Babylonian Programming / Godot - Halo
 
-A Halo System for Godot based on the Squeak/Smalltalk Halo System.
+## Abstract
+
+This addon implements a halo-based user interface for the Godot game engine, inspired by the halo system found in Squeak/Smalltalk. The halo provides a visual and interactive overlay that appears around selected nodes within the running scene. It enables users to inspect and modify objects in real time, without leaving the game context. Through this interface, users can perform common operations such as translation, rotation, duplication, and deletion, as well as access a property inspector to view and modify object properties directly.
+
+In addition to manipulation tools, the halo includes features for navigating the scene hierarchy, allowing users to move between parent and child nodes, visualize structural relationships, and maintain a history of selections. Information about the selected object—such as its global position, rotation, name, and depth in the game tree—is displayed as part of the halo overlay.
+
+The system is extensible, allowing developers to register custom buttons that execute arbitrary logic when clicked. These buttons can be configured to apply only to specific node types and can be visually customized using textures and color modulation. While the halo system is currently limited to 2D scenes, it is designed to facilitate live, exploratory development workflows and runtime inspection, making it particularly useful in prototyping, debugging, and educational contexts.
 
 ## How to Install
 
