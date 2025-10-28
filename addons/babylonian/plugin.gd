@@ -7,6 +7,11 @@ var in_game_ui = preload("./InGameUI.gd").new()
 
 var singletons = ["B", "InGameUI"]
 
+# Object inspector constants
+const INSPECTOR_CONTROL_NAME = "ObjectInspector"
+const INSPECTOR_CONTROL_SCRIPT = "res://addons/babylonian/object-inspector/scripts/inspector.gd"
+const INSPECTOR_CONTROL_ICON = "res://addons/babylonian/object-inspector/icons/inspector_container.svg"
+
 func _enter_tree():
 	# Initialization of the plugin goes here.
 	get_viewport().gui_focus_changed.connect(self._on_gui_focus_changed)
@@ -15,12 +20,27 @@ func _enter_tree():
 	add_debugger_plugin(debugger)
 	for singleton in singletons:
 		add_autoload_singleton(singleton, singleton + ".gd")
+		
+	# Halo initialization
+	var selection = get_editor_interface().get_selection()
+	selection.selection_changed.connect(_on_selection_changed)
+	
+	# Object inspector initialization
+	add_custom_type(INSPECTOR_CONTROL_NAME, "VBoxContainer", load(INSPECTOR_CONTROL_SCRIPT), load(INSPECTOR_CONTROL_ICON))
+	
+func _on_selection_changed():
+	var selection = get_editor_interface().get_selection()
+	for node in selection.get_selected_nodes():
+		print("Selected node: ", node.name)
 
 func _exit_tree():
 	probe_manager.on_exit()
 	remove_debugger_plugin(debugger)
 	for singleton in singletons:
 		remove_autoload_singleton(singleton)
+		
+	# Object inspector
+	remove_custom_type(INSPECTOR_CONTROL_NAME)
 
 func _on_gui_focus_changed(node: Node):
 	if node is TextEdit:

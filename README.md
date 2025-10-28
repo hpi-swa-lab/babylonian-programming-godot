@@ -92,3 +92,130 @@ Examples can be saved to disk (see above). They will be saved as JSON files in t
 [babylonian_s]: https://github.com/hpi-swa-lab/babylonian-programming-smalltalk
 [babylonian_js]: https://lively-kernel.org/lively4/lively4-core/start.html?load=https://lively-kernel.org/lively4/lively4-core/src/babylonian-programming-editor/demos/index.md
 [babylonian_vsc]: https://github.com/hpi-swa/polyglot-live-programming
+
+# Babylonian Programming / Godot - Halo
+
+## Abstract
+
+This addon implements a halo-based user interface for the Godot game engine, inspired by the halo system found in Squeak/Smalltalk. The halo provides a visual and interactive overlay that appears around selected nodes within the running scene. It enables users to inspect and modify objects in real time, without leaving the game context. Through this interface, users can perform common operations such as translation, rotation, duplication, and deletion, as well as access a property inspector to view and modify object properties directly.
+
+In addition to manipulation tools, the halo includes features for navigating the scene hierarchy, allowing users to move between parent and child nodes, visualize structural relationships, and maintain a history of selections. Information about the selected object—such as its global position, rotation, name, and depth in the game tree—is displayed as part of the halo overlay.
+
+The system is extensible, allowing developers to register custom buttons that execute arbitrary logic when clicked. These buttons can be configured to apply only to specific node types and can be visually customized using textures and color modulation. While the halo system is currently limited to 2D scenes, it is designed to facilitate live, exploratory development workflows and runtime inspection, making it particularly useful in prototyping, debugging, and educational contexts.
+
+## How to Install
+
+The Halo is part of **Babylonian Programming / Godot**. 
+
+## How to Use / Features
+
+### Overview
+
+This addon adds an in-game halo, similar to the one in Squeak/Smalltalk, to your Godot game. You can perform basic and advanced manipulation as well as inspection using this halo.
+
+### Controls
+
+Click on any game object using the **[Middle Mouse Button]** to select it and spawn a halo around it. 
+
+By holding **[Shift]** during selection, the parent of the currently selected object in the game tree is selected. By holding **[Ctrl]**, the selection is limited to the children of the currently selected object in the game tree.
+
+Use **[Ctrl] + [Z]** and **[Ctrl] + [Y]** to navigate through the selection history.
+
+Normally, the halo follows the selected object. This behavior can be toggled by pressing **[F2]**. The halo will switch between following the object and staying still. With **[F3]**, the halo can be placed at the center of the screen. Pressing **[F2]** again will make the halo follow the object.
+
+### Displayed Information
+
+Around the halo, some information is displayed. On the left, you can see the rotation angle of the selected object. On the right, the object's global position is displayed. 
+
+Below the halo, the object's name as well as its depth in the game tree (the root has depth 0) can be seen.
+
+### Halo Buttons
+
+#### Translation
+
+The three arrow buttons enable you to move the object across the plane, across the X-axis, and across the Y-axis.
+
+#### Rotation
+
+The curved arrow button allows you to rotate the object. The horizontal rectangle button resets the object's rotation to 0 degrees.
+
+#### Duplication
+
+The plus button copies the object and places the duplicate next to the original object.
+
+#### Property Inspection
+
+The magnifying glass button opens a property inspector displaying all properties of the selected object. You can view and change the properties. Each property has two buttons labeled **P** and **C**. The **P** button spawns a probe window containing a **Babylonian/G Probe**. The **C** button copies the property's value to the clipboard.
+
+#### Game Tree Navigation
+
+Pressing the network button will toggle lines that indicate the object's position in the game tree. An orange line points toward the object's parent in the game tree. Blue lines point toward children.
+
+Pressing the list button opens a window containing a list of all children of the currently selected object. You can use this list to select any of the children.
+
+#### Object Deletion
+
+Pressing the red cross button deletes the selected object.
+
+### Extensibility
+
+You can add custom buttons to the Halo. The following example demonstrates this by adding a button that toggles the visibility of an `AnimatedSprite2D`. You need to perform the following steps:
+
+##### 1. Define a callback that handles a button click
+
+```js
+var button_handler = func(target: CanvasItem) -> void:
+    target.visible = not target.visible
+```
+
+##### 2. Define a `Texture2D` for the button
+
+Here we are using a texture from a texture atlas.
+
+```js
+var atlas: Texture2D = load("res://path/to/texture/atlas/file.png")
+var region: Rect2 = Rect2(Vector2(100, 450), Vector2(50, 50))
+var texture: Texture2D = AtlasTexture.new()
+texture.atlas = atlas
+texture.region = region
+```
+
+##### 3. Define what node types are affected
+
+```js
+var node_types: Array[String] = ["AnimatedSprite2D"]
+```
+
+You can add as many node types as you want. By using an empty list, all node types will be affected.
+
+##### 4. Define the button’s color
+
+```js
+var color_modulation: Color = Color.ORANGE
+```
+
+##### 5. Add the button using the `button_manager`
+
+```js
+HaloDispatcher.button_manager.add_button(
+    texture, 
+    button_handler,
+    node_types,
+    color_modulation
+)
+```
+
+This will add a button to the Halo of all `AnimatedSprite2D` nodes.
+
+The `node_types` default to `[]`, and the `color_modulation` defaults to `Color.WHITE`.
+
+## Limitations
+
+- There is currently no 3D support. The halo only works in 2D games.
+- Changes to the scene made with the halo cannot be exported yet.
+- It is not possible to select multiple objects at once.
+- It is difficult to select objects that are out of the camera’s FOV. An independent camera could solve this problem.
+
+## Third-Party Software Used
+
+The Halo object inspector window uses the [Object Inspector by Mansur Isaev](https://github.com/4d49/object-inspector), distributed under the MIT License. The license file can be found at `addons/babylonian/object-inspector/LICENSE.md`.

@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://boxotowlih5ak"]
+
+[ext_resource type="Script" uid="uid://g6tuy3hugsq3" path="res://addons/babylonian/halo/scripts/probe_window.gd" id="1_m648c"]
+
+[node name="ProbeWindow" type="Window"]
+position = Vector2i(50, 50)
+size = Vector2i(512, 128)
+theme_override_colors/title_color = Color(0, 0.749, 1, 1)
+script = ExtResource("1_m648c")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3

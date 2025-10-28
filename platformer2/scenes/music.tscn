@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cek6updug5dk3"]
+
+[ext_resource type="AudioStream" uid="uid://fs5wbfpij8q8" path="res://platformer2/assets/music/time_for_adventure.mp3" id="1_e0osg"]
+
+[node name="Music" type="AudioStreamPlayer2D"]
+stream = ExtResource("1_e0osg")
+autoplay = true
+bus = &"Music"

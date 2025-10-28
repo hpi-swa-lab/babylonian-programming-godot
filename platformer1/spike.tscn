@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://hh1xymp2mv5r"]
+
+[ext_resource type="Texture2D" uid="uid://cd6cr1cgaph6r" path="res://platformer1/spike.png" id="1_8wnwy"]
+
+[node name="Spike" type="StaticBody2D" groups=["spike"]]
+
+[node name="Blocks" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(4, 4)
+texture = ExtResource("1_8wnwy")
+region_rect = Rect2(128, 128, 16, 32)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+scale = Vector2(1.99219, 1.99219)
+polygon = PackedVector2Array(-16.0627, -4.01568, 0, 15.0588, 16.0627, -4.51764, 16, -16, -16, -16, -16.0627, -4.01568)
+metadata/_edit_lock_ = true
