@@ -1,16 +1,4 @@
-[gd_resource type="Theme" load_steps=16 format=3 uid="uid://brgv3slrtq5v1"]
-
-[ext_resource type="Texture2D" uid="uid://bmu1chhb5ptqr" path="res://addons/babylonian/object-inspector/icons/file.svg" id="1_65vh4"]
-[ext_resource type="Texture2D" uid="uid://cw4hi4tcfajkm" path="res://addons/babylonian/object-inspector/icons/maximize.svg" id="1_hfaeu"]
-[ext_resource type="Texture2D" uid="uid://bcivoba82n1mu" path="res://addons/babylonian/object-inspector/icons/collapsed.svg" id="1_hpca1"]
-[ext_resource type="Texture2D" uid="uid://bxumeikoh6v" path="res://addons/babylonian/object-inspector/icons/expanded.svg" id="2_0jwgf"]
-[ext_resource type="Texture2D" uid="uid://d03gbf7trbp1d" path="res://addons/babylonian/object-inspector/icons/search.svg" id="2_vebvf"]
-[ext_resource type="Texture2D" uid="uid://dv31hjjg8y4fb" path="res://addons/babylonian/object-inspector/icons/page_first.svg" id="5_e0bdv"]
-[ext_resource type="Texture2D" uid="uid://c2j3nb1xha88l" path="res://addons/babylonian/object-inspector/icons/edit.svg" id="5_x0g0o"]
-[ext_resource type="Texture2D" uid="uid://1ixkw8ewjxja" path="res://addons/babylonian/object-inspector/icons/page_last.svg" id="6_wdbtw"]
-[ext_resource type="Texture2D" uid="uid://j36hvw1deb1t" path="res://addons/babylonian/object-inspector/icons/page_next.svg" id="7_hjbvh"]
-[ext_resource type="Texture2D" uid="uid://bkiw5jjudua2y" path="res://addons/babylonian/object-inspector/icons/page_prev.svg" id="8_ybigx"]
-[ext_resource type="Texture2D" uid="uid://cbmotj4fsal1v" path="res://addons/babylonian/object-inspector/icons/delete.svg" id="9_t1qfx"]
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://brgv3slrtq5v1"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h08j0"]
 
@@ -58,31 +46,31 @@ BoxContainer/constants/separation = 2
 FlowContainer/constants/h_separation = 2
 FlowContainer/constants/v_separation = 2
 Inspector/base_type = &"VBoxContainer"
-Inspector/icons/file = ExtResource("1_65vh4")
-Inspector/icons/maximize = ExtResource("1_hfaeu")
-Inspector/icons/search = ExtResource("2_vebvf")
+Inspector/icons/file = null
+Inspector/icons/maximize = null
+Inspector/icons/search = null
 InspectorProperty/base_type = &"PanelContainer"
 InspectorProperty/styles/panel = SubResource("StyleBoxEmpty_h08j0")
 InspectorPropertyArray/base_type = &"PanelContainer"
-InspectorPropertyArray/icons/delete = ExtResource("9_t1qfx")
-InspectorPropertyArray/icons/edit = ExtResource("5_x0g0o")
+InspectorPropertyArray/icons/delete = null
+InspectorPropertyArray/icons/edit = null
 InspectorPropertyArray/styles/panel = SubResource("StyleBoxEmpty_h08j0")
 InspectorPropertyCategory/base_type = &"PanelContainer"
 InspectorPropertyCategory/styles/header = SubResource("StyleBoxFlat_ds1an")
 InspectorPropertyCategory/styles/panel = SubResource("StyleBoxEmpty_h08j0")
 InspectorPropertyDictionary/base_type = &"PanelContainer"
-InspectorPropertyDictionary/icons/delete = ExtResource("9_t1qfx")
-InspectorPropertyDictionary/icons/edit = ExtResource("5_x0g0o")
+InspectorPropertyDictionary/icons/delete = null
+InspectorPropertyDictionary/icons/edit = null
 InspectorPropertyDictionary/styles/panel = SubResource("StyleBoxEmpty_h08j0")
 InspectorPropertyGroup/base_type = &"PanelContainer"
-InspectorPropertyGroup/icons/collapsed = ExtResource("1_hpca1")
-InspectorPropertyGroup/icons/expanded = ExtResource("2_0jwgf")
+InspectorPropertyGroup/icons/collapsed = null
+InspectorPropertyGroup/icons/expanded = null
 InspectorPropertyGroup/styles/panel = SubResource("StyleBoxFlat_idiuy")
 InspectorPropertyPaginator/base_type = &"VBoxContainer"
-InspectorPropertyPaginator/icons/page_first = ExtResource("5_e0bdv")
-InspectorPropertyPaginator/icons/page_last = ExtResource("6_wdbtw")
-InspectorPropertyPaginator/icons/page_next = ExtResource("7_hjbvh")
-InspectorPropertyPaginator/icons/page_prev = ExtResource("8_ybigx")
+InspectorPropertyPaginator/icons/page_first = null
+InspectorPropertyPaginator/icons/page_last = null
+InspectorPropertyPaginator/icons/page_next = null
+InspectorPropertyPaginator/icons/page_prev = null
 InspectorPropertySubGroup/base_type = &"InspectorPropertyGroup"
 InspectorPropertySubGroup/styles/panel = SubResource("StyleBoxFlat_cncyr")
 InspectorSubProperty/base_type = &"InspectorProperty"

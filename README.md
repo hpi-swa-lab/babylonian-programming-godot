@@ -48,22 +48,22 @@ We currently support probes for colors, floats, strings and vectors. We automati
    | Snapshot & Input Recording | Takes a snapshot first, then immediately starts Input Recording                            |
 4. Press _Start example_ or <kbd>Ctrl</kbd>+<kbd>S</kbd>.
 5. If your selected mode includes Input Recording:
-    - Perform the user input (e. g. jump around).
-    - Press _Stop recording_ or <kbd>Ctrl</kbd>+<kbd>S</kbd>.
+	- Perform the user input (e. g. jump around).
+	- Press _Stop recording_ or <kbd>Ctrl</kbd>+<kbd>S</kbd>.
 7. The new example appears below the UI:
-    ![example slot](https://github.com/hpi-swa-lab/babylonian-programming-godot/assets/41512063/a23d0d37-d06a-44b9-b9f7-b8cd78f0594b)
-    - The number (_1_) indicates the index of the example _slot_.
-    - The parentheses indicate the mode of the example: _S_ stands for Snapshot and _R_ for Input Recording.
-    - The _[last]_ brackets show the last used slot.
-    - The input box contains the name of the example (_Example 1_). You can rename the example by typing in the input box. After you renamed the example, press <kbd>Esc</kbd> to prevent further user input from reaching the input box.
-    - The _Loop_ checkbox is used when restoring the example, see below. It is only present for examples that include an input recording.
-    - The _Save_ button is used to store the example on disk. When you click it, a file save dialog opens.
-    - The _Restore_ button is used to apply the example.
-        - If the example includes a snapshot, the game state it captured will be restored.
-        - If the example includes an input recording, it will be played back.
-        - If _Loop_ is enabled, the example will be restored again after the playback of the input recording has completed. This will repeat indefinitely.
-        - Playback of an input recording (looped or not) can be stopped using the _Stop playback_ button in the top left.
-    - The _Delete_ button is used to remove the example slot. This will not delete an example from disk.
+	![example slot](https://github.com/hpi-swa-lab/babylonian-programming-godot/assets/41512063/a23d0d37-d06a-44b9-b9f7-b8cd78f0594b)
+	- The number (_1_) indicates the index of the example _slot_.
+	- The parentheses indicate the mode of the example: _S_ stands for Snapshot and _R_ for Input Recording.
+	- The _[last]_ brackets show the last used slot.
+	- The input box contains the name of the example (_Example 1_). You can rename the example by typing in the input box. After you renamed the example, press <kbd>Esc</kbd> to prevent further user input from reaching the input box.
+	- The _Loop_ checkbox is used when restoring the example, see below. It is only present for examples that include an input recording.
+	- The _Save_ button is used to store the example on disk. When you click it, a file save dialog opens.
+	- The _Restore_ button is used to apply the example.
+		- If the example includes a snapshot, the game state it captured will be restored.
+		- If the example includes an input recording, it will be played back.
+		- If _Loop_ is enabled, the example will be restored again after the playback of the input recording has completed. This will repeat indefinitely.
+		- Playback of an input recording (looped or not) can be stopped using the _Stop playback_ button in the top left.
+	- The _Delete_ button is used to remove the example slot. This will not delete an example from disk.
 8. You can now restore the example using the _Restore_ button (see above). You can also use a keyboard shortcut. First, press <kbd>Ctrl</kbd>+<kbd>R</kbd>, then
    - <kbd>Ctrl</kbd>+<kbd>1</kbd> through <kbd>Ctrl</kbd>+<kbd>9</kbd> to load the example slot with the corresponding index. <kbd>Ctrl</kbd>+<kbd>0</kbd> loads example slot 10. More than 10 example slots are not supported using this keyboard shortcut.
    - <kbd>Ctrl</kbd>+<kbd>R</kbd> to load the example slot annotated with _[last]_.

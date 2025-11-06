@@ -38,8 +38,7 @@ const COPY_OFFSET: Vector2 = Vector2(10, 10)
 var _radius: float = RADIUS_8
 
 var _dragging: bool = false
-var _dragging_v: bool = false
-var _dragging_h: bool = false
+var _drag_start_position: Vector2 = Vector2.ZERO
 var _rotating: bool = false
 
 func set_target(target: CanvasItem, target_is_root: bool, additional_buttons: Array[TextureButton]) -> void:
@@ -121,8 +120,8 @@ func _set_additional_buttons(additional_buttons: Array[TextureButton]) -> void:
 
 func _set_button_visibility() -> void:
 	self._move_button.visible = not self._target_is_root
-	self._move_v_button.visible = not self._target_is_root
-	self._move_h_button.visible = not self._target_is_root
+	self._move_v_button.visible = false
+	self._move_h_button.visible = false
 	self._rotate_button.visible = not self._target_is_root
 	self._reset_rotation_button.visible = not self._target_is_root
 	self._duplicate_button.visible = self._target_has_scene_file and not self._target_is_root
@@ -259,22 +258,58 @@ func _perform_dragging() -> void:
 	self._perform_dragging_rotation()
 
 func _perform_dragging_translation() -> void:
-	var button: TextureButton = null
+	const SNAP_THRESHOLD: float = 20.0
 	if self._dragging:
-		button = self._move_button
-	elif self._dragging_v:
-		button = self._move_v_button
-	elif self._dragging_h:
-		button = self._move_h_button
-	if self._dragging or self._dragging_h or self._dragging_v:
-		var new_position: Vector2 = get_global_mouse_position() 
-		if self._dragging:
-			self._target.global_position = new_position
-		elif self._dragging_v:
+		var new_position: Vector2 = get_global_mouse_position()
+		var drag_delta: Vector2 = new_position - self._drag_start_position
+		if abs(drag_delta.x) < SNAP_THRESHOLD:
+			# only update y
 			self._target.global_position.y = new_position.y
-		elif self._dragging_h:
+		elif abs(drag_delta.y) < SNAP_THRESHOLD:
+			# only update y
 			self._target.global_position.x = new_position.x
+		else:
+			self._target.global_position = new_position
 		self._reposition()
+		
+func _write_position_to_scene() -> void:
+	print("target name", self._target.name)
+	var root_scene_path = get_tree().current_scene.scene_file_path
+	print("root", root_scene_path)
+	
+	var pos = self._target.global_position
+	print("position", pos)
+	
+	var file = FileAccess.open(root_scene_path, FileAccess.READ)
+	var content = file.get_as_text()
+	file.close()
+	
+	var node_pattern = 'name="%s"' % self._target.name
+	var node_idx = content.find(node_pattern)
+	var pos_pattern = "position = Vector2("
+	var next_node = content.find("\n[", node_idx + 1)
+	var pos_idx = content.find(pos_pattern, node_idx)
+	var new_pos_line = "position = Vector2(%s, %s)" % [pos.x, pos.y]
+	
+	if pos_idx != -1 and (next_node == -1 or pos_idx < next_node):
+		var line_end = content.find("\n", pos_idx)
+		content = content.substr(0, pos_idx) + new_pos_line + content.substr(line_end)
+	else:
+		var insert_at = content.find("\n", node_idx) + 1
+		content = content.substr(0, insert_at) + new_pos_line + "\n" + content.substr(insert_at)
+
+	file = FileAccess.open(root_scene_path, FileAccess.WRITE)
+	file.store_string(content)
+	file.close()
+	print("success")
+	
+	#if Engine.is_editor_hint():
+		#EditorInterface.get_resource_filesystem().scan()
+
+	#var dummy = load(root_scene_path)
+	
+	#if ResourceLoader.has_cached(root_scene_path):
+		#ResourceLoader.load(root_scene_path, "", ResourceLoader.CACHE_MODE_IGNORE)
 
 func _perform_dragging_rotation() -> void:
 	if self._rotating:
@@ -304,22 +339,12 @@ func _on_delete_button_pressed() -> void:
 	HaloDispatcher.put_halo_on(null)
 
 func _on_move_button_button_down() -> void:
+	self._drag_start_position = get_global_mouse_position()
 	self._dragging = true
 
 func _on_move_button_button_up() -> void:
 	self._dragging = false
-
-func _on_move_v_button_button_down() -> void:
-	self._dragging_v = true
-
-func _on_move_v_button_button_up() -> void:
-	self._dragging_v = false
-
-func _on_move_h_button_button_down() -> void:
-	self._dragging_h = true
-
-func _on_move_h_button_button_up() -> void:
-	self._dragging_h = false
+	self._write_position_to_scene()
 
 func _on_inspect_button_pressed() -> void:
 	self._inspector_window.visible = not self._inspector_window.visible  
