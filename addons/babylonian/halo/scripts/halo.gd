@@ -5,6 +5,7 @@ class_name Halo extends Node2D
 @onready var _move_v_button: TextureButton = $MoveVButton
 @onready var _move_h_button: TextureButton = $MoveHButton
 @onready var _rotate_button: TextureButton = $RotateButton
+@onready var _reset_scene_button: TextureButton = $ResetSceneButton
 @onready var _reset_rotation_button: TextureButton = $ResetRotationButton
 @onready var _duplicate_button: TextureButton = $DuplicateButton
 @onready var _inspect_button: TextureButton = $InspectButton
@@ -95,8 +96,9 @@ func _fill_button_array() -> void:
 	if not self._target_is_root:
 		self._buttons.append_array([
 			self._move_button,
-			self._move_v_button,
-			self._move_h_button,
+			#self._move_v_button,
+			#self._move_h_button,
+			#self._reset_scene_button,
 			self._rotate_button,
 			self._reset_rotation_button
 		])
@@ -258,7 +260,7 @@ func _perform_dragging() -> void:
 	self._perform_dragging_rotation()
 
 func _perform_dragging_translation() -> void:
-	const SNAP_THRESHOLD: float = 20.0
+	const SNAP_THRESHOLD: float = 10.0
 	if self._dragging:
 		var new_position: Vector2 = get_global_mouse_position()
 		var drag_delta: Vector2 = new_position - self._drag_start_position
@@ -266,7 +268,7 @@ func _perform_dragging_translation() -> void:
 			# only update y
 			self._target.global_position.y = new_position.y
 		elif abs(drag_delta.y) < SNAP_THRESHOLD:
-			# only update y
+			# only update x
 			self._target.global_position.x = new_position.x
 		else:
 			self._target.global_position = new_position
