@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://dkkwh55src4ok"]
+[gd_scene load_steps=23 format=3 uid="uid://ckmkpbywc1065"]
 
 [ext_resource type="Script" uid="uid://c02qxvms43idk" path="res://addons/babylonian/halo/scripts/halo.gd" id="1_d3xw1"]
 [ext_resource type="Texture2D" uid="uid://bm6wiyrtbqv8g" path="res://addons/babylonian/halo/assets/ui_0.png" id="2_27p3b"]
@@ -138,6 +138,7 @@ focus_mode = 0
 texture_normal = SubResource("AtlasTexture_d3xw1")
 
 [node name="TreeVisibilityButton" type="TextureButton" parent="."]
+process_mode = 4
 self_modulate = Color(1, 0.870588, 0.678431, 1)
 z_index = 128
 z_as_relative = false
@@ -186,6 +187,7 @@ text = "Test"
 label_settings = SubResource("LabelSettings_d3xw1")
 
 [node name="HaloInspectorWindow" parent="." instance=ExtResource("4_27p3b")]
+oversampling_override = 1.0
 
 [node name="SelectionRect" type="ColorRect" parent="."]
 z_index = 127

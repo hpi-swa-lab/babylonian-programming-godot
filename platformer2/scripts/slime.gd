@@ -21,12 +21,12 @@ func _add_button() -> void:
 	texture.atlas = atlas
 	texture.region = region
 		
-	HaloDispatcher.button_manager.add_button(
-		texture, 
-		button_handler,
-		["Slime"],
-		Color.ORANGE
-	)
+	#HaloDispatcher.button_manager.add_button(
+		#texture, 
+		#button_handler,
+		#["Slime"],
+		#Color.ORANGE
+	#)
 	
 	Slime._initialized = true
 
