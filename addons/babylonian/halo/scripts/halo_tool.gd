@@ -1,4 +1,4 @@
-class_name Tool extends RefCounted
+class_name HaloTool extends RefCounted
 
 const ATLAS: Texture2D = preload("res://addons/babylonian/halo/assets/ui_0.png")
 const ICON_SIZE: int = 50

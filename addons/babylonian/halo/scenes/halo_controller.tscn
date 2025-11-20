@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://jdjvwco8oqqn"]
+
+[ext_resource type="Script" uid="uid://cyuh6bk5cjadt" path="res://addons/babylonian/halo/scripts/halo_controller.gd" id="1_qx1vj"]
+
+[node name="HaloController" type="Node"]
+script = ExtResource("1_qx1vj")

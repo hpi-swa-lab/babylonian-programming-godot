@@ -1,4 +1,4 @@
-class_name FreeMoveTool extends Tool
+class_name FreeMoveTool extends HaloTool
 
 func _init():
 	name = "Free Move"
@@ -13,4 +13,4 @@ func deactivate() -> void:
 
 func process(delta: float) -> void:
 	if Input.is_action_just_pressed("left_mouse_button"):
-		self.target.global_position = HaloSingleton.get_global_mouse_position()
+		self.target.global_position = Halo.get_global_mouse_position()

@@ -259,36 +259,37 @@ func update_inspector() -> void:
 				halo = halo.get_parent()
 				if halo == null:
 					break
+					
 			
-			var probe_button_handler = func() -> void:
-				var probe_window: ProbeWindow = preload("res://addons/babylonian/halo/scenes/probe_window.tscn").instantiate()
-				halo.add_child(probe_window)
-				probe_window.position += Vector2i(10, 10)
-				probe_window.set_target(_object, property['name'])
+			#var probe_button_handler = func() -> void:
+				#var probe_window: ProbeWindow = preload("res://addons/babylonian/halo/scenes/probe_window.tscn").instantiate()
+				#halo.add_child(probe_window)
+				#probe_window.position += Vector2i(10, 10)
+				#probe_window.set_target(_object, property['name'])
 
-			var copy_button_handler = func() -> void:
-				var string: String = str(_object.get(property['name']))
-				print(string)
-				DisplayServer.clipboard_set(string)
-				
-			var probe_button: Button = Button.new()
-			probe_button.text = "P"
-			probe_button.pressed.connect(probe_button_handler)
-			probe_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-			probe_button.size_flags_stretch_ratio = 0.5
-			
-			var copy_button: Button = Button.new()
-			copy_button.text = "C"
-			copy_button.pressed.connect(copy_button_handler)
-			copy_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-			copy_button.size_flags_stretch_ratio = 0.5
-		
-			var property_container: HBoxContainer = HBoxContainer.new()
-
-			property_container.add_child(control)
-			property_container.add_child(probe_button)
-			property_container.add_child(copy_button)
-			parent.add_child(property_container)
+			#var copy_button_handler = func() -> void:
+				#var string: String = str(_object.get(property['name']))
+				#print(string)
+				#DisplayServer.clipboard_set(string)
+				#
+			#var probe_button: Button = Button.new()
+			#probe_button.text = "P"
+			#probe_button.pressed.connect(probe_button_handler)
+			#probe_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			#probe_button.size_flags_stretch_ratio = 0.5
+			#
+			#var copy_button: Button = Button.new()
+			#copy_button.text = "C"
+			#copy_button.pressed.connect(copy_button_handler)
+			#copy_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			#copy_button.size_flags_stretch_ratio = 0.5
+		#
+			#var property_container: HBoxContainer = HBoxContainer.new()
+#
+			#property_container.add_child(control)
+			#property_container.add_child(probe_button)
+			#property_container.add_child(copy_button)
+			#parent.add_child(property_container)
 
 		property["control"] = control
 

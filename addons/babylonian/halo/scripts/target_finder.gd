@@ -2,10 +2,7 @@ class_name TargetFinder extends RefCounted
 
 const MAX_DISTANCE: int = 32
 
-var _dispatcher: HaloDispatcher
-
-func init(dispatcher: HaloDispatcher) -> TargetFinder:
-	self._dispatcher = dispatcher
+func init() -> TargetFinder:
 	return self
 
 func find_target_above(root: Node, halo_target: CanvasItem, screen_pos: Vector2) -> CanvasItem:
@@ -18,14 +15,14 @@ func find_target(root: Node, halo_target: CanvasItem, screen_pos: Vector2) -> Ca
 	return _find_target(root, halo_target, screen_pos, false, false, false)
 
 func _get_world_position(screen_position: Vector2) -> Vector2:
-	var cam = self._dispatcher.get_viewport().get_camera_2d()
+	var cam = Halo.get_viewport().get_camera_2d()
 	if cam == null:
 		push_warning("No Camera2D found in viewport; cannot convert click to world coordinates.")
 		return Vector2.INF
 	return cam.get_canvas_transform().affine_inverse() * screen_position
 
 func _find_area_target(world_position: Vector2, root: Node, exclude_root: bool = false) -> CanvasItem:
-	var space_state = self._dispatcher.get_world_2d().direct_space_state
+	var space_state = Halo.get_world_2d().direct_space_state
 	var parameters: PhysicsPointQueryParameters2D = PhysicsPointQueryParameters2D.new()
 	parameters.position = world_position
 	parameters.collide_with_areas = true
@@ -74,8 +71,10 @@ func _find_parent_target(node: CanvasItem) -> CanvasItem:
 
 func _find_target(root: Node, halo_target: CanvasItem, screen_pos: Vector2, go_up: bool, go_down: bool, exclude_root: bool = false) -> CanvasItem:
 	var world_pos = _get_world_position(screen_pos)
+	print("World pos: ", world_pos, " from screen pos: ", screen_pos)
 	var point_target: CanvasItem = _find_point_target(world_pos, root, exclude_root)
 	var area_target: CanvasItem = _find_area_target(world_pos, root, exclude_root)
+	print("Point target: ", point_target, " Area target: ", area_target)
 	
 	if not halo_target:
 		if point_target:
