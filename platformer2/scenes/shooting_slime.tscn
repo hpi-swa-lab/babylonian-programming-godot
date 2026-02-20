@@ -1,0 +1,48 @@
+[gd_scene load_steps=7 format=3 uid="uid://cmkoutefpewpm"]
+
+[ext_resource type="Texture2D" uid="uid://bh3tji8c1wnux" path="res://platformer2/assets/sprites/slime_purple.png" id="1_43spr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7e1tk"]
+atlas = ExtResource("1_43spr")
+region = Rect2(0, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xrma0"]
+atlas = ExtResource("1_43spr")
+region = Rect2(24, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_87btx"]
+atlas = ExtResource("1_43spr")
+region = Rect2(48, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6pn63"]
+atlas = ExtResource("1_43spr")
+region = Rect2(72, 24, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_d0bvv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7e1tk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xrma0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_87btx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6pn63")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="ShootingSlime" type="Node2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -5)
+scale = Vector2(-1, 1)
+sprite_frames = SubResource("SpriteFrames_d0bvv")
+autoplay = "default"
+frame_progress = 0.92046106
