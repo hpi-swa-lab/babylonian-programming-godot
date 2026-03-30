@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://df3k352fau6x7"]
 
-[ext_resource type="Script" path="res://addons/babylonian/Examples.gd" id="1_3yfx3"]
-[ext_resource type="Script" path="res://addons/babylonian/ToggleVisibilityButton.gd" id="2_gu3p0"]
+[ext_resource type="Script" uid="uid://b8cmx4w41w5i1" path="res://addons/babylonian/Examples.gd" id="1_3yfx3"]
+[ext_resource type="Script" uid="uid://cdol6h6a41a7" path="res://addons/babylonian/ToggleVisibilityButton.gd" id="2_gu3p0"]
 
 [sub_resource type="Theme" id="Theme_nhwpp"]
 default_font_size = 30
@@ -10,9 +10,12 @@ default_font_size = 30
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -755.0
-offset_bottom = 50.0
+offset_left = -927.0
+offset_top = 1.0
+offset_right = -172.0
+offset_bottom = 503.0
 grow_horizontal = 0
+scale = Vector2(0.59080803, 0.59080803)
 size_flags_horizontal = 2
 size_flags_vertical = 2
 theme = SubResource("Theme_nhwpp")
@@ -50,8 +53,8 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
-item_count = 3
 selected = 0
+item_count = 3
 popup/item_0/text = "Snapshot only"
 popup/item_0/id = 0
 popup/item_1/text = "Snapshot & Input Recording"

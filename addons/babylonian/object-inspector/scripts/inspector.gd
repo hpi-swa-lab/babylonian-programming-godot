@@ -259,6 +259,7 @@ func update_inspector() -> void:
 				halo = halo.get_parent()
 				if halo == null:
 					break
+					
 			
 			var probe_button_handler = func() -> void:
 				var probe_window: ProbeWindow = preload("res://addons/babylonian/halo/scenes/probe_window.tscn").instantiate()
@@ -268,7 +269,6 @@ func update_inspector() -> void:
 
 			var copy_button_handler = func() -> void:
 				var string: String = str(_object.get(property['name']))
-				print(string)
 				DisplayServer.clipboard_set(string)
 				
 			var probe_button: Button = Button.new()

@@ -3,9 +3,7 @@ extends Area2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 var game_manager: Node
-
-#func _ready():
-	#game_manager = $"../../GameManager"
+@export var value = 1
 
 func find_game_manager(node):
 	if node.name == "GameManager":
@@ -20,5 +18,5 @@ func _ready():
 	game_manager = find_game_manager(get_tree().get_root())
 
 func _on_body_entered(body: Node2D) -> void:
-	game_manager.add_point()
+	game_manager.add_points(self.value)
 	animation_player.play("pickup")

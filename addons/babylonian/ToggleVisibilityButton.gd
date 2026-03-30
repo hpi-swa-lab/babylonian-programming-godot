@@ -3,12 +3,10 @@ extends Button
 @export var control: Control
 
 func _ready():
-	control.visibility_changed.connect(self.update_text)
-	update_text()
-	control.visible = false 
+	self._pressed()
 
-func update_text():
-	text = "Hide" if control.visible else "Show"
 
 func _pressed():
 	control.visible = not control.visible
+	text = "Hide" if control.visible else "Show"
+	control.mouse_filter = Control.MOUSE_FILTER_IGNORE if control.visible else Control.MOUSE_FILTER_PASS

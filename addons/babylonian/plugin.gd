@@ -7,10 +7,14 @@ var in_game_ui = preload("./InGameUI.gd").new()
 
 var singletons = ["B", "InGameUI"]
 
+var halo_editor_bridge = HaloEditorBridge.new()
+
 # Object inspector constants
 const INSPECTOR_CONTROL_NAME = "ObjectInspector"
 const INSPECTOR_CONTROL_SCRIPT = "res://addons/babylonian/object-inspector/scripts/inspector.gd"
 const INSPECTOR_CONTROL_ICON = "res://addons/babylonian/object-inspector/icons/inspector_container.svg"
+
+var halo_persistence = HaloPersistenceManager.new()
 
 func _enter_tree():
 	# Initialization of the plugin goes here.
@@ -18,6 +22,9 @@ func _enter_tree():
 	probe_manager.plugin = self
 	debugger.plugin = self
 	add_debugger_plugin(debugger)
+	add_debugger_plugin(halo_editor_bridge)
+	halo_editor_bridge.undo_engine = self.get_undo_redo()
+	
 	for singleton in singletons:
 		add_autoload_singleton(singleton, singleton + ".gd")
 		
@@ -36,6 +43,7 @@ func _on_selection_changed():
 func _exit_tree():
 	probe_manager.on_exit()
 	remove_debugger_plugin(debugger)
+	remove_debugger_plugin(halo_editor_bridge)
 	for singleton in singletons:
 		remove_autoload_singleton(singleton)
 		

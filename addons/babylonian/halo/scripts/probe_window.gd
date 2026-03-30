@@ -50,7 +50,7 @@ func _add_select_button() -> void:
 	self.add_child(self._select_button)
 
 func _on_select_button_pressed() -> void:
-	HaloDispatcher.put_halo_on(self._target)
+	Halo.set_target(self._target)
 
 func _on_close_requested() -> void:
 	queue_free()

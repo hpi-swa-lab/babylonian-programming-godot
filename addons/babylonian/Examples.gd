@@ -14,10 +14,20 @@ var loop_example_slots = []
 var last_example_slot = -1
 
 func _ready():
+	self._set_mouse_pass_through(self)
 	for child in [snapshots, recordings]:
 		add_child(child)
 	recordings.looped_playback_ended.connect(self.looped_playback_ended)
 	recordings.theme = theme
+
+
+func _set_mouse_pass_through(node: Control) -> void:
+	if node is BaseButton:
+		return
+	node.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	for child in node.get_children():
+		if child is Control:
+			self._set_mouse_pass_through(child)
 
 func create_example(snapshot, recording):
 	return {
@@ -78,6 +88,7 @@ func add_example_slot_ui(example, index: int):
 	example_slot.has_recording = example["recording"] != null
 	example_slot.example_name = example_name(index)
 	example_slots_container.add_child(example_slot)
+	self._set_mouse_pass_through(example_slot)
 	example_slot_uis.append(example_slot)
 	await get_tree().process_frame
 	$ScrollContainer.ensure_control_visible(example_slot)

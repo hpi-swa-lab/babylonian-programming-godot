@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://bdol2hwl0ae80"]
+
+[ext_resource type="Script" uid="uid://comg1p5qn83up" path="res://platformer2/scripts/projectile.gd" id="1_5b3fa"]
+[ext_resource type="Texture2D" uid="uid://0hd312ou5dif" path="res://platformer2/assets/sprites/fruit.png" id="1_8vi7i"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5b3fa"]
+radius = 5.0990195
+
+[node name="Projectile" type="RigidBody2D"]
+gravity_scale = 0.1
+angular_velocity = 17.453293
+script = ExtResource("1_5b3fa")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -1)
+texture = ExtResource("1_8vi7i")
+hframes = 4
+vframes = 4
+frame = 12
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_5b3fa")
