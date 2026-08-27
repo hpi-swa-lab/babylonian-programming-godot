@@ -17,6 +17,6 @@ func find_game_manager(node):
 func _ready():
 	game_manager = find_game_manager(get_tree().get_root())
 
-func _on_body_entered(body: Node2D) -> void:
+func _on_body_entered(_body: Node2D) -> void:
 	game_manager.add_points(self.value)
 	animation_player.play("pickup")

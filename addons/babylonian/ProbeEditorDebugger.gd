@@ -17,3 +17,5 @@ func _capture(message, data, session_id):
 		plugin.probe_manager.on_probe(source, line, value, group)
 		# we handled the message
 		return true
+	# we did not handle the message
+	return false

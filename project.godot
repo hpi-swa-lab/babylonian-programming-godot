@@ -8,19 +8,23 @@
 
 config_version=5
 
+[animation]
+
+compatibility/default_parent_skeleton_in_mesh_instance_3d=true
+
 [application]
 
 config/name="Babylonian"
 run/main_scene="uid://bdgo2w0eity1o"
-config/features=PackedStringArray("4.5", "Forward Plus")
+config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
 Music="*res://platformer2/scenes/music.tscn"
 Halo="*res://addons/babylonian/halo/scripts/halo.gd"
-B="*res://addons/babylonian/B.gd"
-InGameUI="*res://addons/babylonian/InGameUI.gd"
+B="*uid://bn3kubqq84k1o"
+InGameUI="*uid://dimtd56uilvjw"
 
 [editor]
 

@@ -61,4 +61,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 
+	B.probe(velocity.x)
+	B.game_probe(velocity)
+
 	move_and_slide()
