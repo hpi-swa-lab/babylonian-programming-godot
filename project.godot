@@ -22,17 +22,10 @@ config/icon="res://icon.svg"
 [autoload]
 
 Music="*res://platformer2/scenes/music.tscn"
-Halo="*res://addons/babylonian/halo/scripts/halo.gd"
-B="*uid://bn3kubqq84k1o"
-InGameUI="*uid://dimtd56uilvjw"
 
 [editor]
 
 version_control/autoload_on_startup=true
-
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/babylonian/plugin.cfg")
 
 [input]
 

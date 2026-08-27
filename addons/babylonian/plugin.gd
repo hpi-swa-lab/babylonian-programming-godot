@@ -5,7 +5,11 @@ var probe_manager = ProbeManager.new()
 var debugger = ProbeEditorDebugger.new()
 var in_game_ui = preload("./InGameUI.gd").new()
 
-var singletons = ["B", "InGameUI"]
+var singletons = {
+	"B": "B.gd",
+	"InGameUI": "InGameUI.gd",
+	"Halo": "halo/scripts/halo.gd",
+}
 
 var halo_editor_bridge = HaloEditorBridge.new()
 
@@ -26,7 +30,7 @@ func _enter_tree():
 	halo_editor_bridge.undo_engine = self.get_undo_redo()
 	
 	for singleton in singletons:
-		add_autoload_singleton(singleton, singleton + ".gd")
+		add_autoload_singleton(singleton, singletons[singleton])
 		
 	# Halo initialization
 	var selection = get_editor_interface().get_selection()
